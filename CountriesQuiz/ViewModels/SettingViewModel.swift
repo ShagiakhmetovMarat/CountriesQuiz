@@ -12,6 +12,7 @@ protocol SettingViewModelProtocol {
     var cell: AnyClass { get }
     var heightOfRow: CGFloat { get }
     var numberOfSections: Int { get }
+    var color: UIColor { get }
     
     var mode: Setting { get }
     
@@ -24,12 +25,14 @@ protocol SettingViewModelProtocol {
     func customCell(cell: SettingCell, indexPath: IndexPath)
     
     func setMode(_ mode: Setting)
+    func setStatusButton(_ button: UIButton)
     func showAlert(_ mode: Setting,_ button: UIButton, and tableView: UITableView) -> UIAlertController
     func setSquare(subviews: UIView..., sizes: CGFloat)
     
     func countQuestionsViewController() -> CountQuestionsViewModelProtocol
     func continentsViewController() -> ContinentsViewModelProtocol
     func timeViewController() -> TimeViewModelProtocol
+    func languageViewController() -> LanguageViewModelProtocol
 }
 
 class SettingViewModel: SettingViewModelProtocol {
@@ -37,6 +40,9 @@ class SettingViewModel: SettingViewModelProtocol {
     var cell: AnyClass = SettingCell.self
     var heightOfRow: CGFloat = 55
     var numberOfSections = 2
+    var color: UIColor {
+        !allCountries && countQuestions > 50 ? .white : .grayStone
+    }
     
     var mode: Setting
     
@@ -83,8 +89,8 @@ class SettingViewModel: SettingViewModelProtocol {
     private var time: String {
         isTime ? "\(setTime) сек." : "Нет."
     }
-    private var isMoreFiftyQuestions: Bool {
-        !allCountries && countQuestions > 50
+    private var isEnabled: Bool {
+        !allCountries && countQuestions > 50 ? true : false
     }
     
     required init(mode: Setting) {
@@ -97,6 +103,7 @@ class SettingViewModel: SettingViewModelProtocol {
         let buttonRight = UIBarButtonItem(customView: buttonDefault)
         navigationItem.leftBarButtonItem = buttonLeft
         navigationItem.rightBarButtonItem = buttonRight
+        buttonRight.isEnabled = isEnabled
     }
     
     func setSubviews(subviews: UIView..., on subviewOther: UIView) {
@@ -135,6 +142,13 @@ class SettingViewModel: SettingViewModelProtocol {
         mode = setting
     }
     
+    func setStatusButton(_ button: UIButton) {
+        let barButton = UIBarButtonItem(customView: button)
+        button.tintColor = color
+        button.layer.borderColor = color.cgColor
+        barButton.isEnabled = isEnabled
+    }
+    
     func showAlert(_ mode: Setting, _ button: UIButton, and
                    tableView: UITableView) -> UIAlertController {
         let title = "Сбросить настройки"
@@ -146,7 +160,8 @@ class SettingViewModel: SettingViewModelProtocol {
             preferredStyle: .alert)
         
         alert.action(mode: mode) {
-            self.resetSetting(button: button)
+            self.resetSetting()
+            self.setStatusButton(button)
             tableView.reloadData()
         }
         
@@ -172,6 +187,10 @@ class SettingViewModel: SettingViewModelProtocol {
     
     func timeViewController() -> TimeViewModelProtocol {
         TimeViewModel(mode: mode)
+    }
+    
+    func languageViewController() -> LanguageViewModelProtocol {
+        LanguageViewModel(mode: mode)
     }
 }
 // MARK: - Constants
@@ -239,7 +258,7 @@ extension SettingViewModel {
         }
     }
     
-    private func resetSetting(button: UIButton) {
+    private func resetSetting() {
         setMode(Setting.getSettingDefault())
     }
 }

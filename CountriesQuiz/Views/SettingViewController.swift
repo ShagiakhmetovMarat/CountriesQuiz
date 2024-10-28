@@ -22,7 +22,7 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     private lazy var buttonDefault: UIButton = {
         setButton(
             image: "arrow.counterclockwise",
-            color: .white,
+            color: viewModel.color,
             action: #selector(defaultSetting))
     }()
     
@@ -92,6 +92,7 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
 extension SettingViewController: SettingViewControllerInput {
     func dataToSetting(mode: Setting) {
         viewModel.setMode(mode)
+        viewModel.setStatusButton(buttonDefault)
         tableView.reloadData()
     }
 }
@@ -125,6 +126,7 @@ extension SettingViewController {
         case (0, 0): countQuestionsViewController()
         case (1, 0): continentsViewController()
         case (2, 0): timeViewController()
+        case (0, 1): languageViewController()
         default: break
         }
     }
@@ -151,6 +153,14 @@ extension SettingViewController {
         timeVC.viewModel = timeViewModel
         timeVC.delegate = self
         navigationController?.pushViewController(timeVC, animated: true)
+    }
+    
+    private func languageViewController() {
+        let languageViewModel = viewModel.languageViewController()
+        let languageVC = LanguageViewController()
+        languageVC.viewModel = languageViewModel
+        languageVC.delegate = self
+        navigationController?.pushViewController(languageVC, animated: true)
     }
 }
 

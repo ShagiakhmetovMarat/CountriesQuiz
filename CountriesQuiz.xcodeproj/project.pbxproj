@@ -56,6 +56,9 @@
 		C3B972F82CB6A11D0013A32F /* CountQuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B972F72CB6A11D0013A32F /* CountQuestionsViewController.swift */; };
 		C3B972FA2CB6A16A0013A32F /* CountQuestionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B972F92CB6A15B0013A32F /* CountQuestionsViewModel.swift */; };
 		C3BADD042BC7EF5A0098BDCB /* QuestionnaireViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3BADD032BC7EF5A0098BDCB /* QuestionnaireViewModel.swift */; };
+		C3C0AF872CCFB53700B8F309 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0AF862CCFB53700B8F309 /* LanguageViewController.swift */; };
+		C3C0AF892CCFB55500B8F309 /* LanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0AF882CCFB55500B8F309 /* LanguageViewModel.swift */; };
+		C3C0AF8B2CCFBC3700B8F309 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0AF8A2CCFBC3700B8F309 /* LanguageCell.swift */; };
 		C3D292EB293F5F0900786752 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D292EA293F5F0900786752 /* SettingViewController.swift */; };
 		C3E2EB302938E7F300AB40AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E2EB2F2938E7F300AB40AD /* AppDelegate.swift */; };
 		C3E2EB322938E7F300AB40AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E2EB312938E7F300AB40AD /* SceneDelegate.swift */; };
@@ -119,6 +122,9 @@
 		C3B972F72CB6A11D0013A32F /* CountQuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountQuestionsViewController.swift; sourceTree = "<group>"; };
 		C3B972F92CB6A15B0013A32F /* CountQuestionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountQuestionsViewModel.swift; sourceTree = "<group>"; };
 		C3BADD032BC7EF5A0098BDCB /* QuestionnaireViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireViewModel.swift; sourceTree = "<group>"; };
+		C3C0AF862CCFB53700B8F309 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
+		C3C0AF882CCFB55500B8F309 /* LanguageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewModel.swift; sourceTree = "<group>"; };
+		C3C0AF8A2CCFBC3700B8F309 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
 		C3D292EA293F5F0900786752 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		C3E2EB2C2938E7F300AB40AD /* CountriesQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountriesQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3E2EB2F2938E7F300AB40AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -172,6 +178,7 @@
 				C3B972F92CB6A15B0013A32F /* CountQuestionsViewModel.swift */,
 				C3AF1F582CB7B70D0096EE1F /* ContinentsViewModel.swift */,
 				C32745402CBFD83D001F7C2A /* TimeViewModel.swift */,
+				C3C0AF882CCFB55500B8F309 /* LanguageViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -211,6 +218,7 @@
 				C33653272A94CFF7008CF2C6 /* NameCell.swift */,
 				C3B3248B2C6DF843003BB31F /* FavoritesCell.swift */,
 				C3B972F32CB6496E0013A32F /* SettingCell.swift */,
+				C3C0AF8A2CCFBC3700B8F309 /* LanguageCell.swift */,
 			);
 			path = UITableViewCell;
 			sourceTree = "<group>";
@@ -280,6 +288,7 @@
 				C3B972F72CB6A11D0013A32F /* CountQuestionsViewController.swift */,
 				C3AF1F562CB7B6F60096EE1F /* ContinentsViewController.swift */,
 				C327453E2CBFD765001F7C2A /* TimeViewController.swift */,
+				C3C0AF862CCFB53700B8F309 /* LanguageViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -408,6 +417,7 @@
 				C384F29B2C441B9200827B9F /* CorrectAnswersViewModel.swift in Sources */,
 				C392B1882C36861300779A53 /* RatioViewController.swift in Sources */,
 				C33669D62B998F990081C39A /* Game.swift in Sources */,
+				C3C0AF872CCFB53700B8F309 /* LanguageViewController.swift in Sources */,
 				C3BADD042BC7EF5A0098BDCB /* QuestionnaireViewModel.swift in Sources */,
 				C3E2EB342938E7F300AB40AD /* MenuViewController.swift in Sources */,
 				C36773F1296BF9E10096BCC5 /* QuizOfFlagsViewController.swift in Sources */,
@@ -422,6 +432,7 @@
 				C3E2EB322938E7F300AB40AD /* SceneDelegate.swift in Sources */,
 				C32745412CBFD83D001F7C2A /* TimeViewModel.swift in Sources */,
 				C36F58F82A7288FB0023E98F /* UIButton + Extension.swift in Sources */,
+				C3C0AF892CCFB55500B8F309 /* LanguageViewModel.swift in Sources */,
 				C38DF4DB2A8E4BF000550BCC /* IncorrectAnswersViewController.swift in Sources */,
 				C3B972F42CB6496E0013A32F /* SettingCell.swift in Sources */,
 				C35568F22C89C6BC00F2D4DD /* CorrectsFlagCell.swift in Sources */,
@@ -435,6 +446,7 @@
 				C3301D6D2B9C8D3E00024479 /* Box.swift in Sources */,
 				C3342B352ACD9E6600C75C6E /* IncorrectViewController.swift in Sources */,
 				C3E2EB4D2938ED6800AB40AD /* CountriesManager.swift in Sources */,
+				C3C0AF8B2CCFBC3700B8F309 /* LanguageCell.swift in Sources */,
 				C3E2EB4B2938EA6800AB40AD /* FlagsOfCountries.swift in Sources */,
 				C33669D22B98A13D0081C39A /* MenuViewModel.swift in Sources */,
 				C3E7C9962A7C19F80046A883 /* GameType.swift in Sources */,

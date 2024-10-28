@@ -19,6 +19,7 @@ struct Setting: Codable {
     var flag: Bool
     var scrabbleType: Int
     var timeElapsed: TimeElapsed
+    var language: Dialect
 }
 
 struct TimeElapsed: Codable {
@@ -58,7 +59,8 @@ extension Setting {
                         allQuestionsTime: DefaultSetting.allQuestionsTime.rawValue
                     )
                 )
-            )
+            ),
+            language: .russian
         )
         return setting
     }
@@ -70,4 +72,9 @@ enum DefaultSetting: Int {
     case scrabbleType = 0
     case oneQuestionTime = 10
     case allQuestionsTime = 100
+}
+
+enum Dialect: Codable, CaseIterable {
+    case russian
+    case english
 }

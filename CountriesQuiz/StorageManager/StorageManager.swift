@@ -21,8 +21,8 @@ class StorageManager {
     }
     
     func fetchSetting() -> Setting {
-        guard let data = userDefaults.object(forKey: settingKey) as? Data else { return Setting.getSettingDefault() }
-        guard let setting = try? JSONDecoder().decode(Setting.self, from: data) else { return Setting.getSettingDefault() }
+        guard let data = userDefaults.object(forKey: settingKey) as? Data else { return Setting.getSettingDefault(.english) }
+        guard let setting = try? JSONDecoder().decode(Setting.self, from: data) else { return Setting.getSettingDefault(.english) }
         return setting
     }
     

@@ -38,7 +38,7 @@ struct QuestionTime: Codable {
 }
 
 extension Setting {
-    static func getSettingDefault() -> Setting {
+    static func getSettingDefault(_ dialect: Dialect) -> Setting {
         let setting = Setting(
             countQuestions: DefaultSetting.countQuestions.rawValue,
             countRows: DefaultSetting.countRows.rawValue,
@@ -60,7 +60,7 @@ extension Setting {
                     )
                 )
             ),
-            language: .russian
+            language: dialect
         )
         return setting
     }

@@ -8,14 +8,24 @@
 import UIKit
 
 protocol MenuViewModelProtocol {
+    var titleQuizOfFlags: String { get }
+    var titleQuestionnaire: String { get }
+    var titleQuizOfMaps: String { get }
+    var titleScrabble: String { get }
+    var titleQuizOfCapitals: String { get }
     var mode: Setting? { get set }
+    
     func setSubviews(subviews: UIView..., on subviewOther: UIView)
+    func setImage(image: String, color: UIColor, size: CGFloat) -> UIImageView
+    func setLabel(title: String, size: CGFloat, style: String, color: UIColor) -> UILabel
     func fetchData()
     func size(view: UIView?) -> CGSize
     func forPresented(_ button: UIButton) -> Transition
     func forDismissed(_ button: UIButton) -> Transition
     func setMode(_ setting: Setting)
     func setData(_ setting: Setting, newFavorites: [Favorites])
+    func reloadTitles(_ quizOfFlags: UILabel, _ questionnaire: UILabel, _ quizOfMaps: UILabel,
+                      _ scrabble: UILabel, _ quizOfCapitals: UILabel)
     
     func gameTypeViewModel(tag: Int) -> GameTypeViewModelProtocol
     func settingViewModel() -> SettingViewModelProtocol
@@ -28,7 +38,38 @@ protocol MenuViewModelProtocol {
 }
 
 class MenuViewModel: MenuViewModelProtocol {
+    var titleQuizOfFlags: String {
+        switch mode?.language {
+        case .russian: "Викторина флагов"
+        default: "Quiz of flags"
+        }
+    }
+    var titleQuestionnaire: String {
+        switch mode?.language {
+        case .russian: "Опрос"
+        default: "Questionnaire"
+        }
+    }
+    var titleQuizOfMaps: String {
+        switch mode?.language {
+        case .russian: "Викторина карт"
+        default: "Quiz of maps"
+        }
+    }
+    var titleScrabble: String {
+        switch mode?.language {
+        case .russian: "Эрудит"
+        default: "Scrabble"
+        }
+    }
+    var titleQuizOfCapitals: String {
+        switch mode?.language {
+        case .russian: "Викторина столиц"
+        default: "Quiz of capitals"
+        }
+    }
     var mode: Setting?
+    
     private var games: [Games] = []
     private var favorites: [Favorites] = []
     private let transition = Transition()
@@ -39,6 +80,24 @@ class MenuViewModel: MenuViewModelProtocol {
         }
     }
     
+    func setImage(image: String, color: UIColor, size: CGFloat) -> UIImageView {
+        let size = UIImage.SymbolConfiguration(pointSize: size)
+        let image = UIImage(systemName: image, withConfiguration: size)
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = color
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }
+    
+    func setLabel(title: String, size: CGFloat, style: String, color: UIColor) -> UILabel {
+        let label = UILabel()
+        label.text = title
+        label.font = UIFont(name: style, size: size)
+        label.textColor = color
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
     func fetchData() {
         mode = StorageManager.shared.fetchSetting()
         games = getGames()
@@ -47,13 +106,6 @@ class MenuViewModel: MenuViewModelProtocol {
     func size(view: UIView?) -> CGSize {
         guard let view = view else { return CGSize(width: 0, height: 0) }
         return CGSize(width: view.frame.width, height: view.frame.height + 5)
-    }
-    
-    func gameTypeViewModel(tag: Int) -> GameTypeViewModelProtocol {
-        let mode = mode ?? Setting.getSettingDefault()
-        let game = games[tag]
-        favorites = StorageManager.shared.fetchFavorites(key: game.keys)
-        return GameTypeViewModel(mode: mode, game: game, tag: tag, favorites: favorites)
     }
     
     func forPresented(_ button: UIButton) -> Transition {
@@ -77,8 +129,24 @@ class MenuViewModel: MenuViewModelProtocol {
         favorites = newFavorites
     }
     
+    func reloadTitles(_ quizOfFlags: UILabel, _ questionnaire: UILabel,
+                      _ quizOfMaps: UILabel, _ scrabble: UILabel, _ quizOfCapitals: UILabel) {
+        quizOfFlags.text = titleQuizOfFlags
+        questionnaire.text = titleQuestionnaire
+        quizOfMaps.text = titleQuizOfMaps
+        scrabble.text = titleScrabble
+        quizOfCapitals.text = titleQuizOfCapitals
+    }
+    
+    func gameTypeViewModel(tag: Int) -> GameTypeViewModelProtocol {
+        let mode = mode ?? Setting.getSettingDefault(mode?.language ?? .english)
+        let game = games[tag]
+        favorites = StorageManager.shared.fetchFavorites(key: game.keys)
+        return GameTypeViewModel(mode: mode, game: game, tag: tag, favorites: favorites)
+    }
+    
     func settingViewModel() -> SettingViewModelProtocol {
-        let mode = mode ?? Setting.getSettingDefault()
+        let mode = mode ?? Setting.getSettingDefault(mode?.language ?? .english)
         return SettingViewModel(mode: mode)
     }
     

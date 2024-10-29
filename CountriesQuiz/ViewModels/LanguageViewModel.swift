@@ -24,14 +24,25 @@ protocol LanguageViewModelProtocol {
     
     func changeLanguage(_ indexPath: IndexPath)
     func reloadCells(_ indexPath: IndexPath, and tableView: UITableView)
+    func reloadTitles(_ title: UILabel, and description: UILabel)
     func setSquare(subview: UIView, sizes: CGFloat)
 }
 
 class LanguageViewModel: LanguageViewModelProtocol {
-    var title = "Язык"
-    var description = "Выберите нужный вам язык для интерфейса."
+    var title: String {
+        switch dialects {
+        case .russian: "Язык"
+        default: "Language"
+        }
+    }
+    var description: String {
+        switch dialects {
+        case .russian: "Выберите нужный вам язык для интерфейса."
+        default: "Select the language you need for the interface."
+        }
+    }
     var cell: AnyClass = LanguageCell.self
-    var numberOfRows = 2
+    var numberOfRows = Dialect.allCases.count
     var heightOfRows: CGFloat = 60
     var mode: Setting
     
@@ -87,6 +98,11 @@ class LanguageViewModel: LanguageViewModelProtocol {
                 tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
             }
         }
+    }
+    
+    func reloadTitles(_ labelTitle: UILabel, and labelDescription: UILabel) {
+        labelTitle.text = title
+        labelDescription.text = description
     }
     
     func setSquare(subview: UIView, sizes: CGFloat) {

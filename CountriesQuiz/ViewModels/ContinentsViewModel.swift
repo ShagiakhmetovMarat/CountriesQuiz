@@ -34,8 +34,18 @@ protocol ContinentsViewModelProtocol {
 }
 
 class ContinentsViewModel: ContinentsViewModelProtocol {
-    var title = "Континенты"
-    var description = "Установите континенты и в вопросах будут выпадать те государства, которые входят в той или иной континент."
+    var title: String {
+        switch mode.language {
+        case .russian: "Континенты"
+        default: "Continents"
+        }
+    }
+    var description: String {
+        switch mode.language {
+        case .russian: "Выберите континенты и в вопросах будут выпадать те государства, которые входят в той или иной континент."
+        default: "Select continents and in questions will be displayed countries that belong to the selected continent."
+        }
+    }
     var allCountries: Bool {
         mode.allCountries
     }
@@ -59,6 +69,48 @@ class ContinentsViewModel: ContinentsViewModelProtocol {
     
     private var countContinents = 0
     private var background: UIColor = .blueMiddlePersian
+    private var titleAllCountries: String {
+        switch mode.language {
+        case .russian: "Все страны мира"
+        default: "All countries in the world"
+        }
+    }
+    private var titleAmericaContinent: String {
+        switch mode.language {
+        case .russian: "Континент Америки"
+        default: "America continent"
+        }
+    }
+    private var titleEuropeContinent: String {
+        switch mode.language {
+        case .russian: "Континент Европы"
+        default: "Europe continent"
+        }
+    }
+    private var titleAfricaContinent: String {
+        switch mode.language {
+        case .russian: "Континент Африки"
+        default: "Africa continent"
+        }
+    }
+    private var titleAsiaContinent: String {
+        switch mode.language {
+        case .russian: "Континент Азии"
+        default: "Asia continent"
+        }
+    }
+    private var titleOceaniaContinent: String {
+        switch mode.language {
+        case .russian: "Континент Океании"
+        default: "Oceania continent"
+        }
+    }
+    private var titleNumberOfCountries: String {
+        switch mode.language {
+        case .russian: "Количество стран:"
+        default: "Number of countries:"
+        }
+    }
     
     private var buttonAllCountries: UIButton!
     private var buttonAmerica: UIButton!
@@ -152,17 +204,17 @@ extension ContinentsViewModel {
     
     private func continent(tag: Int) -> String {
         switch tag {
-        case 0: "Все страны мира"
-        case 1: "Континент Америки"
-        case 2: "Континент Европы"
-        case 3: "Континент Африки"
-        case 4: "Континент Азии"
-        default: "Континент Океании"
+        case 0: titleAllCountries
+        case 1: titleAmericaContinent
+        case 2: titleEuropeContinent
+        case 3: titleAfricaContinent
+        case 4: titleAsiaContinent
+        default: titleOceaniaContinent
         }
     }
     
     private func count(tag: Int) -> String {
-        "Количество стран: \(countCountries(tag: tag))"
+        "\(titleNumberOfCountries) \(countCountries(tag: tag))"
     }
     
     private func countCountries(tag: Int) -> Int {

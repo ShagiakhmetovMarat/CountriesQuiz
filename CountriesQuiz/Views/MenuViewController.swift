@@ -14,7 +14,7 @@ protocol MenuViewControllerInput: AnyObject {
 
 class MenuViewController: UIViewController {
     private lazy var labelMenu: UILabel = {
-        setLabel(title: "Countries Quiz", size: 40, style: "echorevival", color: .blueBlackSea)
+        viewModel.setLabel(title: "Countries Quiz", size: 40, style: "echorevival", color: .blueBlackSea)
     }()
     
     private lazy var buttonSettings: UIButton = {
@@ -22,7 +22,7 @@ class MenuViewController: UIViewController {
     }()
     
     private lazy var imageSettings: UIImageView = {
-        setImage(image: "gear", color: .white, size: 26)
+        viewModel.setImage(image: "gear", color: .white, size: 26)
     }()
     
     private lazy var stackViewMenu: UIStackView = {
@@ -57,24 +57,23 @@ class MenuViewController: UIViewController {
     }()
     
     private lazy var imageFlag: UIImageView = {
-        setImage(image: "flag", color: .white, size: 20)
+        viewModel.setImage(image: "flag", color: .white, size: 20)
     }()
     
     private lazy var labelQuizOfFlags: UILabel = {
-        setLabel(
-            title: "Викторина флагов",
+        viewModel.setLabel(
+            title: viewModel.titleQuizOfFlags,
             size: 26,
             style: "Gill Sans",
-            color: .white,
-            alignment: .left)
+            color: .white)
     }()
     
     private lazy var circleQuizOfFlag: UIImageView = {
-        setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
+        viewModel.setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
     }()
     
     private lazy var imageQuizOfFlags: UIImageView = {
-        setImage(image: "filemenu.and.selection", color: .cyanDark, size: 60)
+        viewModel.setImage(image: "filemenu.and.selection", color: .cyanDark, size: 60)
     }()
     
     private lazy var buttonQuestionnaire: UIButton = {
@@ -89,24 +88,23 @@ class MenuViewController: UIViewController {
     }()
     
     private lazy var imageCheckmark: UIImageView = {
-        setImage(image: "checkmark.circle.badge.questionmark", color: .white, size: 20)
+        viewModel.setImage(image: "checkmark.circle.badge.questionmark", color: .white, size: 20)
     }()
     
     private lazy var labelQuestionnaire: UILabel = {
-        setLabel(
-            title: "Опрос",
+        viewModel.setLabel(
+            title: viewModel.titleQuestionnaire,
             size: 26,
             style: "Gill Sans",
-            color: .white,
-            alignment: .left)
+            color: .white)
     }()
     
     private lazy var circleQuestionnare: UIImageView = {
-        setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
+        viewModel.setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
     }()
     
     private lazy var imageQuestionnaire: UIImageView = {
-        setImage(image: "checklist", color: .greenHarlequin, size: 60)
+        viewModel.setImage(image: "checklist", color: .greenHarlequin, size: 60)
     }()
     
     private lazy var buttonQuizOfMaps: UIButton = {
@@ -121,24 +119,23 @@ class MenuViewController: UIViewController {
     }()
     
     private lazy var imageMap: UIImageView = {
-        setImage(image: "map", color: .white, size: 20)
+        viewModel.setImage(image: "map", color: .white, size: 20)
     }()
     
     private lazy var labelQuizOfMaps: UILabel = {
-        setLabel(
-            title: "Викторина карт",
+        viewModel.setLabel(
+            title: viewModel.titleQuizOfMaps,
             size: 26,
             style: "Gill Sans",
-            color: .white,
-            alignment: .left)
+            color: .white)
     }()
     
     private lazy var circleQuizOfMaps: UIImageView = {
-        setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
+        viewModel.setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
     }()
     
     private lazy var imageQuizOfMaps: UIImageView = {
-        setImage(image: "globe.desk", color: .redYellowBrown, size: 60)
+        viewModel.setImage(image: "globe.desk", color: .redYellowBrown, size: 60)
     }()
     
     private lazy var buttonScrabble: UIButton = {
@@ -153,24 +150,23 @@ class MenuViewController: UIViewController {
     }()
     
     private lazy var imageText: UIImageView = {
-        setImage(image: "textformat.abc", color: .white, size: 20)
+        viewModel.setImage(image: "textformat.abc", color: .white, size: 20)
     }()
     
     private lazy var labelScrabble: UILabel = {
-        setLabel(
-            title: "Эрудит",
+        viewModel.setLabel(
+            title: viewModel.titleScrabble,
             size: 26,
             style: "Gill Sans",
-            color: .white,
-            alignment: .left)
+            color: .white)
     }()
     
     private lazy var circleScrabble: UIImageView = {
-        setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
+        viewModel.setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
     }()
     
     private lazy var imageScrabble: UIImageView = {
-        setImage(image: "a.square", color: .indigo, size: 60)
+        viewModel.setImage(image: "a.square", color: .indigo, size: 60)
     }()
     
     private lazy var buttonQuizOfCapitals: UIButton = {
@@ -185,24 +181,23 @@ class MenuViewController: UIViewController {
     }()
     
     private lazy var imageHouse: UIImageView = {
-        setImage(image: "house.and.flag", color: .white, size: 20)
+        viewModel.setImage(image: "house.and.flag", color: .white, size: 20)
     }()
     
     private lazy var labelQuizOfCapitals: UILabel = {
-        setLabel(
-            title: "Викторина столиц",
+        viewModel.setLabel(
+            title: viewModel.titleQuizOfCapitals,
             size: 26,
             style: "Gill Sans",
-            color: .white,
-            alignment: .left)
+            color: .white)
     }()
     
     private lazy var circleQuizOfCapitals: UIImageView = {
-        setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
+        viewModel.setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
     }()
     
     private lazy var imageQuizOfCapitals: UIImageView = {
-        setImage(image: "building.2", color: .redTangerineTango, size: 60)
+        viewModel.setImage(image: "building.2", color: .redTangerineTango, size: 60)
     }()
     
     private var viewModel: MenuViewModelProtocol!
@@ -225,6 +220,8 @@ extension MenuViewController: MenuViewControllerInput {
     
     func modeToMenu(setting: Setting) {
         viewModel.setMode(setting)
+        viewModel.reloadTitles(labelQuizOfFlags, labelQuestionnaire, labelQuizOfMaps,
+                               labelScrabble, labelQuizOfCapitals)
     }
 }
 // MARK: - UIViewControllerTransitioningDelegate
@@ -281,18 +278,6 @@ extension MenuViewController {
 }
 // MARK: - Setup subviews
 extension MenuViewController {
-    private func setLabel(title: String, size: CGFloat, style: String, color: UIColor,
-                          alignment: NSTextAlignment? = nil) -> UILabel {
-        let label = UILabel()
-        label.text = title
-        label.font = UIFont(name: style, size: size)
-        label.textColor = color
-        label.textAlignment = alignment ?? .left
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-    
     private func setButton(color: UIColor, image: UIView, label: UILabel? = nil,
                            circle: UIView? = nil, imageGame: UIView? = nil,
                            tag: Int? = nil, action: Selector) -> UIButton {
@@ -311,15 +296,6 @@ extension MenuViewController {
         }
         button.addTarget(self, action: action, for: .touchUpInside)
         return button
-    }
-    
-    private func setImage(image: String, color: UIColor, size: CGFloat) -> UIImageView {
-        let size = UIImage.SymbolConfiguration(pointSize: size)
-        let image = UIImage(systemName: image, withConfiguration: size)
-        let imageView = UIImageView(image: image)
-        imageView.tintColor = color
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
     }
 }
 // MARK: - Set constraints

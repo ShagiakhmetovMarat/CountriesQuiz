@@ -27,11 +27,23 @@ protocol CountQuestionsViewModelProtocol {
 }
 
 class CountQuestionsViewModel: CountQuestionsViewModelProtocol {
-    var title = "Количество вопросов"
+    var title: String {
+        switch mode.language {
+        case .russian: "Количество вопросов"
+        default: "Number of questions"
+        }
+    }
     var description: String {
+        switch mode.language {
+        case .russian:
         """
         Установите определенное количество вопросов, на которые вы будете отвечать. Минимальное значение - 10, а максимальное - \(numberOfRows + 9).
         """
+        default:
+        """
+        Set a certain number of questions for you will answer. Minimun value is 10 and maximum value is \(numberOfRows + 9).
+        """
+        }
     }
     var numberOfComponents = 1
     var numberOfRows: Int {

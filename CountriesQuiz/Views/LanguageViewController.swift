@@ -75,6 +75,7 @@ class LanguageViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.changeLanguage(indexPath)
         viewModel.reloadCells(indexPath, and: tableView)
+        viewModel.reloadTitles(labelTitle, and: labelDescription)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

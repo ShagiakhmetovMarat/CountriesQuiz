@@ -13,7 +13,6 @@ protocol SettingViewModelProtocol {
     var heightOfRow: CGFloat { get }
     var numberOfSections: Int { get }
     var color: UIColor { get }
-    
     var mode: Setting { get }
     
     init(mode: Setting)
@@ -36,14 +35,18 @@ protocol SettingViewModelProtocol {
 }
 
 class SettingViewModel: SettingViewModelProtocol {
-    var title = "Настройки"
+    var title: String {
+        switch mode.language {
+        case .russian: "Настройки"
+        default: "Settings"
+        }
+    }
     var cell: AnyClass = SettingCell.self
     var heightOfRow: CGFloat = 55
     var numberOfSections = 2
     var color: UIColor {
         !allCountries && countQuestions > 50 ? .white : .grayStone
     }
-    
     var mode: Setting
     
     private var countQuestions: Int {
@@ -87,10 +90,106 @@ class SettingViewModel: SettingViewModelProtocol {
         isOneQuestion ? timeOneQuestion : timeAllQuestions
     }
     private var time: String {
-        isTime ? "\(setTime) сек." : "Нет."
+        isTime ? "\(setTime) \(titleSeconds)" : titleNo
     }
     private var isEnabled: Bool {
         !allCountries && countQuestions > 50 ? true : false
+    }
+    private var titleSeconds: String {
+        switch mode.language {
+        case .russian: "сек."
+        default: "sec."
+        }
+    }
+    private var titleNo: String {
+        switch mode.language {
+        case .russian: "Нет."
+        default: "No."
+        }
+    }
+    private var titleAlert: String {
+        switch mode.language {
+        case .russian: "Сбросить настройки"
+        default: "Reset settings"
+        }
+    }
+    private var titleMessage: String {
+        switch mode.language {
+        case .russian: "Вы действительно хотите сбросить настройки до заводских?"
+        default: "Do you really want to reset settings to default?"
+        }
+    }
+    private var titleNumberOfQuestions: String {
+        switch mode.language {
+        case .russian: "Количество вопросов"
+        default: "Number of questions"
+        }
+    }
+    private var titleContinents: String {
+        switch mode.language {
+        case .russian: "Континенты"
+        default: "Continents"
+        }
+    }
+    private var titleTime: String {
+        switch mode.language {
+        case .russian: "Время для вопросов"
+        default: "Time for questions"
+        }
+    }
+    private var titleLanguage: String {
+        switch mode.language {
+        case .russian: "Язык"
+        default: "Language"
+        }
+    }
+    private var titleAppearence: String {
+        switch mode.language {
+        case .russian: "Оформление"
+        default: "Appearence"
+        }
+    }
+    private var titleDialect: String {
+        switch mode.language {
+        case .russian: "Русский"
+        default: "English"
+        }
+    }
+    private var titleAllCountries: String {
+        switch mode.language {
+        case .russian: "Все страны"
+        default: "All countries"
+        }
+    }
+    private var titleAmerica: String {
+        switch mode.language {
+        case .russian: "Америка"
+        default: "America"
+        }
+    }
+    private var titleEurope: String {
+        switch mode.language {
+        case .russian: "Европа"
+        default: "Europe"
+        }
+    }
+    private var titleAfrica: String {
+        switch mode.language {
+        case .russian: "Африка"
+        default: "Africa"
+        }
+    }
+    private var titleAsia: String {
+        switch mode.language {
+        case .russian: "Азия"
+        default: "Asia"
+        }
+    }
+    private var titleOceania: String {
+        switch mode.language {
+        case .russian: "Океания"
+        default: "Oceania"
+        }
     }
     
     required init(mode: Setting) {
@@ -151,16 +250,13 @@ class SettingViewModel: SettingViewModelProtocol {
     
     func showAlert(_ mode: Setting, _ button: UIButton, and
                    tableView: UITableView) -> UIAlertController {
-        let title = "Сбросить настройки"
-        let message = "Вы действительно хотите сбросить настройки до заводских?"
-        
         let alert = AlertController(
-            title: title,
-            message: message,
+            title: titleAlert,
+            message: titleMessage,
             preferredStyle: .alert)
         
         alert.action(mode: mode) {
-            self.resetSetting()
+            self.resetSetting(dialect: mode.language)
             self.setStatusButton(button)
             tableView.reloadData()
         }
@@ -216,15 +312,15 @@ extension SettingViewModel {
     
     private func title(_ section: Int) -> [String] {
         switch section {
-        case 0: ["Количество вопросов", "Континенты", "Время для вопросов"]
-        default: ["Язык", "Оформление"]
+        case 0: [titleNumberOfQuestions, titleContinents, titleTime]
+        default: [titleLanguage, titleAppearence]
         }
     }
     
     private func additional(_ section: Int) -> [String] {
         switch section {
         case 0: ["\(countQuestions)", "\(continents)", "\(time)"]
-        default: ["Русский", ""]
+        default: [titleDialect, ""]
         }
     }
     
@@ -242,12 +338,12 @@ extension SettingViewModel {
     
     private func title(_ counter: Int) -> String {
         switch counter {
-        case 0: "Все страны"
-        case 1: "Америка"
-        case 2: "Европа"
-        case 3: "Африка"
-        case 4: "Азия"
-        default: "Океания"
+        case 0: titleAllCountries
+        case 1: titleAmerica
+        case 2: titleEurope
+        case 3: titleAfrica
+        case 4: titleAsia
+        default: titleOceania
         }
     }
     
@@ -258,7 +354,7 @@ extension SettingViewModel {
         }
     }
     
-    private func resetSetting() {
-        setMode(Setting.getSettingDefault())
+    private func resetSetting(dialect: Dialect) {
+        setMode(Setting.getSettingDefault(dialect))
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 class LanguageCell: UITableViewCell {
     let title = UILabel()
     let additional = UILabel()
+    let indicator = UIActivityIndicatorView()
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -19,7 +20,7 @@ class LanguageCell: UITableViewCell {
     }
     
     private func setSubviews() {
-        setSubviews(subviews: title, additional, on: contentView)
+        setSubviews(subviews: title, additional, indicator, on: contentView)
     }
     
     private func setSubviews(subviews: UIView..., on subviewOther: UIView) {
@@ -32,6 +33,7 @@ class LanguageCell: UITableViewCell {
     private func setConfigure() {
         setTitle(title: title, font: "GillSans-Semibold", size: 18)
         setTitle(title: additional, font: "GillSans", size: 17)
+        setIndicator(indicator: indicator)
     }
 }
 
@@ -39,6 +41,11 @@ extension LanguageCell {
     private func setTitle(title: UILabel, font: String, size: CGFloat) {
         title.textColor = .blueBlackSea
         title.font = UIFont(name: font, size: size)
+    }
+    
+    private func setIndicator(indicator: UIActivityIndicatorView) {
+        indicator.color = .blueBlackSea
+        indicator.hidesWhenStopped = true
     }
 }
 
@@ -52,6 +59,11 @@ extension LanguageCell {
         NSLayoutConstraint.activate([
             additional.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             additional.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+        ])
+        
+        NSLayoutConstraint.activate([
+            indicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            indicator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22)
         ])
     }
 }

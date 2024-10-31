@@ -9,9 +9,7 @@ import UIKit
 
 struct Games {
     let gameType: TypeOfGame
-    let name: String
     let image: String
-    let description: String
     let background: UIColor
     let keys: String
     let play: UIColor

@@ -22,9 +22,7 @@ protocol LanguageViewModelProtocol {
     func setLabel(text: String, font: String, size: CGFloat) -> UILabel
     func customCell(cell: LanguageCell, indexPath: IndexPath)
     
-    func changeLanguage(_ indexPath: IndexPath)
-    func reloadCells(_ indexPath: IndexPath, and tableView: UITableView)
-    func reloadTitles(_ title: UILabel, and description: UILabel)
+    func selectRow(_ tableView: UITableView, and indexPath: IndexPath)
     func setSquare(subview: UIView, sizes: CGFloat)
 }
 
@@ -49,6 +47,10 @@ class LanguageViewModel: LanguageViewModelProtocol {
     private var dialects: Dialect {
         mode.language
     }
+    private var timer = Timer()
+    
+    private var labelTitle: UILabel!
+    private var labelDescription: UILabel!
     
     required init(mode: Setting) {
         self.mode = mode
@@ -73,6 +75,11 @@ class LanguageViewModel: LanguageViewModelProtocol {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
+        if label.text == title {
+            labelTitle = label
+        } else {
+            labelDescription = label
+        }
         return label
     }
     
@@ -83,26 +90,13 @@ class LanguageViewModel: LanguageViewModelProtocol {
         cell.tintColor = .blueBlackSea
     }
     
-    func changeLanguage(_ indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0: setLanguage(language: .russian)
-        default: setLanguage(language: .english)
-        }
-    }
-    
-    func reloadCells(_ indexPath: IndexPath, and tableView: UITableView) {
-        for row in 0..<Dialect.allCases.count {
-            if row == indexPath.row {
-                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-            } else {
-                tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
-            }
-        }
-    }
-    
-    func reloadTitles(_ labelTitle: UILabel, and labelDescription: UILabel) {
-        labelTitle.text = title
-        labelDescription.text = description
+    func selectRow(_ tableView: UITableView, and indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? LanguageCell else { return }
+        checkTimer()
+        cleanData(cell, tableView, and: indexPath)
+        timer = Timer.scheduledTimer(withTimeInterval: 1.6, repeats: false, block: { [self] _ in
+            reloadData(cell, tableView, and: indexPath)
+        })
     }
     
     func setSquare(subview: UIView, sizes: CGFloat) {
@@ -137,5 +131,57 @@ extension LanguageViewModel {
     
     private func setLanguage(language: Dialect) {
         mode.language = language
+    }
+    
+    private func checkTimer() {
+        guard timer.isValid else { return }
+        timer.invalidate()
+    }
+    
+    private func changeLanguage(_ indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0: setLanguage(language: .russian)
+        default: setLanguage(language: .english)
+        }
+    }
+    
+    private func cleanData(_ cell: LanguageCell, _ tableView: UITableView,
+                           and indexPath: IndexPath) {
+        changeLanguage(indexPath)
+        cleanCells(tableView, and: indexPath)
+        cell.indicator.startAnimating()
+    }
+    
+    private func reloadData(_ cell: LanguageCell, _ tableView: UITableView,
+                            and indexPath: IndexPath) {
+        timer.invalidate()
+        cell.indicator.stopAnimating()
+        reloadCells(tableView, and: indexPath)
+        reloadTitles()
+    }
+    
+    private func reloadCells(_ tableView: UITableView, and indexPath: IndexPath) {
+        for row in 0..<Dialect.allCases.count {
+            if row == indexPath.row {
+                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            } else {
+                tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+            }
+        }
+    }
+    
+    private func cleanCells(_ tableView: UITableView, and indexPath: IndexPath) {
+        for row in 0..<Dialect.allCases.count {
+            if row == indexPath.row {
+                tableView.cellForRow(at: indexPath)?.accessoryType = .none
+            } else {
+                tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
+            }
+        }
+    }
+    
+    private func reloadTitles() {
+        labelTitle.text = title
+        labelDescription.text = description
     }
 }

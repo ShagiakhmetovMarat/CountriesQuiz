@@ -100,7 +100,7 @@ class MenuViewModel: MenuViewModelProtocol {
     
     func fetchData() {
         mode = StorageManager.shared.fetchSetting()
-        games = getGames()
+        games = getGames(dialect: mode?.language ?? .english)
     }
     
     func size(view: UIView?) -> CGSize {
@@ -193,29 +193,24 @@ class MenuViewModel: MenuViewModelProtocol {
 }
 
 extension MenuViewModel {
-    private func getGames() -> [Games] {
+    private func getGames(dialect: Dialect) -> [Games] {
         var games: [Games] = []
         
         let gameType = GameType.shared.gameType
-        let names = GameType.shared.names
         let images = GameType.shared.images
-        let descriptions = GameType.shared.descriptions
         let backgrounds = GameType.shared.backgrounds
         let keys = GameType.shared.keys
         let plays = GameType.shared.buttonsPlay
         let favorites = GameType.shared.buttonsFavorite
         let swaps = GameType.shared.buttonsSwap
         let dones = GameType.shared.buttonsDone
-        let iterrationCount = min(names.count, images.count, descriptions.count,
-                                  backgrounds.count, plays.count,
+        let iterrationCount = min(images.count, backgrounds.count, plays.count,
                                   favorites.count, swaps.count)
         
         for index in 0..<iterrationCount {
             let information = Games(
                 gameType: gameType[index],
-                name: names[index],
                 image: images[index],
-                description: descriptions[index],
                 background: backgrounds[index], 
                 keys: keys[index],
                 play: plays[index],

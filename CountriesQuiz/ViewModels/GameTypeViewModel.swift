@@ -12,6 +12,15 @@ protocol GameTypeViewModelProtocol {
     var tag: Int { get }
     var countQuestions: Int { get }
     var countContinents: Int { get }
+    var titleNumberOfQuestions: String { get }
+    var titleContinents: String { get }
+    var titleYes: String { get }
+    var titleNo: String { get }
+    var titleCountdown: String { get }
+    var titleOnOff: String { get }
+    var titleItems: [String] { get }
+    var titleOk: String { get }
+    var titleCancel: String { get }
     var favorites: [Favorites] { get }
     
     var allCountries: Bool { get }
@@ -164,9 +173,71 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
         game.image
     }
     var name: String {
-        game.name
+        names[tag]
+    }
+    var names: [String] {
+        switch mode.language {
+        case .russian: ["Викторина флагов", "Опрос", "Викторина карт", "Эрудит",
+                        "Викторина столиц"]
+        default: ["Quiz of flags", "Questionnaire", "Quiz of maps", "Scrabble",
+                  "Quiz of capitals"]
+        }
     }
     var popUpViewHelp: Bool = false
+    var titleNumberOfQuestions: String {
+        switch mode.language {
+        case .russian: "Количество вопросов"
+        default: "Number of questions"
+        }
+    }
+    var titleContinents: String {
+        switch mode.language {
+        case .russian: "Континенты"
+        default: "Continents"
+        }
+    }
+    var titleYes: String {
+        switch mode.language {
+        case .russian: "Да"
+        default: "Yes"
+        }
+    }
+    var titleNo: String {
+        switch mode.language {
+        case .russian: "No"
+        default: "No"
+        }
+    }
+    var titleCountdown: String {
+        switch mode.language {
+        case .russian: "Обратный отсчет"
+        default: "Countdown"
+        }
+    }
+    var titleOnOff: String {
+        switch mode.language {
+        case .russian: "Вкл / Выкл"
+        default: "On / Off"
+        }
+    }
+    var titleItems: [String] {
+        switch mode.language {
+        case .russian: ["Один вопрос", "Все вопросы"]
+        default: ["One question", "All questions"]
+        }
+    }
+    var titleOk: String {
+        switch mode.language {
+        case .russian: "Ок"
+        default: "Ok"
+        }
+    }
+    var titleCancel: String {
+        switch mode.language {
+        case .russian: "Отмена"
+        default: "Cancel"
+        }
+    }
     
     var mode: Setting
     let tag: Int
@@ -174,10 +245,131 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     private let game: Games
     
     private var countRowsDefault = DefaultSetting.countRows.rawValue
+    private var titleTimeAllQuestions: String {
+        switch mode.language {
+        case .russian: "Время всех вопросов"
+        default: "Time for all questions"
+        }
+    }
+    private var titleTimeOneQuestion: String {
+        switch mode.language {
+        case .russian: "Время одного вопроса"
+        default: "Time for one question"
+        }
+    }
+    private var titleMapMode: String {
+        switch mode.language {
+        case .russian: "Режим карты"
+        default: "Map mode"
+        }
+    }
+    private var titleFlagMode: String {
+        switch mode.language {
+        case .russian: "Режим флага"
+        default: "Flag mode"
+        }
+    }
+    private var titleCapitalCityMode: String {
+        switch mode.language {
+        case .russian: "Режим столицы"
+        default: "Capital city mode"
+        }
+    }
+    private var titleNamingMode: String {
+        switch mode.language {
+        case .russian: "Режим наименования"
+        default: "Naming mode"
+        }
+    }
+    private var titleFirst: String {
+        tag == 2 ? titleMapMode : titleFlagMode
+    }
+    private var titleSecond: String {
+        switch tag {
+        case 0, 1: titleNamingMode
+        case 4: titleCapitalCityMode
+        default: titleMapMode
+        }
+    }
+    private var descriptionFirst: String {
+        switch tag {
+        case 0, 1: descriptionFlagMode
+        case 2: descriptionMapMode
+        case 3: descriptionScrabble
+        default: descriptionCapitalCityMode
+        }
+    }
+    private var descriptionFlagMode: String {
+        switch mode.language {
+        case .russian: "В качестве вопроса задается флаг страны и пользователь должен выбрать ответ наименования страны."
+        default: "The country flag is set as question and user must choose the country name."
+        }
+    }
+    private var descriptionMapMode: String {
+        switch mode.language {
+        case .russian: "В качестве вопроса задается географическая карта страны и пользователь должен выбрать ответ наименования страны. (Кнопка неактивна)"
+        default: "The geographical map of country is set as question and user must choose the country name. (Button is inactive)"
+        }
+    }
+    private var descriptionScrabble: String {
+        switch mode.language {
+        case .russian: "В качестве вопроса задается флаг страны и пользователь должен составить слово из букв наименования страны."
+        default: "The country flag is set as question and user must compouse a word from letters of country name."
+        }
+    }
+    private var descriptionCapitalCityMode: String {
+        switch mode.language {
+        case .russian: "В качестве вопроса задается флаг страны и пользователь должен выбрать ответ наименования столицы."
+        default: "The country flag is set as question and user must choose the capital city name."
+        }
+    }
+    private var descriptionSecond: String {
+        switch tag {
+        case 0, 1: descriptionNamingMode
+        case 4: descriptionCapitalCityModeSecond
+        default: descriptionMapModeSecond
+        }
+    }
+    private var descriptionNamingMode: String {
+        switch mode.language {
+        case .russian: "В качестве вопроса задается наименование страны и пользователь должен выбрать ответ флага страны."
+        default: "The country name is set as question and user must choose the country flag."
+        }
+    }
+    private var descriptionCapitalCityModeSecond: String {
+        switch mode.language {
+        case .russian: "В качестве вопроса задается наименование страны и пользователь должен выбрать ответ наименования столицы"
+        default: "The country name is set as question and user must choose the capital city name."
+        }
+    }
+    private var descriptionMapModeSecond: String {
+        switch mode.language {
+        case .russian: "В качестве вопроса задается географическая карта страны и пользователь должен составить слово из букв наименования страны."
+        default: "The geographical map is set as question and user must compose a word from letters of the country name."
+        }
+    }
+    private var descriptionThird: String {
+        switch mode.language {
+        case .russian: "В качестве вопроса задается наименование столицы и пользователь должен составить слово из букв наименования страны."
+        default: "The capital city name is set as question and user must compose a word from letters of the country name."
+        }
+    }
+    private var titleTypeOfGame: String {
+        switch mode.language {
+        case .russian: "Тип игры"
+        default: "Type of game"
+        }
+    }
+    private var titleNumberOfCountries: String {
+        switch mode.language {
+        case .russian: "Количество стран:"
+        default: "Number of countries:"
+        }
+    }
     
-    private var title: UILabel!
-    private var description: UILabel!
-    private var list: UILabel!
+    private var labelTitle: UILabel!
+    private var labelDescription: UILabel!
+    private var labelList: UILabel!
     private var contentView: UIView!
     private var scrollView: UIScrollView!
     private var viewSecondary: UIView!
@@ -229,7 +421,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     func viewHelp() -> UIView {
         let popUpView = setView(color: game.swap)
         addSubviewsForPopUpView()
-        setSubviews(subviews: title, scrollView, on: popUpView)
+        setSubviews(subviews: labelTitle, scrollView, on: popUpView)
         setConstraints(popUpView)
         return popUpView
     }
@@ -335,7 +527,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     }
     
     func checkTimeDescription() -> String {
-        isOneQuestion() ? "\(checkTitleGameType())" : "Время всех вопросов"
+        isOneQuestion() ? "\(checkTitleGameType())" : titleTimeAllQuestions
     }
     
     func width(_ view: UIView) -> CGFloat {
@@ -507,7 +699,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
             colorPickerView(pickerViewOneTime, color: .skyGrayLight, isOn: false)
             colorPickerView(pickerViewAllTime, color: .white, isOn: true)
         }
-        titleSetting.text = index == 1 ? "Время всех вопросов" : "Время одного вопроса"
+        titleSetting.text = index == 1 ? titleTimeAllQuestions : titleTimeOneQuestion
         reloadPickerViews(pickerViews: pickerViewOneTime, pickerViewAllTime)
     }
     // MARK: - Button press continents
@@ -689,11 +881,117 @@ extension GameTypeViewModel {
     
     private func bulletsListGameType() -> [String] {
         switch tag {
-        case 0: return GameType.shared.bulletsQuizOfFlags
-        case 1: return GameType.shared.bulletsQuestionnaire
-        case 2: return GameType.shared.bulletsQuizOfMaps
-        case 3: return GameType.shared.bulletsScrabble
-        default: return GameType.shared.bulletsQuizOfCapitals
+        case 0: bulletsQuizOfFlags()
+        case 1: bulletsQuestionnaire()
+        case 2: bulletsQuizOfMaps()
+        case 3: bulletsScrabble()
+        default: bulletsQuizOfCapitals()
+        }
+    }
+    
+    private func description() -> String {
+        descriptions()[tag]
+    }
+    
+    private func descriptions() -> [String] {
+        switch mode.language {
+        case .russian: [
+            "Выбор ответа на заданный вопрос о флаге страны. Один из четырех ответов - правильный.",
+            "Опрос о флагах стран и выбор ответов во всем опросе. Один из четырех ответов - правильный.",
+            "Выбор ответа на заданный вопрос о географической карты страны. Один из четырех ответов - правильный.",
+            "Составление слова из недостающих букв. Вам представлены буквы случайным образом. Для перехода к следующему вопросу, вы должны полностью составить слово из букв.",
+            "Выбор ответа на заданный вопрос о столице страны. Вам предоставляются четыре ответа на выбор. Один из четырех ответов - правильный."]
+        default: [
+            "Choosing the answer to a question about the country's flag. One of the four answers is correct.",
+            "Survey about the flags of countries and choosing the answers in the whole survey. One of the four answers is correct.",
+            "Choosing the answer to a question about the geographical map of the country. One of the four answers is correct.",
+            "Making a qord from the missing letters. You are given letters in random order. To move on to the next question, you must fully compose the word from the letters.",
+            "Choosing the answer to a question about the country's capital. One of the four answers is correct."]
+        }
+    }
+    
+    private func bulletsQuizOfFlags() -> [String] {
+        switch mode.language {
+        case .russian: [
+            "Одна попытка для выбора ответа, чтобы перейти к следующему вопросу.",
+            "Вопрос о флаге страны и выбор ответа наименования страны или же вопрос о наименовании страны и выбор ответа флага страны.",
+            "Зеленый цвет - правильный ответ и красный цвет - неправильный ответ.",
+            "Обратный отсчет для одного вопроса восстанавливается при следующем вопросе.",
+            "Обратный отсчет для всех вопросов не восстанавливается при следующем вопросе."]
+        default: [
+            "One attempt to select an answer to move to the next question.",
+            "The question about country's flag and choise of answer on the country's name or the question about the country's name and choise of answer on the country's flag.",
+            "Green is correct answer and red is wrong answer.",
+            "The countdown for one question os restored at the next question.",
+            "The countdown for all questions is not restored at the next question."]
+        }
+    }
+    
+    private func bulletsQuestionnaire() -> [String] {
+        switch mode.language {
+        case .russian: [
+            "Любое количество попыток для выбора ответа.",
+            "Возможность вернуться к предыдущим вопросам для выбора другого ответа.",
+            "Вопрос о флаге страны и выбор ответа наименования страны или же вопрос о наименовании страны и выбор ответа флага страны.",
+            "О правильных и неправильных ответах узнаете только после окончания опроса.",
+            "Игра завершается при касании экрана в последнем вопросе.",
+            "Обратный отсчет только для всех вопросов и не восстанавливается до конца игры."]
+        default: [
+            "Any number of attempts to select an answer.",
+            "You can go back to previous questions to choose a different answer.",
+            "The question about country's flag and choise of answer on the country's name or the question about the country's name and choise of answer on the country's flag.",
+            "You will learn about correct and incorrect answers only after end of the survey ",
+            "The game ends when you touch the screen in the last question.",
+            "The countdown only for all questions and it doesn't reset during the game."]
+        }
+    }
+    
+    private func bulletsQuizOfMaps() -> [String] {
+        switch mode.language {
+        case .russian: [
+            "Одна попытка для выбора ответа, чтобы перейти к следующему вопросу.",
+            "Зеленый цвет - правильный ответ и красный цвет - неправильный ответ.",
+            "Обратный отсчет для одного вопроса восстанавливается при следующем вопросе.",
+            "Обратный отсчет для всех вопросов не восстанавливается при следующем вопросе."]
+        default: [
+            "One attempt to select an answer to move to the next question.",
+            "Green is correct answer and red is wrong answer.",
+            "The countdown for one question os restored at the next question.",
+            "The countdown for all questions is not restored at the next question."]
+        }
+    }
+    
+    private func bulletsScrabble() -> [String] {
+        switch mode.language {
+        case .russian: [
+            "Одна попытка для выбора ответа, чтобы перейти к следующему вопросу.",
+            "Вопрос о флаге страны / о географической карты страны / о столице страны",
+            "Зеленый цвет - правильный ответ и красный цвет - неправильный ответ.",
+            "Обратный отсчет для одного вопроса восстанавливается при следующем вопросе.",
+            "Обратный отсчет для всех вопросов не восстанавливается при следующем вопросе."]
+        default: [
+            "One attempt to select an answer to move to the next question.",
+            "Question about a country's flag / a geographical map of the country / a country's capital",
+            "Green is correct answer and red is wrong answer.",
+            "The countdown for one question os restored at the next question.",
+            "The countdown for all questions is not restored at the next question."]
+        }
+    }
+    
+    private func bulletsQuizOfCapitals() -> [String] {
+        switch mode.language {
+        case .russian: [
+            "Одна попытка для выбора ответа, чтобы перейти к следующему вопросу.",
+            "Вопрос о флаге страны и выбор ответа столицы страны или же вопрос о наименовании страны и выбор ответа столицы страны.",
+            "Зеленый цвет - правильный ответ и красный цвет - неправильный ответ.",
+            "Обратный отсчет для одного вопроса восстанавливается при следующем вопросе.",
+            "Обратный отсчет для всех вопросов не восстанавливается при следующем вопросе."]
+        default: [
+            "One attempt to select an answer to move to the next question.",
+            "The question about country's flag and choice of answer on the country's capital or the question about a country's name and choice of answer on the country's capital.",
+            "Green is correct answer and red is wrong answer.",
+            "The countdown for one question os restored at the next question.",
+            "The countdown for all questions is not restored at the next question."]
         }
     }
     
@@ -741,10 +1039,10 @@ extension GameTypeViewModel {
     }
     // MARK: - Set subviews for view help
     private func addSubviewsForPopUpView() {
-        title = setLabel(title: "Тип игры", size: 25, font: "GillSans")
-        description = setLabel(title: game.description, size: 19, font: "GillSans", alignment: .left)
-        list = setting(bulletsList(list: bulletsListGameType()), size: 19)
-        contentView = setContentView(description, list)
+        labelTitle = setLabel(title: titleTypeOfGame, size: 25, font: "GillSans")
+        labelDescription = setLabel(title: description(), size: 19, font: "GillSans", alignment: .left)
+        labelList = setting(bulletsList(list: bulletsListGameType()), size: 19)
+        contentView = setContentView(labelDescription, labelList)
         scrollView = setScrollView(contentView)
     }
     
@@ -785,39 +1083,39 @@ extension GameTypeViewModel {
     
     private func gameTypeFirst() -> (UIStackView, UIStackView) {
         let stackViewOne = topic(image: imageFirst(), color: .white,
-                                 title: titleFirst(), description: descriptionFirst())
+                                 title: titleFirst, description: descriptionFirst)
         let stackViewTwo = topic(image: imageSecond(), color: .white,
-                                 title: titleSecond(), description: descriptionSecond())
+                                 title: titleSecond, description: descriptionSecond)
         return (stackViewOne, stackViewTwo)
     }
     
     private func gameTypeSecond() -> UIStackView {
         topic(image: imageFirst(), color: .white.withAlphaComponent(0.4),
-              title: titleFirst(), description: descriptionFirst())
+              title: titleFirst, description: descriptionFirst)
     }
     
     private func gameTypeThird() -> (UIStackView, UIStackView, UIStackView) {
         let stackViewOne = topic(image: imageFirst(), color: .white,
-                                 title: titleFirst(), description: descriptionFirst())
+                                 title: titleFirst, description: descriptionFirst)
         let stackViewTwo = topic(image: imageSecond(), color: .white,
-                                 title: titleSecond(), description: descriptionSecond())
+                                 title: titleSecond, description: descriptionSecond)
         let stackViewThree = topic(image: "building.2", color: .white,
-                                   title: "Режим столицы", description: descriptionThird())
+                                   title: titleCapitalCityMode, description: descriptionThird)
         return (stackViewOne, stackViewTwo, stackViewThree)
     }
     
     private func setConstraintsFirst(_ first: UIView, _ second: UIView, _ view: UIView) {
-        setConstraints(subview: first, to: list, view)
+        setConstraints(subview: first, to: labelList, view)
         setConstraints(subview: second, to: first, view)
     }
     
     private func setConstraintSecond(_ first: UIView, _ view: UIView) {
-        setConstraints(subview: first, to: list, view)
+        setConstraints(subview: first, to: labelList, view)
     }
     
     private func setConstraintsThird(_ first: UIView, _ second: UIView, 
                                      _ third: UIView, _ view: UIView) {
-        setConstraints(subview: first, to: list, view)
+        setConstraints(subview: first, to: labelList, view)
         setConstraints(subview: second, to: first, view)
         setConstraints(subview: third, to: second, view)
     }
@@ -1094,7 +1392,7 @@ extension GameTypeViewModel {
         let size = UIImage.SymbolConfiguration(pointSize: 25)
         let currentImage = button.currentImage?.withConfiguration(size)
         let imageCircle = UIImage(systemName: "circle", withConfiguration: size)
-        label.text = currentImage == imageCircle ? "Нет" : "Да"
+        label.text = currentImage == imageCircle ? titleNo : titleYes
         setCountdown(isOn: currentImage == imageCircle ? false : true)
     }
     
@@ -1202,12 +1500,12 @@ extension GameTypeViewModel {
     
     private func checkContinent(continent: Int) -> String {
         switch continent {
-        case 1: "Все страны"
-        case 2: "Америка"
-        case 3: "Европа"
-        case 4: "Африка"
-        case 5: "Азия"
-        default: "Океания"
+        case 1: titleAllCountries(tag: 0)
+        case 2: titleAmericaContinent(tag: 0)
+        case 3: titleEuropeContinent(tag: 0)
+        case 4: titleAfricaContinent(tag: 0)
+        case 5: titleAsiaContinent(tag: 0)
+        default: titleOceaniaContinent(tag: 0)
         }
     }
     
@@ -1221,22 +1519,22 @@ extension GameTypeViewModel {
     
     private func titleSetting(tag: Int) -> String {
         switch tag {
-        case 1: return "Количество вопросов"
-        case 2: return "Континенты"
-        case 3: return "Обратный отсчет"
-        default: return checkTimeDescription()
+        case 1: titleNumberOfQuestions
+        case 2: titleContinents
+        case 3: titleCountdown
+        default: checkTimeDescription()
         }
     }
     
     private func checkTitleGameType() -> String {
-        game.gameType == .questionnaire ? "Время всех вопросов" : "Время одного вопроса"
+        game.gameType == .questionnaire ? titleTimeAllQuestions : titleTimeOneQuestion
     }
     
     private func scrabbleType() -> String {
         switch mode.scrabbleType {
-        case 0: return "flag"
-        case 1: return "globe.europe.africa"
-        default: return "building.2"
+        case 0: "flag"
+        case 1: "globe.europe.africa"
+        default: "building.2"
         }
     }
     
@@ -1244,56 +1542,23 @@ extension GameTypeViewModel {
         tag == 2 ? "globe.europe.africa" : "flag"
     }
     
-    private func titleFirst() -> String {
-        tag == 2 ? "Режим карты" : "Режим флага"
-    }
-    
-    private func descriptionFirst() -> String {
-        switch tag {
-        case 0, 1: "В качестве вопроса задается флаг страны и пользователь должен выбрать ответ наименования страны."
-        case 2: "В качестве вопроса задается географическая карта страны и пользователь должен выбрать ответ наименования страны. (Кнопка неактивна)"
-        case 3: "В качестве вопроса задается флаг страны и пользователь должен составить слово из букв наименования страны."
-        default: "В качестве вопроса задается флаг страны и пользователь должен выбрать ответ наименования столицы."
-        }
-    }
-    
     private func imageSecond() -> String {
         tag == 3 ? "globe.europe.africa" : "building"
     }
     
-    private func titleSecond() -> String {
-        switch tag {
-        case 0, 1: "Режим наименования"
-        case 4: "Режим столицы"
-        default: "Режим карты"
-        }
-    }
-    
-    private func descriptionSecond() -> String {
-        switch tag {
-        case 0, 1: "В качестве вопроса задается наименование страны и пользователь должен выбрать ответ флага страны."
-        case 4: "В качестве вопроса задается наименование страны и пользователь должен выбрать ответ наименования столицы."
-        default: "В качестве вопроса задается географическая карта страны и пользователь должен составить слово из букв наименования страны."
-        }
-    }
-    
-    private func descriptionThird() -> String {
-        "В качестве вопроса задается наименование столицы и пользователь должен составить слово из букв наименования страны."
-    }
-    
     private func continent(tag: Int) -> String {
         switch tag {
-        case 0: "Все страны мира"
-        case 1: "Континент Америки"
-        case 2: "Континент Европы"
-        case 3: "Континент Африки"
-        case 4: "Континент Азии"
-        default: "Континент Океании"
+        case 0: titleAllCountries(tag: 1)
+        case 1: titleAmericaContinent(tag: 1)
+        case 2: titleEuropeContinent(tag: 1)
+        case 3: titleAfricaContinent(tag: 1)
+        case 4: titleAsiaContinent(tag: 1)
+        default: titleOceaniaContinent(tag: 1)
         }
     }
     
     private func count(tag: Int) -> String {
-        "Количество стран: \(countCountries(tag: tag))"
+        "\(titleNumberOfCountries) \(countCountries(tag: tag))"
     }
     
     private func countCountries(tag: Int) -> Int {
@@ -1304,6 +1569,48 @@ extension GameTypeViewModel {
         case 3: FlagsOfCountries.shared.countriesOfAfricanContinent.count
         case 4: FlagsOfCountries.shared.countriesOfAsianContinent.count
         default: FlagsOfCountries.shared.countriesOfOceanContinent.count
+        }
+    }
+    
+    private func titleAllCountries(tag: Int) -> String {
+        switch mode.language {
+        case .russian: tag == 0 ? "Все страны" : "Все страны мира"
+        default: tag == 0 ? "All countries" : "All countries of the world"
+        }
+    }
+    
+    private func titleAmericaContinent(tag: Int) -> String {
+        switch mode.language {
+        case .russian: tag == 0 ? "Америка" : "Континент Америки"
+        default: tag == 0 ? "America" : "American continent"
+        }
+    }
+    
+    private func titleEuropeContinent(tag: Int) -> String {
+        switch mode.language {
+        case .russian: tag == 0 ? "Европа" : "Континент Европы"
+        default: tag == 0 ? "Europe" : "European continent"
+        }
+    }
+    
+    private func titleAfricaContinent(tag: Int) -> String {
+        switch mode.language {
+        case .russian: tag == 0 ? "Африка" : "Континент Африки"
+        default: tag == 0 ? "Africa" : "African continent"
+        }
+    }
+    
+    private func titleAsiaContinent(tag: Int) -> String {
+        switch mode.language {
+        case .russian: tag == 0 ? "Азия" : "Континент Азии"
+        default: tag == 0 ? "Asia" : "Asian continent"
+        }
+    }
+    
+    private func titleOceaniaContinent(tag: Int) -> String {
+        switch mode.language {
+        case .russian: tag == 0 ? "Океания" : "Континент Океании"
+        default: tag == 0 ? "Oceania" : "Oceanian continent"
         }
     }
     
@@ -1386,8 +1693,8 @@ extension GameTypeViewModel {
     
     private func setConstraints(_ popUpView: UIView) {
         NSLayoutConstraint.activate([
-            title.centerXAnchor.constraint(equalTo: popUpView.centerXAnchor, constant: 20),
-            title.centerYAnchor.constraint(equalTo: popUpView.topAnchor, constant: 26)
+            labelTitle.centerXAnchor.constraint(equalTo: popUpView.centerXAnchor, constant: 20),
+            labelTitle.centerYAnchor.constraint(equalTo: popUpView.topAnchor, constant: 26)
         ])
         
         NSLayoutConstraint.activate([
@@ -1407,15 +1714,15 @@ extension GameTypeViewModel {
         ])
         
         NSLayoutConstraint.activate([
-            description.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
-            description.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            description.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
+            labelDescription.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            labelDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            labelDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
         ])
         
         NSLayoutConstraint.activate([
-            list.topAnchor.constraint(equalTo: description.bottomAnchor, constant: 19),
-            list.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            list.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
+            labelList.topAnchor.constraint(equalTo: labelDescription.bottomAnchor, constant: 19),
+            labelList.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            labelList.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15)
         ])
     }
     

@@ -88,7 +88,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }()
     
     private lazy var labelCount: UILabel = {
-        setLabel(color: .white, title: "Количество вопросов", size: 17, style: "GillSans")
+        setLabel(color: .white, title: viewModel.titleNumberOfQuestions, size: 17, style: "GillSans")
     }()
     
     private lazy var buttonContinents: UIButton = {
@@ -104,7 +104,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }()
     
     private lazy var labelContinentsDescription: UILabel = {
-        setLabel(color: .white, title: "Континенты", size: 17, style: "GillSans")
+        setLabel(color: .white, title: viewModel.titleContinents, size: 17, style: "GillSans")
     }()
     
     private lazy var buttonCountdown: UIButton = {
@@ -118,7 +118,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     private lazy var labelCountdown: UILabel = {
         setLabel(
             color: .white,
-            title: viewModel.isCountdown() ? "Да" : "Нет",
+            title: viewModel.isCountdown() ? viewModel.titleYes : viewModel.titleNo,
             size: 60,
             style: "GillSans")
     }()
@@ -126,7 +126,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     private lazy var labelCountdownDesription: UILabel = {
         setLabel(
             color: .white,
-            title: "Обратный отсчёт",
+            title: viewModel.titleCountdown,
             size: 17,
             style: "GillSans")
     }()
@@ -241,7 +241,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     private lazy var labelCheckmark: UILabel = {
         setLabel(
             color: .white,
-            title: "Вкл / Выкл",
+            title: viewModel.titleOnOff,
             size: 26,
             style: "mr_fontick",
             alignment: .center)
@@ -268,7 +268,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }()
     
     private lazy var segmentedControl: UISegmentedControl = {
-        let segment = UISegmentedControl(items: ["Один вопрос", "Все вопросы"])
+        let segment = UISegmentedControl(items: viewModel.titleItems)
         let font = UIFont(name: "mr_fontick", size: 22)
         segment.backgroundColor = .white
         segment.selectedSegmentTintColor = viewModel.background
@@ -298,11 +298,11 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }()
     
     private lazy var buttonDone: UIButton = {
-        setButton(title: "ОК", color: viewModel.colorDone, action: #selector(done))
+        setButton(title: viewModel.titleOk, color: viewModel.colorDone, action: #selector(done))
     }()
     
     private lazy var buttonCancel: UIButton = {
-        setButton(title: "Отмена", color: .white, action: #selector(closeViewSetting))
+        setButton(title: viewModel.titleCancel, color: .white, action: #selector(closeViewSetting))
     }()
     
     private lazy var stackView: UIStackView = {

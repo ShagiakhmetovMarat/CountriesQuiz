@@ -25,6 +25,7 @@ protocol SettingViewModelProtocol {
     
     func setMode(_ mode: Setting)
     func setStatusButton(_ button: UIButton)
+    func setTitle(_ label: UILabel)
     func showAlert(_ mode: Setting,_ button: UIButton, and tableView: UITableView) -> UIAlertController
     func setSquare(subviews: UIView..., sizes: CGFloat)
     
@@ -222,7 +223,7 @@ class SettingViewModel: SettingViewModelProtocol {
     func setLabel(text: String, size: CGFloat, color: UIColor) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.font = UIFont(name: "mr_fontick", size: size)
+        label.font = UIFont(name: "GillSans-Bold", size: size)
         label.textColor = color
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -246,6 +247,10 @@ class SettingViewModel: SettingViewModelProtocol {
         button.tintColor = color
         button.layer.borderColor = color.cgColor
         barButton.isEnabled = isEnabled
+    }
+    
+    func setTitle(_ label: UILabel) {
+        label.text = title
     }
     
     func showAlert(_ mode: Setting, _ button: UIButton, and

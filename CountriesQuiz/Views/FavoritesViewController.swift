@@ -31,11 +31,11 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     }()
     
     private lazy var labelTitle: UILabel = {
-        viewModel.setLabel(title: viewModel.title, font: "mr_fontick", size: 28, color: .white)
+        viewModel.setLabel(title: viewModel.title, font: "GillSans-Bold", size: 29, color: .white)
     }()
     
     private lazy var imageTitle: UIImageView = {
-        let size = UIImage.SymbolConfiguration(pointSize: 28)
+        let size = UIImage.SymbolConfiguration(pointSize: 29)
         let image = UIImage(systemName: "star.fill", withConfiguration: size)
         let imageView = UIImageView(image: image)
         imageView.tintColor = .white
@@ -64,7 +64,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     private lazy var viewDetails: UIView = {
         let view = viewModel.setView(color: viewModel.backgroundDark, radius: 15)
         let close = setButton(image: "multiply", action: #selector(closeDetails))
-        let label = viewModel.setLabel(title: viewModel.details, font: "GillSans", size: 22, color: .white)
+        let label = viewModel.setLabel(title: viewModel.titleError, font: "GillSans", size: 22, color: .white)
         let moreInfo = setButton()
         viewModel.setSubviews(subviews: close, label, moreInfo, on: view)
         viewModel.setConstraints(close, label, moreInfo, on: view)
@@ -199,7 +199,7 @@ extension FavoritesViewController {
     }
     
     private func setButton() -> UIButton {
-        let label = viewModel.setLabel(title: "Подробнее", font: "mr_fontick", size: 26, color: .white)
+        let label = viewModel.setLabel(title: viewModel.titleDetails, font: "GillSans", size: 23, color: .white)
         let image = viewModel.setImage(image: "chevron.right", color: .white, size: 21)
         let button = Button(type: .custom)
         button.backgroundColor = viewModel.backgroundLight

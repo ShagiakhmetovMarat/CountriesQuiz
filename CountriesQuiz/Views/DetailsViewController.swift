@@ -143,7 +143,7 @@ class DetailsViewController: UIViewController {
     }()
     
     private lazy var timeUp: UILabel = {
-        viewModel.setLabel(title: viewModel.title, size: 24, style: "mr_fontick", color: .white)
+        viewModel.setLabel(title: viewModel.title, size: 24, style: "GillSans", color: .white)
     }()
     
     private lazy var viewSubviews: UIView = {
@@ -174,7 +174,7 @@ class DetailsViewController: UIViewController {
         let button = Button(type: .system)
         button.setTitle(viewModel.titleButton, for: .normal)
         button.tintColor = .white
-        button.titleLabel?.font = UIFont(name: "mr_fontick", size: 25)
+        button.titleLabel?.font = UIFont(name: "GillSans", size: 25)
         button.setImage(image, for: .normal)
         button.backgroundColor = .bismarkFuriozo
         button.layer.shadowColor = UIColor.bismarkFuriozo.cgColor

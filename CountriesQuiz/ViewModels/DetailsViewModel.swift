@@ -22,7 +22,7 @@ protocol DetailsViewModelProtocol {
     var height: CGFloat { get }
     var favorites: [Favorites] { get }
     
-    init(game: Games, favorite: Favorites, favorites: [Favorites], indexPath: IndexPath)
+    init(mode: Setting, game: Games, favorite: Favorites, favorites: [Favorites], indexPath: IndexPath)
     
     func setBarButton(_ button: UIButton,_ navigationItem: UINavigationItem)
     func setSubviews(subviews: UIView..., on otherSubview: UIView)
@@ -72,15 +72,24 @@ class DetailsViewModel: DetailsViewModelProtocol {
     var buttonFour: String {
         favorite.buttonFourth
     }
-    var titleButton: String = "   Удалить из избранных"
+    var titleButton: String {
+        switch mode.language {
+        case .russian: "   Удалить из избранных"
+        default: "    Remove from favorites"
+        }
+    }
     var title: String {
-        favorite.isTimeUp ? "Время вышло!" : ""
+        switch mode.language {
+        case .russian: favorite.isTimeUp ? "Время вышло!" : ""
+        default: favorite.isTimeUp ? "Time is up!" : ""
+        }
     }
     var height: CGFloat {
         heightStackView + constant + (favorite.isTimeUp ? 44 : 0) + 10
     }
     
     var favorites: [Favorites]
+    private let mode: Setting
     private let game: Games
     private let favorite: Favorites
     private let indexPath: IndexPath
@@ -99,7 +108,9 @@ class DetailsViewModel: DetailsViewModelProtocol {
         }
     }
     
-    required init(game: Games, favorite: Favorites, favorites: [Favorites], indexPath: IndexPath) {
+    required init(mode: Setting, game: Games, favorite: Favorites,
+                  favorites: [Favorites], indexPath: IndexPath) {
+        self.mode = mode
         self.game = game
         self.favorite = favorite
         self.favorites = favorites
@@ -206,7 +217,7 @@ class DetailsViewModel: DetailsViewModelProtocol {
     
     func subview(title: String, and tag: Int) -> UIView {
         if isFlag {
-            setLabel(title: title, size: 23, style: "mr_fontick", color: textColor(title, tag))
+            setLabel(title: title, size: 23, style: "GillSans-SemiBold", color: textColor(title, tag))
         } else {
             setSubview(title, tag)
         }
@@ -357,7 +368,7 @@ extension DetailsViewModel {
 extension DetailsViewModel {
     private func setSubview(_ title: String, _ tag: Int) -> UIView {
         if game.gameType == .quizOfCapitals {
-            setLabel(title: title, size: 23, style: "mr_fontick", color: textColor(title, tag))
+            setLabel(title: title, size: 23, style: "GillSans-SemiBold", color: textColor(title, tag))
         } else {
             setImage(image: UIImage(named: title))
         }

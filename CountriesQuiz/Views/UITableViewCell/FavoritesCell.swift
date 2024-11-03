@@ -52,7 +52,7 @@ extension FavoritesCell {
     }
     
     private func setLabel(label: UILabel) {
-        label.font = UIFont(name: "mr_fontick", size: 26)
+        label.font = UIFont(name: "GillSans", size: 26)
         label.textColor = .white
         label.numberOfLines = 0
         label.textAlignment = .center

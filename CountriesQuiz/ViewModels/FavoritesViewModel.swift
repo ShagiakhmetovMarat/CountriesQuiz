@@ -15,10 +15,11 @@ protocol FavoritesViewModelProtocol {
     var numberOfRows: Int { get }
     var heightOfRow: CGFloat { get }
     var title: String { get }
-    var details: String { get }
+    var titleError: String { get }
+    var titleDetails: String { get }
     var favorites: [Favorites] { get }
     
-    init(game: Games, favorites: [Favorites])
+    init(mode: Setting, game: Games, favorites: [Favorites])
     
     func setBarButton(_ button: UIButton,_ navigationItem: UINavigationItem)
     func setSubviews(subviews: UIView..., on subviewOther: UIView)
@@ -57,10 +58,27 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
         favorites.count
     }
     var heightOfRow: CGFloat = 60
-    var title: String = "Избранное"
-    var details: String = "Ошибка ответа"
+    var title: String {
+        switch mode.language {
+        case .russian: "Избранное"
+        default: "Favorites"
+        }
+    }
+    var titleError: String {
+        switch mode.language {
+        case .russian: "Ошибка ответа"
+        default: "Response error"
+        }
+    }
+    var titleDetails: String {
+        switch mode.language {
+        case .russian: "Подробнее"
+        default: "Details"
+        }
+    }
     
     var favorites: [Favorites]
+    private let mode: Setting
     private let game: Games
     private var indexPath: IndexPath!
     
@@ -69,7 +87,8 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     private var stackView: UIStackView!
     private var timeUp: UILabel!
     
-    required init(game: Games, favorites: [Favorites]) {
+    required init(mode: Setting, game: Games, favorites: [Favorites]) {
+        self.mode = mode
         self.game = game
         self.favorites = favorites
     }
@@ -96,7 +115,7 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     }
     
     func detailsViewController() -> DetailsViewModelProtocol {
-        DetailsViewModel(game: game, favorite: favorites[indexPath.row],
+        DetailsViewModel(mode: mode, game: game, favorite: favorites[indexPath.row],
                          favorites: favorites, indexPath: indexPath)
     }
     
@@ -133,7 +152,7 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
         viewSecondary = setView(color: game.background)
         subview = setName(favourite: favorite)
         stackView = setStackView(favorite, view)
-        timeUp = setLabel(title: title(favorite), font: "mr_fontick", size: 22, color: .white)
+        timeUp = setLabel(title: title(favorite), font: "GillSans", size: 22, color: .white)
         setSubviews(subviews: viewSecondary, on: viewDetails)
         setSubviews(subviews: subview, stackView, timeUp, on: viewSecondary)
         setConstraints(favorite: favorite, on: viewDetails)
@@ -234,7 +253,7 @@ extension FavoritesViewModel {
         if favourite.isFlag {
             setImage(image: favourite.flag)
         } else {
-            setLabel(title: favourite.name, font: "mr_fontick", size: 28, color: .white)
+            setLabel(title: favourite.name, font: "GillSans-SemiBold", size: 28, color: .white)
         }
     }
     
@@ -321,7 +340,7 @@ extension FavoritesViewModel {
                          and tag: Int) -> UIView {
         if favourite.isFlag {
             let color = textColor(favourite, name, and: tag)
-            return setLabel(title: name, font: "mr_fontick", size: 21, color: color)
+            return setLabel(title: name, font: "GillSans-SemiBold", size: 21, color: color)
         } else {
             return setSubview(favourite, name, and: tag)
         }
@@ -331,7 +350,7 @@ extension FavoritesViewModel {
                             and tag: Int) -> UIView {
         if game.gameType == .quizOfCapitals {
             let color = textColor(favourite, name, and: tag)
-            return setLabel(title: name, font: "mr_fontick", size: 21, color: color)
+            return setLabel(title: name, font: "GillSans-SemiBold", size: 21, color: color)
         } else {
             return setImage(image: name, radius: 8)
         }

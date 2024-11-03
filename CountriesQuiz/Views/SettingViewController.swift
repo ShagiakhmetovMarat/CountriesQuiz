@@ -27,11 +27,11 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     }()
     
     private lazy var labelTitle: UILabel = {
-        viewModel.setLabel(text: viewModel.title, size: 28, color: .white)
+        viewModel.setLabel(text: viewModel.title, size: 29, color: .white)
     }()
     
     private lazy var imageTitle: UIImageView = {
-        let size = UIImage.SymbolConfiguration(pointSize: 28)
+        let size = UIImage.SymbolConfiguration(pointSize: 29)
         let image = UIImage(systemName: "gear", withConfiguration: size)
         let imageView = UIImageView(image: image)
         imageView.tintColor = .white
@@ -93,6 +93,7 @@ extension SettingViewController: SettingViewControllerInput {
     func dataToSetting(mode: Setting) {
         viewModel.setMode(mode)
         viewModel.setStatusButton(buttonDefault)
+        viewModel.setTitle(labelTitle)
         tableView.reloadData()
     }
 }

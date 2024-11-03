@@ -64,7 +64,7 @@ class MenuViewController: UIViewController {
         viewModel.setLabel(
             title: viewModel.titleQuizOfFlags,
             size: 26,
-            style: "Gill Sans",
+            style: "GillSans",
             color: .white)
     }()
     
@@ -95,7 +95,7 @@ class MenuViewController: UIViewController {
         viewModel.setLabel(
             title: viewModel.titleQuestionnaire,
             size: 26,
-            style: "Gill Sans",
+            style: "GillSans",
             color: .white)
     }()
     
@@ -126,7 +126,7 @@ class MenuViewController: UIViewController {
         viewModel.setLabel(
             title: viewModel.titleQuizOfMaps,
             size: 26,
-            style: "Gill Sans",
+            style: "GillSans",
             color: .white)
     }()
     
@@ -157,7 +157,7 @@ class MenuViewController: UIViewController {
         viewModel.setLabel(
             title: viewModel.titleScrabble,
             size: 26,
-            style: "Gill Sans",
+            style: "GillSans",
             color: .white)
     }()
     
@@ -188,7 +188,7 @@ class MenuViewController: UIViewController {
         viewModel.setLabel(
             title: viewModel.titleQuizOfCapitals,
             size: 26,
-            style: "Gill Sans",
+            style: "GillSans",
             color: .white)
     }()
     

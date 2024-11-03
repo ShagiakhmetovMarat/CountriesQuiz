@@ -770,7 +770,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     }
     // MARK: - Transitions to other view controller
     func favouritesViewModel() -> FavoritesViewModelProtocol {
-        FavoritesViewModel(game: game, favorites: favorites)
+        FavoritesViewModel(mode: mode, game: game, favorites: favorites)
     }
     
     func quizOfFlagsViewModel() -> QuizOfFlagsViewModelProtocol {
@@ -922,7 +922,7 @@ extension GameTypeViewModel {
             "One attempt to select an answer to move to the next question.",
             "The question about country's flag and choise of answer on the country's name or the question about the country's name and choise of answer on the country's flag.",
             "Green is correct answer and red is wrong answer.",
-            "The countdown for one question os restored at the next question.",
+            "The countdown for one question is restored at the next question.",
             "The countdown for all questions is not restored at the next question."]
         }
     }
@@ -956,7 +956,7 @@ extension GameTypeViewModel {
         default: [
             "One attempt to select an answer to move to the next question.",
             "Green is correct answer and red is wrong answer.",
-            "The countdown for one question os restored at the next question.",
+            "The countdown for one question is restored at the next question.",
             "The countdown for all questions is not restored at the next question."]
         }
     }
@@ -973,7 +973,7 @@ extension GameTypeViewModel {
             "One attempt to select an answer to move to the next question.",
             "Question about a country's flag / a geographical map of the country / a country's capital",
             "Green is correct answer and red is wrong answer.",
-            "The countdown for one question os restored at the next question.",
+            "The countdown for one question is restored at the next question.",
             "The countdown for all questions is not restored at the next question."]
         }
     }
@@ -990,7 +990,7 @@ extension GameTypeViewModel {
             "One attempt to select an answer to move to the next question.",
             "The question about country's flag and choice of answer on the country's capital or the question about a country's name and choice of answer on the country's capital.",
             "Green is correct answer and red is wrong answer.",
-            "The countdown for one question os restored at the next question.",
+            "The countdown for one question is restored at the next question.",
             "The countdown for all questions is not restored at the next question."]
         }
     }
@@ -1159,7 +1159,7 @@ extension GameTypeViewModel {
     private func setAttributed(title: String, tag: Int, segmented: UISegmentedControl) -> NSAttributedString {
         let color = tag == 1 ? game.favorite : color(tag: tag, segmented: segmented)
         return NSAttributedString(string: title, attributes: [
-            .font: UIFont(name: "mr_fontick", size: 26) ?? "",
+            .font: UIFont(name: "GillSans", size: 26) ?? "",
             .foregroundColor: color
         ])
     }

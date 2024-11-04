@@ -39,6 +39,7 @@ protocol GameTypeViewModelProtocol {
     var name: String { get }
     var diameter: CGFloat { get }
     var radius: CGFloat { get }
+    var heightOfRows: CGFloat { get }
     var popUpViewHelp: Bool { get }
     
     init(mode: Setting, game: Games, tag: Int, favorites: [Favorites])
@@ -169,6 +170,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     var radius: CGFloat {
         diameter / 2
     }
+    var heightOfRows: CGFloat = 29
     var image: String {
         game.image
     }
@@ -763,7 +765,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     func attributedText(text: String, tag: Int) -> NSMutableAttributedString {
         let attributed = NSMutableAttributedString(string: text)
         let font = NSAttributedString.Key.font
-        let key = UIFont(name: "mr_fontick", size: 20)
+        let key = UIFont(name: "GillSans", size: 19)
         let range = setRange(subString: count(tag: tag), fromString: text)
         attributed.addAttributes([font: key ?? ""], range: range)
         return attributed
@@ -1757,7 +1759,7 @@ extension GameTypeViewModel {
     
     private func setContinents(_ stackView: UIView, on viewSetting: UIView,
                                and view: UIView) {
-        setConstraints(stackView, on: viewSetting, and: view, constant: -220, height: 435)
+        setConstraints(stackView, on: viewSetting, and: view, constant: -135, height: 370)
     }
     
     private func setCheckmarkTime(_ stackView: UIView, on viewSetting: UIView,

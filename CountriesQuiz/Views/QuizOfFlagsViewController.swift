@@ -27,7 +27,7 @@ class QuizOfFlagsViewController: UIViewController, ViewControllerInput {
     }()
     
     private lazy var labelTimer: UILabel = {
-        viewModel.setLabel("\(viewModel.time)", size: 35, and: 1)
+        viewModel.setLabel("\(viewModel.time)", font: "GillSans", size: 35, and: 1)
     }()
     
     private lazy var question: UIView = {
@@ -46,15 +46,15 @@ class QuizOfFlagsViewController: UIViewController, ViewControllerInput {
     }()
     
     private lazy var labelNumber: UILabel = {
-        viewModel.setLabel(viewModel.textNumber, size: 23, and: 1)
+        viewModel.setLabel(viewModel.textNumber, font: "GillSans", size: 23, and: 1)
     }()
     
     private lazy var labelQuiz: UILabel = {
-        viewModel.setLabel(viewModel.textQuiz, size: 23, and: 0)
+        viewModel.setLabel(viewModel.textQuiz, font: "GillSans", size: 23, and: 0)
     }()
     
     private lazy var labelDescription: UILabel = {
-        viewModel.setLabel(viewModel.textDescription, size: 19, and: 0)
+        viewModel.setLabel(viewModel.textDescription, font: "GillSans", size: 19, and: 0)
     }()
     
     private lazy var buttonFirst: UIButton = {
@@ -296,7 +296,7 @@ extension QuizOfFlagsViewController {
         button.setTitleColor(.blueBlackSea, for: .normal)
         button.titleLabel?.numberOfLines = 0
         button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont(name: "mr_fontick", size: 23)
+        button.titleLabel?.font = UIFont(name: "GillSans-SemiBold", size: 23)
         button.backgroundColor = .white
         button.layer.cornerRadius = 12
         button.layer.shadowColor = UIColor.white.cgColor

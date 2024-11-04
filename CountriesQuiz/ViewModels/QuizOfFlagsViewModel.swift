@@ -42,7 +42,7 @@ protocol QuizOfFlagsViewModelProtocol {
     func question() -> UIView
     func stackView(_ first: UIButton,_ second: UIButton,_ third: UIButton,_ fourth: UIButton) -> UIStackView
     func setImage(_ image: Countries, tag: Int) -> UIImageView
-    func setLabel(_ title: String, size: CGFloat, and opacity: Float) -> UILabel
+    func setLabel(_ title: String, font: String, size: CGFloat, and opacity: Float) -> UILabel
     
     func setCircleTimer(_ labelTimer: UILabel,_ view: UIView)
     func circularShadow(_ labelTimer: UILabel,_ view: UIView)
@@ -122,8 +122,18 @@ class QuizOfFlagsViewModel: QuizOfFlagsViewModelProtocol {
     var time: Int {
         isOneQuestion ? oneQuestionTime : allQuestionsTime
     }
-    var textQuiz: String = "Выберите правильный ответ"
-    var textDescription: String = "Коснитесь экрана, чтобы продолжить"
+    var textQuiz: String {
+        switch mode.language {
+        case .russian: "Выберите правильный ответ"
+        default: "Choose the correct answer"
+        }
+    }
+    var textDescription: String {
+        switch mode.language {
+        case .russian: "Коснитесь экрана, чтобы продолжить"
+        default: "Touch the screen to continue"
+        }
+    }
     var textNumber: String {
         "0 / \(countQuestions)"
     }
@@ -157,6 +167,12 @@ class QuizOfFlagsViewModel: QuizOfFlagsViewModelProtocol {
     private var heightStackView: CGFloat {
         isFlag ? 215 : 235
     }
+    private var titleShowDescription: String {
+        switch mode.language {
+        case .russian: "Коснитесь экрана, чтобы завершить"
+        default: "Touch the screen to finish"
+        }
+    }
     private var issueSpring: NSLayoutConstraint!
     private var stackViewSpring: NSLayoutConstraint!
     
@@ -188,7 +204,7 @@ class QuizOfFlagsViewModel: QuizOfFlagsViewModelProtocol {
     }
     
     func question() -> UIView {
-        isFlag ? setImage(image: issue) : setLabel(issue, size: 32, and: 1)
+        isFlag ? setImage(image: issue) : setLabel(issue, font: "GillSans-SemiBold", size: 32, and: 1)
     }
     
     func stackView(_ first: UIButton, _ second: UIButton, _ third: UIButton, 
@@ -214,10 +230,10 @@ class QuizOfFlagsViewModel: QuizOfFlagsViewModelProtocol {
         return imageView
     }
     
-    func setLabel(_ title: String, size: CGFloat, and opacity: Float) -> UILabel {
+    func setLabel(_ title: String, font: String, size: CGFloat, and opacity: Float) -> UILabel {
         let label = UILabel()
         label.text = title
-        label.font = UIFont(name: "mr_fontick", size: size)
+        label.font = UIFont(name: font, size: size)
         label.textColor = .white
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -819,7 +835,7 @@ class QuizOfFlagsViewModel: QuizOfFlagsViewModelProtocol {
     private func showDescription(_ label: UILabel) {
         guard currentQuestion == countQuestions - 1 else { return }
         let red = UIColor.lightPurplePink
-        label.text = "Коснитесь экрана, чтобы завершить"
+        label.text = titleShowDescription
         label.textColor = red
     }
     // MARK: - Set time spent for every answer

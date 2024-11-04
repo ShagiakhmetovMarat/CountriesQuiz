@@ -40,7 +40,7 @@ class TimeViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }()
     
     private lazy var labelTurnOnOff: UILabel = {
-        viewModel.setLabel(text: viewModel.titleTimer, color: .blueMiddlePersian, font: "mr_fontick", size: 26)
+        viewModel.setLabel(text: viewModel.titleTimer, color: .blueMiddlePersian, font: "GillSans", size: 24)
     }()
     
     private lazy var switchToggle: UISwitch = {

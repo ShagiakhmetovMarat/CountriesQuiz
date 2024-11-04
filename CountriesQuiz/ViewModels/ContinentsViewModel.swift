@@ -155,7 +155,7 @@ class ContinentsViewModel: ContinentsViewModelProtocol {
     func attributedText(text: String, tag: Int) -> NSMutableAttributedString {
         let attributed = NSMutableAttributedString(string: text)
         let font = NSAttributedString.Key.font
-        let key = UIFont(name: "mr_fontick", size: 20)
+        let key = UIFont(name: "GillSans", size: 19)
         let range = setRange(subString: count(tag: tag), fromString: text)
         attributed.addAttributes([font: key ?? ""], range: range)
         return attributed

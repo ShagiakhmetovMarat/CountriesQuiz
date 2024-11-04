@@ -119,7 +119,7 @@ extension GameTypeViewController {
         let button = Button(type: .system)
         button.setTitle(title, for: .normal)
         button.setTitleColor(viewModel.colorFavourite, for: .normal)
-        button.titleLabel?.font = UIFont(name: "mr_fontick", size: 25)
+        button.titleLabel?.font = UIFont(name: "GillSans-SemiBold", size: 25)
         button.backgroundColor = color
         button.layer.cornerRadius = 12
         button.layer.shadowColor = color.cgColor
@@ -137,7 +137,7 @@ extension GameTypeViewController {
         button.backgroundColor = viewModel.isSelect(isOn: backgroundIsOn)
         button.setTitle(text, for: .normal)
         button.setTitleColor(viewModel.isSelect(isOn: colorIsOn), for: .normal)
-        button.titleLabel?.font = UIFont(name: "mr_fontick", size: 26)
+        button.titleLabel?.font = UIFont(name: "GillSans", size: 24)
         button.titleLabel?.attributedText = attributed
         button.titleLabel?.numberOfLines = 0
         button.titleLabel?.textAlignment = .center
@@ -146,7 +146,7 @@ extension GameTypeViewController {
         button.layer.cornerRadius = 13
         button.layer.shadowColor = UIColor.white.cgColor
         button.layer.shadowOpacity = 0.4
-        button.layer.shadowOffset = CGSize(width: 0, height: 6)
+        button.layer.shadowOffset = CGSize(width: 0, height: 3)
         button.tag = tag ?? 0
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(continents), for: .touchUpInside)

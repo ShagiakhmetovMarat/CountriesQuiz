@@ -131,7 +131,7 @@ extension ContinentsViewController {
         button.backgroundColor = viewModel.isSelect(isOn: backgroundIsOn)
         button.setTitle(text, for: .normal)
         button.setTitleColor(viewModel.isSelect(isOn: colorIsOn), for: .normal)
-        button.titleLabel?.font = UIFont(name: "mr_fontick", size: 26)
+        button.titleLabel?.font = UIFont(name: "GillSans", size: 24)
         button.titleLabel?.attributedText = attributed
         button.titleLabel?.numberOfLines = 0
         button.titleLabel?.textAlignment = .center

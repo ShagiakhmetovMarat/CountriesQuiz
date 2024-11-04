@@ -70,7 +70,7 @@ class TimeViewModel: TimeViewModelProtocol {
         default: ["One question", "All questions"]
         }
     }
-    var font = UIFont(name: "mr_fontick", size: 26)
+    var font = UIFont(name: "GillSans", size: 24)
     var isTime: Bool {
         mode.timeElapsed.timeElapsed ? true : false
     }
@@ -84,7 +84,7 @@ class TimeViewModel: TimeViewModelProtocol {
         isOneQuestion ? 0 : 1
     }
     var numberOfComponents = 1
-    var heightOfRows: CGFloat = 35
+    var heightOfRows: CGFloat = 32
     
     var mode: Setting
     
@@ -253,7 +253,7 @@ extension TimeViewModel {
     
     private func setAttributed(title: String, tag: Int, segment:
                                UISegmentedControl) -> NSAttributedString {
-        let font = UIFont(name: "mr_fontick", size: 32)
+        let font = UIFont(name: "GillSans", size: 29)
         let color = color(tag: tag, segment: segment)
         return NSAttributedString(string: title, attributes: [
             .font: font ?? "",

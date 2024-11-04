@@ -212,7 +212,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                                buttonEuropeContinent, buttonAfricaContinent,
                                buttonAsiaContinent, buttonOceanContinent])
         stackView.axis = .vertical
-        stackView.spacing = 15
+        stackView.spacing = 8
         stackView.distribution = .fillEqually
         stackView.tag = 1
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -243,7 +243,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             color: .white,
             title: viewModel.titleOnOff,
             size: 26,
-            style: "mr_fontick",
+            style: "GillSans",
             alignment: .center)
     }()
     
@@ -269,7 +269,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     private lazy var segmentedControl: UISegmentedControl = {
         let segment = UISegmentedControl(items: viewModel.titleItems)
-        let font = UIFont(name: "mr_fontick", size: 22)
+        let font = UIFont(name: "GillSans", size: 22)
         segment.backgroundColor = .white
         segment.selectedSegmentTintColor = viewModel.background
         segment.setTitleTextAttributes([NSAttributedString.Key
@@ -336,6 +336,10 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         viewModel.titles(pickerView, row, and: segmentedControl)
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        viewModel.heightOfRows
     }
     // MARK: - Press button count questions / continents / countdown / time
     @objc func showSetting(sender: UIButton) {

@@ -63,7 +63,7 @@ extension LanguageCell {
         
         NSLayoutConstraint.activate([
             indicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            indicator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22)
+            indicator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -18)
         ])
     }
 }

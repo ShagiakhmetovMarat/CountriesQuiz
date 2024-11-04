@@ -108,7 +108,7 @@ class CountQuestionsViewModel: CountQuestionsViewModelProtocol {
 
 extension CountQuestionsViewModel {
     private func setAttributed(title: String) -> NSAttributedString {
-        let font = UIFont(name: "mr_fontick", size: 32)
+        let font = UIFont(name: "GillSans", size: 32)
         let color = UIColor.blueMiddlePersian
         return NSAttributedString(string: title, attributes: [
             .font: font ?? "",

@@ -25,7 +25,7 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     }()
     
     private lazy var labelResults: UILabel = {
-        setLabel(title: "Результаты", style: "echorevival", size: 38, color: viewModel.game.swap)
+        setLabel(title: viewModel.titleResults, style: "echorevival", size: 38, color: viewModel.game.swap)
     }()
     
     private lazy var stackViewResults: UIStackView = {
@@ -90,7 +90,7 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     
     private lazy var buttonDescription: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Подробнее", for: .normal)
+        button.setTitle(viewModel.titleMoreDetailed, for: .normal)
         button.setTitleColor(viewModel.game.background, for: .normal)
         button.titleLabel?.font = UIFont(name: "GillSans-SemiBold", size: 21)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -112,7 +112,7 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     private lazy var labelCorrectCount: UILabel = {
         setLabel(
             title: "\(viewModel.correctAnswers.count)",
-            style: "mr_fontick",
+            style: "GillSans",
             size: 35,
             color: .white,
             alignment: .center)
@@ -124,8 +124,8 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     
     private lazy var labelCorrectTitle: UILabel = {
         setLabel(
-            title: "Правильные ответы",
-            style: "mr_fontick",
+            title: viewModel.titleCorrectAnswers,
+            style: "GillSans",
             size: 20,
             color: .white,
             alignment: .center)
@@ -145,7 +145,7 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     private lazy var labelIncorrectCount: UILabel = {
         setLabel(
             title: "\(viewModel.incorrectAnswers.count)",
-            style: "mr_fontick",
+            style: "GillSans",
             size: 35,
             color: .white,
             alignment: .center)
@@ -157,8 +157,8 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     
     private lazy var labelIncorrectTitle: UILabel = {
         setLabel(
-            title: "Неправильные ответы",
-            style: "mr_fontick",
+            title: viewModel.titleIncorrectAnswers,
+            style: "GillSans",
             size: 20,
             color: .white,
             alignment: .center)
@@ -184,7 +184,7 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     private lazy var labelNumberTimeSpend: UILabel = {
         setLabel(
             title: viewModel.numberTimeSpend,
-            style: "mr_fontick",
+            style: "GillSans",
             size: 35,
             color: .white,
             alignment: .center)
@@ -197,7 +197,7 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     private lazy var labelTimeSpend: UILabel = {
         setLabel(
             title: viewModel.titleTimeSpend,
-            style: "mr_fontick",
+            style: "GillSans",
             size: 20,
             color: .white,
             alignment: .center)
@@ -220,7 +220,7 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     private lazy var labelAnsweredQuestions: UILabel = {
         setLabel(
             title: "\(viewModel.answeredQuestions)",
-            style: "mr_fontick",
+            style: "GillSans",
             size: 35,
             color: .white,
             alignment: .center)
@@ -232,8 +232,8 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     
     private lazy var labelAnsweredTitle: UILabel = {
         setLabel(
-            title: "Количество отвеченных вопросов",
-            style: "mr_fontick",
+            title: viewModel.titleAnsweredQuestions,
+            style: "GillSans",
             size: 20,
             color: .white,
             alignment: .center)
@@ -245,14 +245,14 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     
     private lazy var buttonComplete: UIButton = {
         let button = Button(type: .system)
-        button.setTitle("Завершить", for: .normal)
+        button.setTitle(viewModel.titleComplete, for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "mr_fontick", size: 25)
+        button.titleLabel?.font = UIFont(name: "GillSans-SemiBold", size: 25)
         button.backgroundColor = viewModel.game.background
         button.layer.cornerRadius = 12
         button.layer.shadowColor = viewModel.game.background.cgColor
         button.layer.shadowOpacity = 0.4
-        button.layer.shadowOffset = CGSize(width: 0, height: 6)
+        button.layer.shadowOffset = CGSize(width: 0, height: 4.5)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(exitToMenu), for: .touchUpInside)
         return button
@@ -367,14 +367,6 @@ extension ResultsViewController {
         stackView.spacing = 10
         stackView.distribution = distribution
         stackView.axis = axis ?? .horizontal
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }
-    
-    private func setStackView(first: UIView, second: UIView, third: UIView) -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: [first, second, third])
-        stackView.spacing = 10
-        stackView.distribution = .fill
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }

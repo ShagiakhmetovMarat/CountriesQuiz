@@ -301,7 +301,7 @@ extension QuizOfFlagsViewController {
         button.layer.cornerRadius = 12
         button.layer.shadowColor = UIColor.white.cgColor
         button.layer.shadowOpacity = 0.4
-        button.layer.shadowOffset = CGSize(width: 0, height: 6)
+        button.layer.shadowOffset = CGSize(width: 0, height: 4.5)
         button.isEnabled = false
         button.tag = tag
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -316,7 +316,7 @@ extension QuizOfFlagsViewController {
         button.layer.cornerRadius = 12
         button.layer.shadowColor = UIColor.white.cgColor
         button.layer.shadowOpacity = 0.4
-        button.layer.shadowOffset = CGSize(width: 0, height: 6)
+        button.layer.shadowOffset = CGSize(width: 0, height: 4.5)
         button.isEnabled = false
         button.tag = tag
         button.translatesAutoresizingMaskIntoConstraints = false

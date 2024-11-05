@@ -8,8 +8,16 @@
 import UIKit
 
 protocol ResultsViewModelProtocol {
-    var time: Int { get }
-    var radiusView: CGFloat { get }
+    var titleResults: String { get }
+    var titleCountdownOff: String { get }
+    var titleAverageTime: String { get }
+    var titleTimeUp: String { get }
+    var titleTimeSpent: String { get }
+    var titleMoreDetailed: String { get }
+    var titleCorrectAnswers: String { get }
+    var titleIncorrectAnswers: String { get }
+    var titleAnsweredQuestions: String { get }
+    var titleComplete: String { get }
     var radius: CGFloat { get }
     var titleTimeSpend: String { get }
     var imageTimeSpend: String { get }
@@ -54,13 +62,69 @@ protocol ResultsViewModelProtocol {
 }
 
 class ResultsViewModel: ResultsViewModelProtocol {
-    var time: Int {
-        isOneQuestion() ? oneQuestionTime() : allQuestionsTime()
+    var titleResults: String {
+        switch mode.language {
+        case .russian: "Результаты"
+        default: "Results"
+        }
     }
-    var radiusView: CGFloat = 10
+    var titleCountdownOff: String {
+        switch mode.language {
+        case .russian: "Обратный отсчет выключен"
+        default: "Countdown off"
+        }
+    }
+    var titleAverageTime: String {
+        switch mode.language {
+        case .russian: "Среднее время на вопрос"
+        default: "Average time on question"
+        }
+    }
+    var titleTimeUp: String {
+        switch mode.language {
+        case .russian: "Вы не успели ответить за это время"
+        default: "You didn't have time to respond"
+        }
+    }
+    var titleTimeSpent: String {
+        switch mode.language {
+        case .russian: "Потраченное время на вопросы"
+        default: "Time spent on questions"
+        }
+    }
+    var titleMoreDetailed: String {
+        switch mode.language {
+        case .russian: "Подробнее"
+        default: "More detailed"
+        }
+    }
+    var titleCorrectAnswers: String {
+        switch mode.language {
+        case .russian: "Правильные ответы"
+        default: "Correct answers"
+        }
+    }
+    var titleIncorrectAnswers: String {
+        switch mode.language {
+        case .russian: "Неправильные ответы"
+        default: "Incorrect answers"
+        }
+    }
+    var titleAnsweredQuestions: String {
+        switch mode.language {
+        case .russian: "Количество отвеченных вопросов"
+        default: "Number of answered questions"
+        }
+    }
+    var titleComplete: String {
+        switch mode.language {
+        case .russian: "Завершить"
+        default: "Complete"
+        }
+    }
     var radius: CGFloat = 15
     var titleTimeSpend: String {
-        isTime() ? "\(checkTitleTimeSpend())" : "Обратный отсчет выключен"
+        isTime() ? "\(checkTitleTimeSpend())" : titleCountdownOff
     }
     var imageTimeSpend: String {
         isTime() ? "\(checkImageTimeSpend())" : "clock.badge.xmark"
@@ -74,12 +138,14 @@ class ResultsViewModel: ResultsViewModelProtocol {
     var wrongAnswers: Int {
         incorrectAnswers.count
     }
-    var heading: String = "Соотношение ответов"
+    var heading: String {
+        switch mode.language {
+        case .russian: "Соотношение ответов"
+        default: "Answers ratio"
+        }
+    }
     var description: String {
-        """
-        Соотношение ответов
-        На все вопросы вы смогли ответить правильно точно на \(percentCorrectAnswers()).
-        """
+        "\(titleDescription) \(percentCorrectAnswers())."
     }
     var percent: String {
         percentCorrectAnswers()
@@ -92,6 +158,20 @@ class ResultsViewModel: ResultsViewModelProtocol {
     var answeredQuestions: Int
     var favorites: [Favorites]
     private let timeSpend: [CGFloat]
+    private var titleDescription: String {
+        switch mode.language {
+        case .russian:
+        """
+        Соотношение ответов
+        На все вопросы вы смогли ответить правильно точно на 
+        """
+        default:
+        """
+        Answers ratio
+        You were able to answer all the questions exactly 
+        """
+        }
+    }
     
     required init(mode: Setting, game: Games, correctAnswers: [Corrects],
                   incorrectAnswers: [Incorrects], timeSpend: [CGFloat],
@@ -208,12 +288,11 @@ class ResultsViewModel: ResultsViewModelProtocol {
     }
     
     private func isQuestionnaire() -> String {
-        game.gameType == .questionnaire ? titleAllQuestions() : "Среднее время на вопрос"
+        game.gameType == .questionnaire ? titleAllQuestions() : titleAverageTime
     }
     
     private func titleAllQuestions() -> String {
-        timeSpend.isEmpty ? "Вы не успели ответить за это время" :
-        "Потраченное время на все вопросы"
+        timeSpend.isEmpty ? titleTimeUp : titleTimeSpend
     }
     
     private func checkImageTimeSpend() -> String {

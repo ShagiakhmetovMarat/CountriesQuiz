@@ -76,6 +76,12 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
         default: "Details"
         }
     }
+    var titleTimeUp: String {
+        switch mode.language {
+        case .russian: "Время вышло!"
+        default: "Time is up!"
+        }
+    }
     
     var favorites: [Favorites]
     private let mode: Setting
@@ -517,15 +523,15 @@ extension FavoritesViewModel {
     }
     
     private func name(_ favorite: Favorites) -> CGFloat {
-        favorite.isFlag ? 0 : favorite.name.count > 23 ? 0.035 : 0
+        favorite.isFlag ? 0 : favorite.name.count > 23 ? 0.045 : 0
     }
     
     private func isTimeUp(_ favorite: Favorites) -> CGFloat {
-        favorite.isTimeUp ? 0.035 : 0
+        favorite.isTimeUp ? 0.045 : 0
     }
     
     private func title(_ favorite: Favorites) -> String {
-        favorite.isTimeUp ? "Время вышло!" : ""
+        favorite.isTimeUp ? titleTimeUp : ""
     }
 }
 // MARK: - Constraints

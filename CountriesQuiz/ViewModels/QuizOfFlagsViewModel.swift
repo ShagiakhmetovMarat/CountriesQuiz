@@ -204,7 +204,7 @@ class QuizOfFlagsViewModel: QuizOfFlagsViewModelProtocol {
     }
     
     func question() -> UIView {
-        isFlag ? setImage(image: issue) : setLabel(issue, font: "GillSans-SemiBold", size: 32, and: 1)
+        isFlag ? setImage(image: issue) : setLabel(issue, font: "GillSans-SemiBold", size: 30, and: 1)
     }
     
     func stackView(_ first: UIButton, _ second: UIButton, _ third: UIButton, 
@@ -563,7 +563,7 @@ class QuizOfFlagsViewModel: QuizOfFlagsViewModelProtocol {
     
     func progressView(_ progressView: UIProgressView, on issue: UIView, _ view: UIView) {
         let layout = isFlag ? issue.bottomAnchor : view.safeAreaLayoutGuide.topAnchor
-        let constant: CGFloat = isFlag ? 30 : 140
+        let constant: CGFloat = isFlag ? 30 : 160
         NSLayoutConstraint.activate([
             progressView.topAnchor.constraint(equalTo: layout, constant: constant),
             progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -964,7 +964,7 @@ extension QuizOfFlagsViewModel {
             toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
         view.addConstraint(issueSpring)
         NSLayoutConstraint.activate([
-            question.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 65),
+            question.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 95),
             question.widthAnchor.constraint(equalToConstant: widthSubview(view))
         ])
     }

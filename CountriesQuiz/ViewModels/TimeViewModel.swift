@@ -57,8 +57,8 @@ class TimeViewModel: TimeViewModelProtocol {
     }
     var titleTimer: String {
         switch mode.language {
-        case .russian: "Таймер"
-        default: "Timer"
+        case .russian: "Обратный отсчет"
+        default: "Countdown"
         }
     }
     var isOn: Bool {

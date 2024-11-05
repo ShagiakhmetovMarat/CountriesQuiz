@@ -18,7 +18,7 @@ extension GameTypeViewController {
             view.addSubview(button)
             view.layer.shadowColor = color.cgColor
             view.layer.shadowOpacity = 0.4
-            view.layer.shadowOffset = CGSize(width: 0, height: 6)
+            view.layer.shadowOffset = CGSize(width: 0, height: 4.5)
             viewModel.setCenterSubview(subview: button, on: view)
         }
         viewModel.setSquare(subviews: view, sizes: sizes)
@@ -87,7 +87,7 @@ extension GameTypeViewController {
         button.layer.cornerRadius = 12
         button.layer.shadowColor = color.cgColor
         button.layer.shadowOpacity = 0.4
-        button.layer.shadowOffset = CGSize(width: 0, height: 6)
+        button.layer.shadowOffset = CGSize(width: 0, height: 4.5)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.isEnabled = isEnabled ?? true
         button.addTarget(self, action: action, for: .touchUpInside)
@@ -102,7 +102,7 @@ extension GameTypeViewController {
         button.layer.cornerRadius = 20
         button.layer.shadowColor = color.cgColor
         button.layer.shadowOpacity = 0.4
-        button.layer.shadowOffset = CGSize(width: 0, height: 6)
+        button.layer.shadowOffset = CGSize(width: 0, height: 4.5)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(showSetting), for: .touchUpInside)
         button.tag = tag
@@ -124,7 +124,7 @@ extension GameTypeViewController {
         button.layer.cornerRadius = 12
         button.layer.shadowColor = color.cgColor
         button.layer.shadowOpacity = 0.4
-        button.layer.shadowOffset = CGSize(width: 0, height: 6)
+        button.layer.shadowOffset = CGSize(width: 0, height: 4.5)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: action, for: .touchUpInside)
         return button

@@ -78,31 +78,31 @@ class ContinentsViewModel: ContinentsViewModelProtocol {
     private var titleAmericaContinent: String {
         switch mode.language {
         case .russian: "Континент Америки"
-        default: "America continent"
+        default: "American continent"
         }
     }
     private var titleEuropeContinent: String {
         switch mode.language {
         case .russian: "Континент Европы"
-        default: "Europe continent"
+        default: "European continent"
         }
     }
     private var titleAfricaContinent: String {
         switch mode.language {
         case .russian: "Континент Африки"
-        default: "Africa continent"
+        default: "African continent"
         }
     }
     private var titleAsiaContinent: String {
         switch mode.language {
         case .russian: "Континент Азии"
-        default: "Asia continent"
+        default: "Asian continent"
         }
     }
     private var titleOceaniaContinent: String {
         switch mode.language {
         case .russian: "Континент Океании"
-        default: "Oceania continent"
+        default: "Oceanian continent"
         }
     }
     private var titleNumberOfCountries: String {

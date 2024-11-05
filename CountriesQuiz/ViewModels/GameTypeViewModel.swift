@@ -1754,7 +1754,7 @@ extension GameTypeViewModel {
     
     private func setCountQuestions(_ pickerView: UIView, on viewSetting: UIView,
                                    and view: UIView) {
-        setConstraints(pickerView, on: viewSetting, and: view, constant: 100, height: 110)
+        setConstraints(pickerView, on: viewSetting, and: view, constant: 65, height: 170)
     }
     
     private func setContinents(_ stackView: UIView, on viewSetting: UIView,
@@ -1764,12 +1764,12 @@ extension GameTypeViewModel {
     
     private func setCheckmarkTime(_ stackView: UIView, on viewSetting: UIView,
                                   and view: UIView) {
-        setConstraints(stackView, on: viewSetting, and: view, constant: 165, height: 60)
+        setConstraints(stackView, on: viewSetting, and: view, constant: 175, height: 60)
     }
     
     private func setTime(_ stackView: UIView, on viewSetting: UIView,
                          and view: UIView) {
-        setConstraints(stackView, on: viewSetting, and: view, constant: 60, height: 165)
+        setConstraints(stackView, on: viewSetting, and: view, constant: 30, height: 205)
     }
     
     private func setConstraints(_ subview: UIView, on viewSetting: UIView, and

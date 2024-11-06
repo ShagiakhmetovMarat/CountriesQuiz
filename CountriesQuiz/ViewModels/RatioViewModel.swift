@@ -13,7 +13,6 @@ protocol RatioViewModelProtocol {
     var titleIncorrect: String { get }
     var titleTimeSpend: String { get }
     var titleAnswered: String { get }
-    var radius: CGFloat { get }
     var dataCorrect: String { get }
     var progressCorrect: Float { get }
     var dataIncorrect: String { get }
@@ -24,12 +23,19 @@ protocol RatioViewModelProtocol {
     var dataAnswered: String { get }
     var progressAnswered: Float { get }
     var isTime: Bool { get }
+    var titleDone: String { get }
     
     init(mode: Setting, game: Games, correctAnswers: [Corrects],
          incorrectAnswers: [Incorrects], timeSpend: [CGFloat], answeredQuestions: Int)
     
-    func setupSubviews(subviews: UIView..., on subviewOther: UIView)
+    func setSubviews(subviews: UIView..., on subviewOther: UIView)
     func setBarButton(_ button: UIButton,_ navigationItem: UINavigationItem)
+    func setLabel(text: String, color: UIColor, size: CGFloat, font: String,
+                  alignment: NSTextAlignment) -> UILabel
+    func setImage(image: String, size: CGFloat, color: UIColor, addImage: UIImageView) -> UIImageView
+    func setImage(image: String, size: CGFloat, color: UIColor) -> UIImageView
+    func setProgressView(color: UIColor, value: Float) -> UIProgressView
+    
     func setSquare(subview: UIView, sizes: CGFloat)
     func constraintsPanel(button: UIButton, label: UILabel, on subview: UIView)
     func setCircles(_ subview: UIView,_ view: UIView)
@@ -42,14 +48,33 @@ protocol RatioViewModelProtocol {
 }
 
 class RatioViewModel: RatioViewModelProtocol {
-    var title: String = "Статистика"
-    var titleCorrect: String = "Правильные"
-    var titleIncorrect: String = "Неправильные"
-    var titleTimeSpend: String {
-        isTime ? "\(checkTitleTimeSpend())" : "Нет таймера"
+    var title: String {
+        switch mode.language {
+        case .russian: "Статистика"
+        default: "Statistics"
+        }
     }
-    var titleAnswered: String = "Отвеченные вопросы"
-    var radius: CGFloat = 5
+    var titleCorrect: String {
+        switch mode.language {
+        case .russian: "Правильные"
+        default: "Correct"
+        }
+    }
+    var titleIncorrect: String {
+        switch mode.language {
+        case .russian: "Неправильные"
+        default: "Incorrect"
+        }
+    }
+    var titleTimeSpend: String {
+        isTime ? "\(checkTitleTimeSpend())" : titleNoTimer
+    }
+    var titleAnswered: String {
+        switch mode.language {
+        case .russian: "Отвеченные вопросы"
+        default: "Answered questions"
+        }
+    }
     var dataCorrect: String {
         "\(correctAnswers.count) | \(percentCorrect)"
     }
@@ -79,6 +104,37 @@ class RatioViewModel: RatioViewModelProtocol {
     }
     var isTime: Bool {
         mode.timeElapsed.timeElapsed ? true : false
+    }
+    var titleDone: String {
+        switch mode.language {
+        case .russian: "Готово"
+        default: "Done"
+        }
+    }
+    private var radius: CGFloat = 5
+    private var titleNoTimer: String {
+        switch mode.language {
+        case .russian: "Нет таймера"
+        default: "No timer"
+        }
+    }
+    private var titleTimeUp: String {
+        switch mode.language {
+        case .russian: "Время вышло"
+        default: "Time is up"
+        }
+    }
+    private var titleTimeSpent: String {
+        switch mode.language {
+        case .russian: "Потраченное время"
+        default: "Time spent"
+        }
+    }
+    private var titleAverageTime: String {
+        switch mode.language {
+        case .russian: "Среднее время"
+        default: "Average time"
+        }
     }
     private var valueCorrect: CGFloat {
         CGFloat(correctAnswers.count) / CGFloat(mode.countQuestions)
@@ -131,7 +187,7 @@ class RatioViewModel: RatioViewModelProtocol {
         self.answeredQuestions = answeredQuestions
     }
     
-    func setupSubviews(subviews: UIView..., on subviewOther: UIView) {
+    func setSubviews(subviews: UIView..., on subviewOther: UIView) {
         subviews.forEach { subview in
             subviewOther.addSubview(subview)
         }
@@ -140,6 +196,49 @@ class RatioViewModel: RatioViewModelProtocol {
     func setBarButton(_ button: UIButton, _ navigationItem: UINavigationItem) {
         let leftBarButton = UIBarButtonItem(customView: button)
         navigationItem.leftBarButtonItem = leftBarButton
+    }
+    
+    func setLabel(text: String, color: UIColor, size: CGFloat, font: String,
+                  alignment: NSTextAlignment) -> UILabel {
+        let label = UILabel()
+        label.text = text
+        label.font = UIFont(name: font, size: size)
+        label.textColor = color
+        label.textAlignment = alignment
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
+    func setImage(image: String, size: CGFloat, color: UIColor,
+                  addImage: UIImageView) -> UIImageView {
+        let size = UIImage.SymbolConfiguration(pointSize: size)
+        let image = UIImage(systemName: image, withConfiguration: size)
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = color
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        setSubviews(subviews: addImage, on: imageView)
+        return imageView
+    }
+    
+    func setImage(image: String, size: CGFloat, color: UIColor) -> UIImageView {
+        let size = UIImage.SymbolConfiguration(pointSize: size)
+        let image = UIImage(systemName: image, withConfiguration: size)
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = color
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }
+    
+    func setProgressView(color: UIColor, value: Float) -> UIProgressView {
+        let progressView = UIProgressView()
+        progressView.progressTintColor = color
+        progressView.trackTintColor = color.withAlphaComponent(0.3)
+        progressView.progress = value
+        progressView.clipsToBounds = true
+        progressView.layer.cornerRadius = radius
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        return progressView
     }
     // MARK: - Constraints
     func setSquare(subview: UIView, sizes: CGFloat) {
@@ -269,11 +368,11 @@ extension RatioViewModel {
     }
     
     private func isQuestionnaire() -> String {
-        game.gameType == .questionnaire ? titleAllQuestions() : "Среднее время"
+        game.gameType == .questionnaire ? titleAllQuestions() : titleAverageTime
     }
     
     private func titleAllQuestions() -> String {
-        timeSpend.isEmpty ? "Время вышло" : "Потраченное время"
+        timeSpend.isEmpty ? titleTimeUp : titleTimeSpent
     }
     
     private func checkNumberTimeSpend() -> String {

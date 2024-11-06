@@ -296,7 +296,7 @@ extension QuizOfFlagsViewController {
         button.setTitleColor(.blueBlackSea, for: .normal)
         button.titleLabel?.numberOfLines = 0
         button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont(name: "GillSans-SemiBold", size: 23)
+        button.titleLabel?.font = UIFont(name: "GillSans-SemiBold", size: 20)
         button.backgroundColor = .white
         button.layer.cornerRadius = 12
         button.layer.shadowColor = UIColor.white.cgColor

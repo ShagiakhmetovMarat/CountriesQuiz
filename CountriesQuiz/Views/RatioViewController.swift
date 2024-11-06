@@ -23,98 +23,158 @@ class RatioViewController: UIViewController {
     }()
     
     private lazy var labelStatistic: UILabel = {
-        setLabel(text: viewModel.title, color: .black, size: 26, font: "GillSans-SemiBold", alignment: .center)
+        viewModel.setLabel(
+            text: viewModel.title,
+            color: .black, size: 26,
+            font: "GillSans-SemiBold",
+            alignment: .center)
     }()
     
     private lazy var imageCircleCorrect: UIImageView = {
-        setImage(image: "seal.fill", size: 50, color: .greenEmerald.withAlphaComponent(0.3), addImage: imageCorrect)
+        viewModel.setImage(
+            image: "seal.fill",
+            size: 50,
+            color: .greenEmerald.withAlphaComponent(0.3),
+            addImage: imageCorrect)
     }()
     
     private lazy var imageCorrect: UIImageView = {
-        setImage(image: "checkmark", size: 25, color: .greenEmerald)
+        viewModel.setImage(image: "checkmark", size: 25, color: .greenEmerald)
     }()
     
     private lazy var labelCorrect: UILabel = {
-        setLabel(text: viewModel.titleCorrect, color: .black, size: 19.5, font: "GillSans")
+        viewModel.setLabel(
+            text: viewModel.titleCorrect,
+            color: .black,
+            size: 19.5,
+            font: "GillSans",
+            alignment: .left)
     }()
     
     private lazy var labelCorrectCount: UILabel = {
-        setLabel(text: viewModel.dataCorrect, color: .greenDartmouth, size: 20, font: "GillSans-SemiBold", alignment: .right)
+        viewModel.setLabel(
+            text: viewModel.dataCorrect,
+            color: .greenDartmouth,
+            size: 20,
+            font: "GillSans-SemiBold",
+            alignment: .right)
     }()
     
     private lazy var progressViewCorrect: UIProgressView = {
-        setProgressView(color: .greenDartmouth, value: viewModel.progressCorrect)
+        viewModel.setProgressView(color: .greenDartmouth, value: viewModel.progressCorrect)
     }()
     
     private lazy var imageCircleIncorrect: UIImageView = {
-        setImage(image: "seal.fill", size: 50, color: .bismarkFuriozo.withAlphaComponent(0.3), addImage: imageIncorrect)
+        viewModel.setImage(
+            image: "seal.fill",
+            size: 50,
+            color: .bismarkFuriozo.withAlphaComponent(0.3),
+            addImage: imageIncorrect)
     }()
     
     private lazy var imageIncorrect: UIImageView = {
-        setImage(image: "multiply", size: 25, color: .bismarkFuriozo)
+        viewModel.setImage(image: "multiply", size: 25, color: .bismarkFuriozo)
     }()
     
     private lazy var labelIncorrect: UILabel = {
-        setLabel(text: viewModel.titleIncorrect, color: .black, size: 19.5, font: "GillSans")
+        viewModel.setLabel(
+            text: viewModel.titleIncorrect,
+            color: .black,
+            size: 19.5,
+            font: "GillSans",
+            alignment: .left)
     }()
     
     private lazy var labelIncorrectCount: UILabel = {
-        setLabel(text: viewModel.dataIncorrect, color: .bismarkFuriozo, size: 20, font: "GillSans-SemiBold", alignment: .right)
+        viewModel.setLabel(
+            text: viewModel.dataIncorrect,
+            color: .bismarkFuriozo,
+            size: 20,
+            font: "GillSans-SemiBold",
+            alignment: .right)
     }()
     
     private lazy var progressViewIncorrect: UIProgressView = {
-        setProgressView(color: .bismarkFuriozo, value: viewModel.progressIncorrect)
+        viewModel.setProgressView(color: .bismarkFuriozo, value: viewModel.progressIncorrect)
     }()
     
     private lazy var imageCircleTimeSpend: UIImageView = {
-        setImage(image: "seal.fill", size: 50, color: .blueMiddlePersian.withAlphaComponent(0.3), addImage: imageTimeSpend)
+        viewModel.setImage(
+            image: "seal.fill",
+            size: 50,
+            color: .blueMiddlePersian.withAlphaComponent(0.3),
+            addImage: imageTimeSpend)
     }()
     
     private lazy var imageTimeSpend: UIImageView = {
-        setImage(image: viewModel.imageTimeSpend, size: 25, color: .blueMiddlePersian)
+        viewModel.setImage(image: viewModel.imageTimeSpend, size: 25, color: .blueMiddlePersian)
     }()
     
     private lazy var labelTimeSpend: UILabel = {
-        setLabel(text: viewModel.titleTimeSpend, color: .black, size: 19.5, font: "GillSans")
+        viewModel.setLabel(
+            text: viewModel.titleTimeSpend,
+            color: .black,
+            size: 19.5,
+            font: "GillSans",
+            alignment: .left)
     }()
     
     private lazy var labelTimeSpendCount: UILabel = {
-        setLabel(text: viewModel.dataTimeSpend, color: .blueMiddlePersian, size: 20, font: "GillSans-SemiBold", alignment: .right)
+        viewModel.setLabel(
+            text: viewModel.dataTimeSpend,
+            color: .blueMiddlePersian,
+            size: 20,
+            font: "GillSans-SemiBold",
+            alignment: .right)
     }()
     
     private lazy var progressViewTimeSpend: UIProgressView = {
-        setProgressView(color: .blueMiddlePersian, value: viewModel.progressTimeSpend)
+        viewModel.setProgressView(color: .blueMiddlePersian, value: viewModel.progressTimeSpend)
     }()
     
     private lazy var imageCircleAnswered: UIImageView = {
-        setImage(image: "seal.fill", size: 50, color: .gummigut.withAlphaComponent(0.3), addImage: imageAnswered)
+        viewModel.setImage(
+            image: "seal.fill",
+            size: 50,
+            color: .gummigut.withAlphaComponent(0.3),
+            addImage: imageAnswered)
     }()
     
     private lazy var imageAnswered: UIImageView = {
-        setImage(image: "questionmark.bubble", size: 25, color: .gummigut)
+        viewModel.setImage(image: "questionmark.bubble", size: 25, color: .gummigut)
     }()
     
     private lazy var labelAnswered: UILabel = {
-        setLabel(text: viewModel.titleAnswered, color: .black, size: 19.5, font: "GillSans")
+        viewModel.setLabel(
+            text: viewModel.titleAnswered,
+            color: .black,
+            size: 19.5,
+            font: "GillSans",
+            alignment: .left)
     }()
     
     private lazy var labelAnsweredCount: UILabel = {
-        setLabel(text: viewModel.dataAnswered, color: .gummigut, size: 20, font: "GillSans-SemiBold", alignment: .right)
+        viewModel.setLabel(
+            text: viewModel.dataAnswered,
+            color: .gummigut,
+            size: 20,
+            font: "GillSans-SemiBold",
+            alignment: .right)
     }()
     
     private lazy var progressViewAnswered: UIProgressView = {
-        setProgressView(color: .gummigut, value: viewModel.progressAnswered)
+        viewModel.setProgressView(color: .gummigut, value: viewModel.progressAnswered)
     }()
     
     private lazy var imageInfinity: UIImageView = {
-        setImage(image: "infinity", size: 20, color: .blueMiddlePersian)
+        viewModel.setImage(image: "infinity", size: 20, color: .blueMiddlePersian)
     }()
     
     private lazy var buttonDone: UIButton = {
         let button = Button(type: .system)
-        button.setTitle("Готово", for: .normal)
+        button.setTitle(viewModel.titleDone, for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "mr_fontick", size: 25)
+        button.titleLabel?.font = UIFont(name: "GillSans-SemiBold", size: 25)
         button.backgroundColor = .black
         button.layer.cornerRadius = 12
         button.layer.shadowColor = UIColor.black.cgColor
@@ -146,7 +206,7 @@ class RatioViewController: UIViewController {
     }
     
     private func setSubviews() {
-        viewModel.setupSubviews(subviews: labelStatistic, imageCircleCorrect,
+        viewModel.setSubviews(subviews: labelStatistic, imageCircleCorrect,
                                 labelCorrect, labelCorrectCount, progressViewCorrect,
                                 imageCircleIncorrect, labelIncorrect, labelIncorrectCount,
                                 progressViewIncorrect, imageCircleTimeSpend,
@@ -162,44 +222,6 @@ class RatioViewController: UIViewController {
     
     @objc private func close() {
         dismiss(animated: true)
-    }
-}
-// MARK: - Set subviews
-extension RatioViewController {
-    private func setLabel(text: String, color: UIColor, size: CGFloat, font: String,
-                          alignment: NSTextAlignment? = nil) -> UILabel {
-        let label = UILabel()
-        label.text = text
-        label.font = UIFont(name: font, size: size)
-        label.textColor = color
-        label.textAlignment = alignment ?? .left
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
-    
-    private func setImage(image: String, size: CGFloat, color: UIColor,
-                          addImage: UIImageView? = nil) -> UIImageView {
-        let size = UIImage.SymbolConfiguration(pointSize: size)
-        let image = UIImage(systemName: image, withConfiguration: size)
-        let imageView = UIImageView(image: image)
-        imageView.tintColor = color
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        if let addImage = addImage {
-            viewModel.setupSubviews(subviews: addImage, on: imageView)
-        }
-        return imageView
-    }
-    
-    private func setProgressView(color: UIColor, value: Float) -> UIProgressView {
-        let progressView = UIProgressView()
-        progressView.progressTintColor = color
-        progressView.trackTintColor = color.withAlphaComponent(0.3)
-        progressView.progress = value
-        progressView.clipsToBounds = true
-        progressView.layer.cornerRadius = viewModel.radius
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        return progressView
     }
 }
 // MARK: - Set constraints

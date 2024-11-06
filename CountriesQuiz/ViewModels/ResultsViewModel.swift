@@ -9,10 +9,6 @@ import UIKit
 
 protocol ResultsViewModelProtocol {
     var titleResults: String { get }
-    var titleCountdownOff: String { get }
-    var titleAverageTime: String { get }
-    var titleTimeUp: String { get }
-    var titleTimeSpent: String { get }
     var titleMoreDetailed: String { get }
     var titleCorrectAnswers: String { get }
     var titleIncorrectAnswers: String { get }
@@ -22,12 +18,11 @@ protocol ResultsViewModelProtocol {
     var titleTimeSpend: String { get }
     var imageTimeSpend: String { get }
     var numberTimeSpend: String { get }
-    var rightAnswers: Int { get }
-    var wrongAnswers: Int { get }
+    var rightAnswersCount: Int { get }
+    var wrongAnswersCount: Int { get }
     var answeredQuestions: Int { get }
-    var heading: String { get }
     var description: String { get }
-    var percent: String { get }
+    var height: CGFloat { get }
     var favorites: [Favorites] { get }
     
     var mode: Setting { get }
@@ -45,10 +40,15 @@ protocol ResultsViewModelProtocol {
     func allQuestionsTime() -> Int
     func width(_ view: UIView) -> CGFloat
     
-    func setupSubviews(subviews: UIView..., on subviewOther: UIView)
+    func setSubviews(subviews: UIView..., on subviewOther: UIView)
+    func setLabel(title: String, font: String, size: CGFloat, color: UIColor, alignment: NSTextAlignment) -> UILabel
+    func setImage(image: String, size: CGFloat, color: UIColor) -> UIImageView
+    func setImage(image: String, size: CGFloat, color: UIColor, addView: UIView) -> UIImageView
+    func setStackView(_ first: UIView, _ second: UIView, and distribution: UIStackView.Distribution) -> UIStackView
+    func setStackView(_ first: UIView, _ second: UIView, _ third: UIView, _ fourth: UIView) -> UIStackView
     
     func percentCorrectAnswers() -> String
-    func getRange(subString: String, fromString: String) -> NSRange
+    func attributedText(text: String) -> NSMutableAttributedString
     func setFavorites(newFavorites: [Favorites])
     
     func constraintsView(view: UIView, image: UIImageView, label: UILabel, button: UIButton)
@@ -68,34 +68,10 @@ class ResultsViewModel: ResultsViewModelProtocol {
         default: "Results"
         }
     }
-    var titleCountdownOff: String {
-        switch mode.language {
-        case .russian: "Обратный отсчет выключен"
-        default: "Countdown off"
-        }
-    }
-    var titleAverageTime: String {
-        switch mode.language {
-        case .russian: "Среднее время на вопрос"
-        default: "Average time on question"
-        }
-    }
-    var titleTimeUp: String {
-        switch mode.language {
-        case .russian: "Вы не успели ответить за это время"
-        default: "You didn't have time to respond"
-        }
-    }
-    var titleTimeSpent: String {
-        switch mode.language {
-        case .russian: "Потраченное время на вопросы"
-        default: "Time spent on questions"
-        }
-    }
     var titleMoreDetailed: String {
         switch mode.language {
-        case .russian: "Подробнее"
-        default: "More detailed"
+        case .russian: "Подробнее..."
+        default: "More detailed..."
         }
     }
     var titleCorrectAnswers: String {
@@ -132,23 +108,17 @@ class ResultsViewModel: ResultsViewModelProtocol {
     var numberTimeSpend: String {
         isTime() ? "\(checkNumberTimeSpend())" : " "
     }
-    var rightAnswers: Int {
+    var rightAnswersCount: Int {
         correctAnswers.count
     }
-    var wrongAnswers: Int {
+    var wrongAnswersCount: Int {
         incorrectAnswers.count
-    }
-    var heading: String {
-        switch mode.language {
-        case .russian: "Соотношение ответов"
-        default: "Answers ratio"
-        }
     }
     var description: String {
         "\(titleDescription) \(percentCorrectAnswers())."
     }
-    var percent: String {
-        percentCorrectAnswers()
+    var height: CGFloat {
+        mode.language == .russian ? 150 : 125
     }
     
     let mode: Setting
@@ -158,19 +128,53 @@ class ResultsViewModel: ResultsViewModelProtocol {
     var answeredQuestions: Int
     var favorites: [Favorites]
     private let timeSpend: [CGFloat]
+    
     private var titleDescription: String {
         switch mode.language {
         case .russian:
         """
         Соотношение ответов
-        На все вопросы вы смогли ответить правильно точно на 
+        На все вопросы вы смогли ответить правильно точно на
         """
         default:
         """
         Answers ratio
-        You were able to answer all the questions exactly 
+        You were able to answer all the questions exactly
         """
         }
+    }
+    private var heading: String {
+        switch mode.language {
+        case .russian: "Соотношение ответов"
+        default: "Answers ratio"
+        }
+    }
+    private var titleCountdownOff: String {
+        switch mode.language {
+        case .russian: "Обратный отсчет выключен"
+        default: "Countdown off"
+        }
+    }
+    private var titleAverageTime: String {
+        switch mode.language {
+        case .russian: "Среднее время на вопрос"
+        default: "Average time on question"
+        }
+    }
+    private var titleTimeUp: String {
+        switch mode.language {
+        case .russian: "Вы не успели ответить за это время"
+        default: "You didn't have time to respond"
+        }
+    }
+    private var titleTimeSpent: String {
+        switch mode.language {
+        case .russian: "Потраченное время на вопросы"
+        default: "Time spent on questions"
+        }
+    }
+    private var percent: String {
+        percentCorrectAnswers()
     }
     
     required init(mode: Setting, game: Games, correctAnswers: [Corrects],
@@ -204,16 +208,78 @@ class ResultsViewModel: ResultsViewModelProtocol {
     func width(_ view: UIView) -> CGFloat {
         view.frame.width / 2 + 10
     }
+    
+    func percentCorrectAnswers() -> String {
+        let percent = CGFloat(rightAnswersCount) / CGFloat(mode.countQuestions) * 100
+        return stringWithoutNull(count: percent) + "%"
+    }
+    
+    func attributedText(text: String) -> NSMutableAttributedString {
+        let attributed = NSMutableAttributedString(string: text)
+        let keyFont = NSAttributedString.Key.font
+        let keyColor = NSAttributedString.Key.foregroundColor
+        let font = UIFont(name: "GillSans-SemiBold", size: 22)
+        let color = game.favorite
+        let rangeHeading = getRange(subString: heading, fromString: text)
+        let rangePercent = getRange(subString: percent, fromString: text)
+        attributed.addAttribute(keyFont, value: font ?? "", range: rangeHeading)
+        attributed.addAttribute(keyColor, value: color, range: rangePercent)
+        return attributed
+    }
     // MARK: - Set subviews
-    func setupSubviews(subviews: UIView..., on subviewOther: UIView) {
+    func setSubviews(subviews: UIView..., on subviewOther: UIView) {
         subviews.forEach { subview in
             subviewOther.addSubview(subview)
         }
     }
-    // MARK: - Percent titles
-    func percentCorrectAnswers() -> String {
-        let percent = CGFloat(rightAnswers) / CGFloat(mode.countQuestions) * 100
-        return stringWithoutNull(count: percent) + "%"
+    
+    func setLabel(title: String, font: String, size: CGFloat, color: UIColor,
+                  alignment: NSTextAlignment) -> UILabel {
+        let label = UILabel()
+        label.text = title
+        label.font = UIFont(name: font, size: size)
+        label.textColor = color
+        label.numberOfLines = 0
+        label.textAlignment = alignment
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
+    func setImage(image: String, size: CGFloat, color: UIColor) -> UIImageView {
+        let size = UIImage.SymbolConfiguration(pointSize: size)
+        let image = UIImage(systemName: image, withConfiguration: size)
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = color
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }
+    
+    func setImage(image: String, size: CGFloat, color: UIColor,
+                  addView: UIView) -> UIImageView {
+        let size = UIImage.SymbolConfiguration(pointSize: size)
+        let image = UIImage(systemName: image, withConfiguration: size)
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = color
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        setSubviews(subviews: addView, on: imageView)
+        return imageView
+    }
+    
+    func setStackView(_ first: UIView, _ second: UIView, and
+                      distribution: UIStackView.Distribution) -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [first, second])
+        stackView.spacing = 10
+        stackView.distribution = distribution
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }
+    
+    func setStackView(_ first: UIView, _ second: UIView, _ third: UIView,
+                      _ fourth: UIView) -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [first, second, third, fourth])
+        stackView.spacing = 2
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }
     // MARK: - Transition to RatioViewController
     func ratio() -> RatioViewModelProtocol {
@@ -234,12 +300,12 @@ class ResultsViewModel: ResultsViewModelProtocol {
     func constraintsView(view: UIView, image: UIImageView, label: UILabel, button: UIButton) {
         NSLayoutConstraint.activate([
             image.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            image.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            image.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
             label.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            label.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 5),
-            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            button.topAnchor.constraint(equalTo: label.bottomAnchor),
-            button.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 5)
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 95),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+            button.topAnchor.constraint(equalTo: label.bottomAnchor, constant: -5),
+            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 95)
         ])
     }
     
@@ -248,7 +314,7 @@ class ResultsViewModel: ResultsViewModelProtocol {
         NSLayoutConstraint.activate([
             labelFirst.topAnchor.constraint(equalTo: subview.topAnchor, constant: 10),
             labelFirst.leadingAnchor.constraint(equalTo: subview.leadingAnchor, constant: 5),
-            labelFirst.trailingAnchor.constraint(equalTo: image.leadingAnchor, constant: -5)
+            labelFirst.trailingAnchor.constraint(equalTo: subview.trailingAnchor, constant: -51)
         ])
         
         NSLayoutConstraint.activate([
@@ -269,14 +335,6 @@ class ResultsViewModel: ResultsViewModelProtocol {
             subview.centerYAnchor.constraint(equalTo: subviewOther.centerYAnchor)
         ])
     }
-    // MARK: - Get word from text description
-    func getRange(subString: String, fromString: String) -> NSRange {
-        let linkRange = fromString.range(of: subString)!
-        let start = fromString.distance(from: fromString.startIndex, to: linkRange.lowerBound)
-        let end = fromString.distance(from: fromString.startIndex, to: linkRange.upperBound)
-        let range = NSMakeRange(start, end - start)
-        return range
-    }
     
     func setFavorites(newFavorites: [Favorites]) {
         favorites = newFavorites
@@ -292,7 +350,7 @@ class ResultsViewModel: ResultsViewModelProtocol {
     }
     
     private func titleAllQuestions() -> String {
-        timeSpend.isEmpty ? titleTimeUp : titleTimeSpend
+        timeSpend.isEmpty ? titleTimeUp : titleTimeSpent
     }
     
     private func checkImageTimeSpend() -> String {
@@ -331,5 +389,13 @@ class ResultsViewModel: ResultsViewModelProtocol {
     
     private func stringWithoutNull(count: CGFloat) -> String {
         String(format: "%.0f", count)
+    }
+    
+    private func getRange(subString: String, fromString: String) -> NSRange {
+        let linkRange = fromString.range(of: subString)!
+        let start = fromString.distance(from: fromString.startIndex, to: linkRange.lowerBound)
+        let end = fromString.distance(from: fromString.startIndex, to: linkRange.upperBound)
+        let range = NSMakeRange(start, end - start)
+        return range
     }
 }

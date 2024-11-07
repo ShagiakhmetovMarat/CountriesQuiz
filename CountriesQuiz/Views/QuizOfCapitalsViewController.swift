@@ -23,7 +23,7 @@ class QuizOfCapitalsViewController: UIViewController, ViewControllerInput {
     }()
     
     private lazy var labelTimer: UILabel = {
-        viewModel.setLabel("\(viewModel.time)", size: 35, color: .white, and: 1)
+        viewModel.setLabel("\(viewModel.time)", font: "GillSans", size: 35, and: 1)
     }()
     
     private lazy var question: UIView = {
@@ -42,15 +42,15 @@ class QuizOfCapitalsViewController: UIViewController, ViewControllerInput {
     }()
     
     private lazy var labelNumber: UILabel = {
-        viewModel.setLabel(viewModel.titleNumberNil, size: 23, color: .white, and: 1)
+        viewModel.setLabel(viewModel.titleNumberNil, font: "GillSans", size: 23, and: 1)
     }()
     
     private lazy var labelQuiz: UILabel = {
-        viewModel.setLabel(viewModel.titleQuiz, size: 23, color: .white, and: 0)
+        viewModel.setLabel(viewModel.titleQuiz, font: "GillSans", size: 23, and: 0)
     }()
     
     private lazy var labelDescription: UILabel = {
-        viewModel.setLabel(viewModel.titleDescription, size: 19, color: .white, and: 0)
+        viewModel.setLabel(viewModel.titleDescription, font: "GillSans-SemiBold", size: 19, and: 0)
     }()
     
     private lazy var buttonFirst: UIButton = {
@@ -232,12 +232,12 @@ extension QuizOfCapitalsViewController {
         button.setTitleColor(.blueBlackSea, for: .normal)
         button.titleLabel?.numberOfLines = 0
         button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = UIFont(name: "mr_fontick", size: 23)
+        button.titleLabel?.font = UIFont(name: "GillSans-SemiBold", size: 20)
         button.backgroundColor = .white
         button.layer.cornerRadius = 12
         button.layer.shadowColor = UIColor.white.cgColor
         button.layer.shadowOpacity = 0.4
-        button.layer.shadowOffset = CGSize(width: 0, height: 6)
+        button.layer.shadowOffset = CGSize(width: 0, height: 4.5)
         button.isEnabled = false
         button.tag = tag
         button.translatesAutoresizingMaskIntoConstraints = false

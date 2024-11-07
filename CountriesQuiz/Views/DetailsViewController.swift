@@ -55,7 +55,7 @@ class DetailsViewController: UIViewController {
     }()
     
     private lazy var titleCountry: UILabel = {
-        viewModel.setLabel(title: viewModel.name, size: 24, style: "GillSans", color: .white)
+        viewModel.setLabel(title: viewModel.name, size: 22.5, style: "GillSans", color: .white)
     }()
     
     private lazy var viewCountryDetails: UIView = {
@@ -71,7 +71,7 @@ class DetailsViewController: UIViewController {
     }()
     
     private lazy var titleCapital: UILabel = {
-        viewModel.setLabel(title: viewModel.capital, size: 24, style: "GillSans", color: .white)
+        viewModel.setLabel(title: viewModel.capital, size: 22.5, style: "GillSans", color: .white)
     }()
     
     private lazy var viewCapitalDetails: UIView = {
@@ -87,7 +87,7 @@ class DetailsViewController: UIViewController {
     }()
     
     private lazy var titleContinent: UILabel = {
-        viewModel.setLabel(title: viewModel.continent, size: 24, style: "GillSans", color: .white)
+        viewModel.setLabel(title: viewModel.continent, size: 22.5, style: "GillSans", color: .white)
     }()
     
     private lazy var viewContinentDetails: UIView = {
@@ -259,21 +259,21 @@ extension DetailsViewController {
             viewCountryDetails.topAnchor.constraint(equalTo: viewFlagDetails.bottomAnchor, constant: 8),
             viewCountryDetails.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             viewCountryDetails.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            viewCountryDetails.heightAnchor.constraint(equalToConstant: 50)
+            viewCountryDetails.heightAnchor.constraint(equalToConstant: 55)
         ])
         
         NSLayoutConstraint.activate([
             viewCapitalDetails.topAnchor.constraint(equalTo: viewCountryDetails.bottomAnchor, constant: 5),
             viewCapitalDetails.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             viewCapitalDetails.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            viewCapitalDetails.heightAnchor.constraint(equalToConstant: 50)
+            viewCapitalDetails.heightAnchor.constraint(equalToConstant: 55)
         ])
         
         NSLayoutConstraint.activate([
             viewContinentDetails.topAnchor.constraint(equalTo: viewCapitalDetails.bottomAnchor, constant: 5),
             viewContinentDetails.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             viewContinentDetails.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            viewContinentDetails.heightAnchor.constraint(equalToConstant: 50)
+            viewContinentDetails.heightAnchor.constraint(equalToConstant: 55)
         ])
         
         NSLayoutConstraint.activate([

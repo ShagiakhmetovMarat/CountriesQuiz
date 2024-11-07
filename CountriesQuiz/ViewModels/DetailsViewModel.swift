@@ -217,7 +217,7 @@ class DetailsViewModel: DetailsViewModelProtocol {
     
     func subview(title: String, and tag: Int) -> UIView {
         if isFlag {
-            setLabel(title: title, size: 23, style: "GillSans-SemiBold", color: textColor(title, tag))
+            setLabel(title: title, size: 20, style: "GillSans-SemiBold", color: textColor(title, tag))
         } else {
             setSubview(title, tag)
         }
@@ -368,7 +368,7 @@ extension DetailsViewModel {
 extension DetailsViewModel {
     private func setSubview(_ title: String, _ tag: Int) -> UIView {
         if game.gameType == .quizOfCapitals {
-            setLabel(title: title, size: 23, style: "GillSans-SemiBold", color: textColor(title, tag))
+            setLabel(title: title, size: 20, style: "GillSans-SemiBold", color: textColor(title, tag))
         } else {
             setImage(image: UIImage(named: title))
         }

@@ -54,7 +54,7 @@ class QuizOfFlagsViewController: UIViewController, ViewControllerInput {
     }()
     
     private lazy var labelDescription: UILabel = {
-        viewModel.setLabel(viewModel.textDescription, font: "GillSans", size: 19, and: 0)
+        viewModel.setLabel(viewModel.textDescription, font: "GillSans-SemiBold", size: 19, and: 0)
     }()
     
     private lazy var buttonFirst: UIButton = {

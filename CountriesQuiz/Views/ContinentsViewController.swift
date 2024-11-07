@@ -87,7 +87,6 @@ class ContinentsViewController: UIViewController {
     }()
     
     var viewModel: ContinentsViewModelProtocol!
-    var delegate: SettingViewControllerInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,7 +112,7 @@ class ContinentsViewController: UIViewController {
     }
     
     @objc private func backToSetting() {
-        delegate.dataToSetting(mode: viewModel.mode)
+        viewModel.delegate.dataToSetting(mode: viewModel.mode)
         navigationController?.popViewController(animated: true)
     }
     

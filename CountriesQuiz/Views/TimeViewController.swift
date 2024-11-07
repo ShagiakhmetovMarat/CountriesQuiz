@@ -115,7 +115,6 @@ class TimeViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }()
     
     var viewModel: TimeViewModelProtocol!
-    var delegate: SettingViewControllerInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,7 +159,7 @@ class TimeViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     @objc private func backToSetting() {
-        delegate.dataToSetting(mode: viewModel.mode)
+        viewModel.delegate.dataToSetting(mode: viewModel.mode)
         navigationController?.popViewController(animated: true)
     }
     

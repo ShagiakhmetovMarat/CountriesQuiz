@@ -332,7 +332,7 @@ extension FavoritesViewModel {
         if game.gameType == .questionnaire {
             let subview = subview(favourite, name, and: tag)
             let checkmark = setImage(image: checkmark(favourite, name, tag),
-                                     color: color(favourite, name, tag), size: 26)
+                                     color: color(favourite, name, tag), size: 25)
             setSubviews(subviews: checkmark, subview, on: button)
             setConstraints(favourite: favourite, checkmark, and: subview, on: button, name, view)
         } else {
@@ -346,7 +346,7 @@ extension FavoritesViewModel {
                          and tag: Int) -> UIView {
         if favourite.isFlag {
             let color = textColor(favourite, name, and: tag)
-            return setLabel(title: name, font: "GillSans-SemiBold", size: 21, color: color)
+            return setLabel(title: name, font: "GillSans-SemiBold", size: 19, color: color)
         } else {
             return setSubview(favourite, name, and: tag)
         }
@@ -356,7 +356,7 @@ extension FavoritesViewModel {
                             and tag: Int) -> UIView {
         if game.gameType == .quizOfCapitals {
             let color = textColor(favourite, name, and: tag)
-            return setLabel(title: name, font: "GillSans-SemiBold", size: 21, color: color)
+            return setLabel(title: name, font: "GillSans-SemiBold", size: 19, color: color)
         } else {
             return setImage(image: name, radius: 8)
         }

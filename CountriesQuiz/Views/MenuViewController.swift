@@ -270,7 +270,7 @@ extension MenuViewController {
         let settingVC = SettingViewController()
         let navigationVC = UINavigationController(rootViewController: settingVC)
         settingVC.viewModel = settingViewModel
-        settingVC.delegate = self
+        settingVC.viewModel.delegate = self
         navigationVC.transitioningDelegate = self
         navigationVC.modalPresentationStyle = .custom
         present(navigationVC, animated: true)

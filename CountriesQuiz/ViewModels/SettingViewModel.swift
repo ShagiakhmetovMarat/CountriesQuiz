@@ -14,6 +14,7 @@ protocol SettingViewModelProtocol {
     var numberOfSections: Int { get }
     var color: UIColor { get }
     var mode: Setting { get }
+    var delegate: MenuViewControllerInput! { get set }
     
     init(mode: Setting)
     
@@ -48,6 +49,7 @@ class SettingViewModel: SettingViewModelProtocol {
     var color: UIColor {
         !allCountries && countQuestions > 50 ? .white : .grayStone
     }
+    var delegate: MenuViewControllerInput!
     var mode: Setting
     
     private var countQuestions: Int {

@@ -52,7 +52,6 @@ class LanguageViewController: UIViewController, UITableViewDelegate, UITableView
     }()
     
     var viewModel: LanguageViewModelProtocol!
-    var delegate: SettingViewControllerInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,7 +93,8 @@ extension LanguageViewController {
     }
     
     @objc private func backToSetting() {
-        delegate.dataToSetting(mode: viewModel.mode)
+        viewModel.checkTimer()
+        viewModel.delegate.dataToSetting(mode: viewModel.mode)
         navigationController?.popViewController(animated: true)
     }
 }

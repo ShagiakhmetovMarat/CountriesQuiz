@@ -59,7 +59,6 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     }()
     
     var viewModel: SettingViewModelProtocol!
-    var delegate: MenuViewControllerInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,7 +111,7 @@ extension SettingViewController {
     }
     
     @objc private func backToMenu() {
-        delegate.modeToMenu(setting: viewModel.mode)
+        viewModel.delegate.modeToMenu(setting: viewModel.mode)
         StorageManager.shared.saveSetting(setting: viewModel.mode)
         dismiss(animated: true)
     }
@@ -136,7 +135,7 @@ extension SettingViewController {
         let countQuestionsViewModel = viewModel.countQuestionsViewController()
         let countQuestionsVC = CountQuestionsViewController()
         countQuestionsVC.viewModel = countQuestionsViewModel
-        countQuestionsVC.delegate = self
+        countQuestionsVC.viewModel.delegate = self
         navigationController?.pushViewController(countQuestionsVC, animated: true)
     }
     
@@ -144,7 +143,7 @@ extension SettingViewController {
         let continentsViewModel = viewModel.continentsViewController()
         let continentsVC = ContinentsViewController()
         continentsVC.viewModel = continentsViewModel
-        continentsVC.delegate = self
+        continentsVC.viewModel.delegate = self
         navigationController?.pushViewController(continentsVC, animated: true)
     }
     
@@ -152,7 +151,7 @@ extension SettingViewController {
         let timeViewModel = viewModel.timeViewController()
         let timeVC = TimeViewController()
         timeVC.viewModel = timeViewModel
-        timeVC.delegate = self
+        timeVC.viewModel.delegate = self
         navigationController?.pushViewController(timeVC, animated: true)
     }
     
@@ -160,7 +159,7 @@ extension SettingViewController {
         let languageViewModel = viewModel.languageViewController()
         let languageVC = LanguageViewController()
         languageVC.viewModel = languageViewModel
-        languageVC.delegate = self
+        languageVC.viewModel.delegate = self
         navigationController?.pushViewController(languageVC, animated: true)
     }
 }

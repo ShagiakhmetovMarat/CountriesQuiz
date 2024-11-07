@@ -45,7 +45,7 @@ class RatioViewController: UIViewController {
     private lazy var labelCorrect: UILabel = {
         viewModel.setLabel(
             text: viewModel.titleCorrect,
-            color: .black,
+            color: .greenEmerald,
             size: 19.5,
             font: "GillSans",
             alignment: .left)
@@ -54,14 +54,14 @@ class RatioViewController: UIViewController {
     private lazy var labelCorrectCount: UILabel = {
         viewModel.setLabel(
             text: viewModel.dataCorrect,
-            color: .greenDartmouth,
+            color: .greenEmerald,
             size: 20,
             font: "GillSans-SemiBold",
             alignment: .right)
     }()
     
     private lazy var progressViewCorrect: UIProgressView = {
-        viewModel.setProgressView(color: .greenDartmouth, value: viewModel.progressCorrect)
+        viewModel.setProgressView(color: .greenEmerald, value: viewModel.progressCorrect)
     }()
     
     private lazy var imageCircleIncorrect: UIImageView = {
@@ -79,7 +79,7 @@ class RatioViewController: UIViewController {
     private lazy var labelIncorrect: UILabel = {
         viewModel.setLabel(
             text: viewModel.titleIncorrect,
-            color: .black,
+            color: .bismarkFuriozo,
             size: 19.5,
             font: "GillSans",
             alignment: .left)
@@ -113,7 +113,7 @@ class RatioViewController: UIViewController {
     private lazy var labelTimeSpend: UILabel = {
         viewModel.setLabel(
             text: viewModel.titleTimeSpend,
-            color: .black,
+            color: .blueMiddlePersian,
             size: 19.5,
             font: "GillSans",
             alignment: .left)
@@ -147,7 +147,7 @@ class RatioViewController: UIViewController {
     private lazy var labelAnswered: UILabel = {
         viewModel.setLabel(
             text: viewModel.titleAnswered,
-            color: .black,
+            color: .gummigut,
             size: 19.5,
             font: "GillSans",
             alignment: .left)

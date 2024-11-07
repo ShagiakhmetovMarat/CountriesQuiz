@@ -199,7 +199,7 @@ extension FavoritesViewController {
     }
     
     private func setButton() -> UIButton {
-        let label = viewModel.setLabel(title: viewModel.titleDetails, font: "GillSans", size: 23, color: .white)
+        let label = viewModel.setLabel(title: viewModel.titleDetails, font: "GillSans-SemiBold", size: 23, color: .white)
         let image = viewModel.setImage(image: "chevron.right", color: .white, size: 21)
         let button = Button(type: .custom)
         button.backgroundColor = viewModel.backgroundLight

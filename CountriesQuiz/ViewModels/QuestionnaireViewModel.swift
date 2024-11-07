@@ -41,8 +41,8 @@ protocol QuestionnaireViewModelProtocol {
     func setBarButton(_ button: UIButton,_ navigationItem: UINavigationItem)
     func isEnabledButtons(isOn: Bool)
     func question() -> UIView
-    func setLabel(_ title: String, size: CGFloat, color: UIColor, and opacity: Float) -> UILabel
-    func setLabel(_ title: String, size: CGFloat, and opacity: Float, tag: Int) -> UILabel
+    func setLabel(_ title: String, font: String, size: CGFloat, color: UIColor, and opacity: Float) -> UILabel
+    func setLabel(title: String, tag: Int) -> UILabel
     func stackView(_ first: UIButton,_ second: UIButton,_ third: UIButton,_ fourth: UIButton) -> UIStackView
     func setCheckmark(tag: Int) -> UIImageView
     func setImage(image: Countries, tag: Int) -> UIImageView
@@ -123,8 +123,18 @@ class QuestionnaireViewModel: QuestionnaireViewModelProtocol {
     var titleNumber: String {
         "0 / \(countQuestions)"
     }
-    var titleQuiz = "Выберите правильные ответы"
-    var titleDescription = "Коснитесь экрана, чтобы завершить"
+    var titleQuiz: String {
+        switch mode.language {
+        case .russian: "Выберите правильные ответы"
+        default: "Choose the correct answers"
+        }
+    }
+    var titleDescription: String {
+        switch mode.language {
+        case .russian: "Коснитесь экрана, чтобы завершить"
+        default: "Touch the screen to finish"
+        }
+    }
     var timer = Timer()
     var countdown = Timer()
     var lastQuestion = false
@@ -179,6 +189,12 @@ class QuestionnaireViewModel: QuestionnaireViewModelProtocol {
     }
     private var responseFourth: Countries {
         data.buttonFourth[checkCurrentQuestion]
+    }
+    private var titleTimeUp: String {
+        switch mode.language {
+        case .russian: "Время вышло! Коснитесь экрана, чтобы завершить"
+        default: "Time is up! Touch the screen to finish"
+        }
     }
     
     private var buttonFirst: UIButton!
@@ -246,15 +262,15 @@ class QuestionnaireViewModel: QuestionnaireViewModelProtocol {
         if isFlag {
             setImage(image: issue)
         } else {
-            setLabel(issue, size: 32, color: .white, and: 1)
+            setLabel(issue, font: "GillSans-Semibold", size: 30, color: .white, and: 1)
         }
     }
     
-    func setLabel(_ title: String, size: CGFloat, color: UIColor, 
+    func setLabel(_ title: String, font: String, size: CGFloat, color: UIColor,
                   and opacity: Float) -> UILabel {
         let label = UILabel()
         label.text = title
-        label.font = UIFont(name: "mr_fontick", size: size)
+        label.font = UIFont(name: font, size: size)
         label.textColor = color
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -263,15 +279,13 @@ class QuestionnaireViewModel: QuestionnaireViewModelProtocol {
         return label
     }
     
-    func setLabel(_ title: String, size: CGFloat, and opacity: Float, 
-                  tag: Int) -> UILabel {
+    func setLabel(title: String, tag: Int) -> UILabel {
         let label = UILabel()
         label.text = title
-        label.font = UIFont(name: "mr_fontick", size: size)
+        label.font = UIFont(name: "GillSans-SemiBold", size: 20)
         label.textColor = .white
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.layer.opacity = opacity
         label.tag = tag
         label.translatesAutoresizingMaskIntoConstraints = false
         setLabel(label: label, tag: tag)
@@ -453,7 +467,7 @@ class QuestionnaireViewModel: QuestionnaireViewModelProtocol {
     }
     
     func endGame(_ labelQuiz: UILabel, _ labelDescription: UILabel) {
-        labelDescription.text = "Время вышло! Коснитесь экрана, чтобы завершить"
+        labelDescription.text = titleTimeUp
         showFinishTitle(labelQuiz, labelDescription)
         setLastQuestion(true)
     }
@@ -545,7 +559,7 @@ class QuestionnaireViewModel: QuestionnaireViewModelProtocol {
     
     func progressView(_ progressView: UIProgressView, on issue: UIView, _ view: UIView) {
         let layout = isFlag ? issue.bottomAnchor : view.safeAreaLayoutGuide.topAnchor
-        let constant: CGFloat = isFlag ? 30 : 140
+        let constant: CGFloat = isFlag ? 30 : 160
         NSLayoutConstraint.activate([
             progressView.topAnchor.constraint(equalTo: layout, constant: constant),
             progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -554,11 +568,9 @@ class QuestionnaireViewModel: QuestionnaireViewModelProtocol {
     }
     
     func constraintsButton(_ button: UIButton, _ question: UIView, _ view: UIView) {
-        let layout = isFlag ? question.centerYAnchor : question.topAnchor
-        let layoutYAxis = isFlag ? button.centerYAnchor : button.topAnchor
         let constant = button.tag == 1 ? -setConstant(view) : setConstant(view)
         NSLayoutConstraint.activate([
-            layoutYAxis.constraint(equalTo: layout),
+            button.centerYAnchor.constraint(equalTo: question.centerYAnchor),
             button.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: constant)
         ])
         setSquare(subview: button, sizes: 40)
@@ -1086,9 +1098,15 @@ class QuestionnaireViewModel: QuestionnaireViewModelProtocol {
     }
     
     private func updateDataLabel(_ question: UILabel, view: UIView) {
-        question.text = issue
+        updateQuestion(question)
         updateImages()
         updateWidthFlag(view)
+    }
+    
+    private func updateQuestion(_ label: UILabel) {
+        let size: CGFloat = issue.count > 30 ? 25 : 30
+        label.text = issue
+        label.font = UIFont(name: "GillSans-Semibold", size: size)
     }
     
     private func updateLabels() {
@@ -1233,7 +1251,7 @@ extension QuestionnaireViewModel {
             toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
         view.addConstraint(issueSpring)
         NSLayoutConstraint.activate([
-            question.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 65),
+            question.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 95),
             question.widthAnchor.constraint(equalToConstant: widthLabel(view))
         ])
     }

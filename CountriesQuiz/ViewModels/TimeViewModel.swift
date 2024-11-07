@@ -20,7 +20,7 @@ protocol TimeViewModelProtocol {
     var segmentIndex: Int { get }
     var numberOfComponents: Int { get }
     var heightOfRows: CGFloat { get }
-    
+    var delegate: SettingViewControllerInput! { get set}
     var mode: Setting { get }
     
     init(mode: Setting)
@@ -85,6 +85,7 @@ class TimeViewModel: TimeViewModelProtocol {
     }
     var numberOfComponents = 1
     var heightOfRows: CGFloat = 32
+    var delegate: SettingViewControllerInput!
     
     var mode: Setting
     

@@ -13,6 +13,7 @@ protocol LanguageViewModelProtocol {
     var cell: AnyClass { get }
     var numberOfRows: Int { get }
     var heightOfRows: CGFloat { get }
+    var delegate: SettingViewControllerInput! { get set }
     var mode: Setting { get }
     
     init(mode: Setting)
@@ -23,6 +24,7 @@ protocol LanguageViewModelProtocol {
     func customCell(cell: LanguageCell, indexPath: IndexPath)
     
     func selectRow(_ tableView: UITableView, and indexPath: IndexPath)
+    func checkTimer()
     func setSquare(subview: UIView, sizes: CGFloat)
 }
 
@@ -43,6 +45,7 @@ class LanguageViewModel: LanguageViewModelProtocol {
     var numberOfRows = Dialect.allCases.count
     var heightOfRows: CGFloat = 60
     var mode: Setting
+    var delegate: SettingViewControllerInput!
     
     private var dialects: Dialect {
         mode.language
@@ -95,8 +98,15 @@ class LanguageViewModel: LanguageViewModelProtocol {
         checkTimer()
         cleanData(cell, tableView, and: indexPath)
         timer = Timer.scheduledTimer(withTimeInterval: 1.6, repeats: false, block: { [self] _ in
+            timer.invalidate()
+            changeLanguage(indexPath)
             reloadData(cell, tableView, and: indexPath)
         })
+    }
+    
+    func checkTimer() {
+        guard timer.isValid else { return }
+        timer.invalidate()
     }
     
     func setSquare(subview: UIView, sizes: CGFloat) {
@@ -133,11 +143,6 @@ extension LanguageViewModel {
         mode.language = language
     }
     
-    private func checkTimer() {
-        guard timer.isValid else { return }
-        timer.invalidate()
-    }
-    
     private func changeLanguage(_ indexPath: IndexPath) {
         switch indexPath.row {
         case 0: setLanguage(language: .russian)
@@ -147,14 +152,12 @@ extension LanguageViewModel {
     
     private func cleanData(_ cell: LanguageCell, _ tableView: UITableView,
                            and indexPath: IndexPath) {
-        changeLanguage(indexPath)
         cleanCells(tableView, and: indexPath)
         cell.indicator.startAnimating()
     }
     
     private func reloadData(_ cell: LanguageCell, _ tableView: UITableView,
                             and indexPath: IndexPath) {
-        timer.invalidate()
         cell.indicator.stopAnimating()
         reloadCells(tableView, and: indexPath)
         reloadTitles()

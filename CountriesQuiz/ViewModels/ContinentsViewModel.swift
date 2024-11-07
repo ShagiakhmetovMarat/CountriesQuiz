@@ -16,6 +16,7 @@ protocol ContinentsViewModelProtocol {
     var africaContinent: Bool { get }
     var asiaContinent: Bool { get }
     var oceaniaContinent: Bool { get }
+    var delegate: SettingViewControllerInput! { get set }
     var mode: Setting { get }
     
     init(mode: Setting)
@@ -64,6 +65,7 @@ class ContinentsViewModel: ContinentsViewModelProtocol {
     var oceaniaContinent: Bool {
         mode.oceaniaContinent
     }
+    var delegate: SettingViewControllerInput!
     
     var mode: Setting
     

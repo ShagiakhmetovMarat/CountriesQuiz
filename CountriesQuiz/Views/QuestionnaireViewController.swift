@@ -13,7 +13,12 @@ class QuestionnaireViewController: UIViewController, ViewControllerInput {
     }()
     
     private lazy var labelTimer: UILabel = {
-        viewModel.setLabel("\(viewModel.time)", size: 35, color: .white, and: 1)
+        viewModel.setLabel(
+            "\(viewModel.time)",
+            font: "GillSans",
+            size: 35,
+            color: .white,
+            and: 1)
     }()
     
     private lazy var question: UIView = {
@@ -51,15 +56,30 @@ class QuestionnaireViewController: UIViewController, ViewControllerInput {
     }()
     
     private lazy var labelNumber: UILabel = {
-        viewModel.setLabel(viewModel.titleNumber, size: 23, color: .white, and: 1)
+        viewModel.setLabel(
+            viewModel.titleNumber,
+            font: "GillSans",
+            size: 23,
+            color: .white,
+            and: 1)
     }()
     
     private lazy var labelQuiz: UILabel = {
-        viewModel.setLabel(viewModel.titleQuiz, size: 23, color: .white, and: 0)
+        viewModel.setLabel(
+            viewModel.titleQuiz,
+            font: "GillSans",
+            size: 23,
+            color: .white,
+            and: 0)
     }()
     
     private lazy var labelDescription: UILabel = {
-        viewModel.setLabel(viewModel.titleDescription, size: 19, color: .lightPurplePink, and: 0)
+        viewModel.setLabel(
+            viewModel.titleDescription,
+            font: "GillSans-SemiBold",
+            size: 19,
+            color: .lightPurplePink,
+            and: 0)
     }()
     
     private lazy var buttonFirst: UIButton = {
@@ -327,7 +347,7 @@ extension QuestionnaireViewController {
     
     private func setButton(title: Countries, tag: Int) -> UIButton {
         let checkmark = viewModel.setCheckmark(tag: tag)
-        let label = viewModel.setLabel(title.name, size: 23, and: 1, tag: tag)
+        let label = viewModel.setLabel(title: title.name, tag: tag)
         let button = UIButton(type: .custom)
         button.layer.borderWidth = 1.5
         button.layer.borderColor = UIColor.white.cgColor

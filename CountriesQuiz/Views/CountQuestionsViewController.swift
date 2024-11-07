@@ -51,7 +51,6 @@ class CountQuestionsViewController: UIViewController, UIPickerViewDataSource, UI
     }()
     
     var viewModel: CountQuestionsViewModelProtocol!
-    var delegate: SettingViewControllerInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,7 +95,7 @@ class CountQuestionsViewController: UIViewController, UIPickerViewDataSource, UI
     }
     
     @objc private func backToSetting() {
-        delegate.dataToSetting(mode: viewModel.mode)
+        viewModel.delegate.dataToSetting(mode: viewModel.mode)
         navigationController?.popViewController(animated: true)
     }
 }

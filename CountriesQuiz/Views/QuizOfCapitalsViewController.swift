@@ -7,7 +7,7 @@
 
 import UIKit
 
-class QuizOfCapitalsViewController: UIViewController, ViewControllerInput {
+class QuizOfCapitalsViewController: UIViewController, MenuViewControllerDelegate {
     private lazy var buttonBack: UIButton = {
         let size = UIImage.SymbolConfiguration(pointSize: 20)
         let image = UIImage(systemName: "multiply", withConfiguration: size)
@@ -74,7 +74,6 @@ class QuizOfCapitalsViewController: UIViewController, ViewControllerInput {
     }()
     
     var viewModel: QuizOfCapitalsViewModelProtocol!
-    weak var delegate: GameTypeViewControllerInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,14 +102,14 @@ class QuizOfCapitalsViewController: UIViewController, ViewControllerInput {
                 let resultsViewModel = viewModel.resultsViewController()
                 let resultsVC = ResultsViewController()
                 resultsVC.viewModel = resultsViewModel
-                resultsVC.delegate = self
+                resultsVC.viewModel.delegate = self
                 navigationController?.pushViewController(resultsVC, animated: true)
             }
         }
     }
     
-    func dataToMenu(setting: Setting, favourites: [Favorites]) {
-        delegate.dataToMenu(setting: setting, favourites: favourites)
+    func dataToMenu(setting: Setting, favorites: [Favorites]) {
+        viewModel.delegate.dataToMenu(setting: setting, favorites: favorites)
     }
     
     // MARK: - General methods

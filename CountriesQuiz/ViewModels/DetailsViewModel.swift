@@ -20,6 +20,8 @@ protocol DetailsViewModelProtocol {
     var titleButton: String { get }
     var title: String { get }
     var height: CGFloat { get }
+    var heightContent: CGFloat { get }
+    var delegate: FavoritesViewControllerDelegate! { get set }
     var favorites: [Favorites] { get }
     
     init(mode: Setting, game: Games, favorite: Favorites, favorites: [Favorites], indexPath: IndexPath)
@@ -87,6 +89,10 @@ class DetailsViewModel: DetailsViewModelProtocol {
     var height: CGFloat {
         heightStackView + constant + (favorite.isTimeUp ? 44 : 0) + 10
     }
+    var heightContent: CGFloat {
+        favorite.isTimeUp ? 1.15 : 1.1
+    }
+    var delegate: FavoritesViewControllerDelegate!
     
     var favorites: [Favorites]
     private let mode: Setting

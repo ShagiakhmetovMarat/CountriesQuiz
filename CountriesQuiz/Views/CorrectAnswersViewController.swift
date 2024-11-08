@@ -23,7 +23,7 @@ class CorrectAnswersViewController: UIViewController, UITableViewDelegate, UITab
     }()
     
     private lazy var labelTitle: UILabel = {
-        viewModel.setLabel(title: viewModel.title, size: 28, color: .white)
+        viewModel.setLabel(title: viewModel.title, font: "GillSans-Bold", size: 28, color: .white)
     }()
     
     private lazy var imageTitle: UIImageView = {

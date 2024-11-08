@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol ViewControllerInput: AnyObject {
-    func dataToMenu(setting: Setting, favourites: [Favorites])
+protocol MenuViewControllerDelegate: AnyObject {
+    func dataToMenu(setting: Setting, favorites: [Favorites])
 }
 
-class QuizOfFlagsViewController: UIViewController, ViewControllerInput {
+class QuizOfFlagsViewController: UIViewController, MenuViewControllerDelegate {
     private lazy var buttonback: UIButton = {
         let size = UIImage.SymbolConfiguration(pointSize: 20)
         let image = UIImage(systemName: "multiply", withConfiguration: size)
@@ -94,7 +94,6 @@ class QuizOfFlagsViewController: UIViewController, ViewControllerInput {
     }()
     
     var viewModel: QuizOfFlagsViewModelProtocol!
-    weak var delegate: GameTypeViewControllerInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,16 +122,18 @@ class QuizOfFlagsViewController: UIViewController, ViewControllerInput {
                 let resultsViewModel = viewModel.resultsViewController()
                 let resultsVC = ResultsViewController()
                 resultsVC.viewModel = resultsViewModel
-                resultsVC.delegate = self
+                resultsVC.viewModel.delegate = self
                 navigationController?.pushViewController(resultsVC, animated: true)
             }
         }
     }
     // MARK: - QuizOfFlagsViewControllerInput
-    func dataToMenu(setting: Setting, favourites: [Favorites]) {
-        delegate.dataToMenu(setting: setting, favourites: favourites)
+    func dataToMenu(setting: Setting, favorites: [Favorites]) {
+        viewModel.delegate.dataToMenu(setting: setting, favorites: favorites)
     }
-    // MARK: - General methods
+}
+// MARK: - General methods
+extension QuizOfFlagsViewController {
     private func setupData() {
         viewModel.getQuestions()
     }
@@ -288,7 +289,7 @@ class QuizOfFlagsViewController: UIViewController, ViewControllerInput {
         viewModel.resetTimer(labelTimer, view)
     }
 }
-// MARK: - Setup button
+// MARK: - Setup buttons
 extension QuizOfFlagsViewController {
     private func setButton(title: Countries, tag: Int) -> UIButton {
         let button = Button(type: .system)

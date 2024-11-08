@@ -187,7 +187,6 @@ class DetailsViewController: UIViewController {
     }()
     
     var viewModel: DetailsViewModelProtocol!
-    var delegate: FavoritesViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -217,7 +216,7 @@ class DetailsViewController: UIViewController {
     
     @objc private func deleteAndBackToList() {
         viewModel.deleteFavorite()
-        delegate.dataToFavorites(favorites: viewModel.favorites)
+        viewModel.delegate.dataToFavorites(favorites: viewModel.favorites)
         navigationController?.popViewController(animated: true)
     }
 }
@@ -245,7 +244,7 @@ extension DetailsViewController {
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1.1)
+            contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: viewModel.heightContent)
         ])
         
         NSLayoutConstraint.activate([

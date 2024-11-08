@@ -11,8 +11,7 @@ protocol IncorrectAnswersViewControllerDelegate {
     func dataToIncorrectAnswers(favourites: [Favorites])
 }
 
-class IncorrectAnswersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, IncorrectAnswersViewControllerDelegate {
-    
+class IncorrectAnswersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     private lazy var buttonClose: UIButton = {
         setButton(image: "multiply", action: #selector(exitToResults), isBarButton: true)
     }()
@@ -32,7 +31,7 @@ class IncorrectAnswersViewController: UIViewController, UITableViewDelegate, UIT
     }()
     
     private lazy var labelTitle: UILabel = {
-        viewModel.setLabel(title: viewModel.title, color: .white, size: 28)
+        viewModel.setLabel(title: viewModel.title, font: "GillSans-Bold", color: .white, size: 28)
     }()
     
     private lazy var imageTitle: UIImageView = {
@@ -72,7 +71,6 @@ class IncorrectAnswersViewController: UIViewController, UITableViewDelegate, UIT
     }()
     
     var viewModel: IncorrectAnswersViewModelProtocol!
-    var delegate: ResultsViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,11 +103,15 @@ class IncorrectAnswersViewController: UIViewController, UITableViewDelegate, UIT
         viewModel.showAnimationView(viewDetails, buttonFavorite, and: visualEffectView)
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
+}
+
+extension IncorrectAnswersViewController: IncorrectAnswersViewControllerDelegate {
     func dataToIncorrectAnswers(favourites: [Favorites]) {
         viewModel.setFavorites(newFavorites: favourites)
     }
-    
+}
+
+extension IncorrectAnswersViewController {
     private func setupDesign() {
         view.backgroundColor = viewModel.backgroundMedium
     }
@@ -124,7 +126,7 @@ class IncorrectAnswersViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     @objc private func exitToResults() {
-        delegate.dataToResults(favourites: viewModel.favorites)
+        viewModel.delegate.dataToResults(favourites: viewModel.favorites)
         dismiss(animated: true)
     }
     
@@ -141,7 +143,7 @@ class IncorrectAnswersViewController: UIViewController, UITableViewDelegate, UIT
         let incorrectViewModel = viewModel.detailsViewModel()
         let incorrectVC = IncorrectViewController()
         incorrectVC.viewModel = incorrectViewModel
-        incorrectVC.delegate = self
+        incorrectVC.viewModel.delegate = self
         navigationController?.pushViewController(incorrectVC, animated: true)
         close()
     }
@@ -165,7 +167,7 @@ extension IncorrectAnswersViewController {
     }
     
     private func setButton() -> UIButton {
-        let label = viewModel.setLabel(title: "Подробнее", color: .white, size: 26)
+        let label = viewModel.setLabel(title: viewModel.titleDetails, font: "GillSans-SemiBold", color: .white, size: 23)
         let image = viewModel.setImage(image: "chevron.right", color: .white, size: 21)
         let button = Button(type: .custom)
         button.backgroundColor = viewModel.backgroundLight

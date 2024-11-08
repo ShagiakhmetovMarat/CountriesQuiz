@@ -16,12 +16,12 @@ class FlagCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        setupSubviews()
-        configure()
-        setupConstraints()
+        setSubviews()
+        setConfigure()
+        setConstraints()
     }
     
-    private func setupSubviews() {
+    private func setSubviews() {
         addSubviews(subviews: image, progressView, labelNumber, imageArrow,
                     on: contentView)
     }
@@ -33,47 +33,43 @@ class FlagCell: UITableViewCell {
         }
     }
     
-    private func configure() {
-        setupImage(image: image)
-        setupProgressView(subview: progressView)
-        setupLabel(label: labelNumber)
-        setupImageArrow(image: imageArrow)
+    private func setConfigure() {
+        setImage(image: image)
+        setProgressView(progressView: progressView)
+        setLabel(label: labelNumber)
+        setImageArrow(image: imageArrow)
     }
 }
-// MARK: - Setup image
+
 extension FlagCell {
-    private func setupImage(image: UIImageView) {
+    private func setImage(image: UIImageView) {
         image.layer.borderWidth = 1
         image.layer.cornerRadius = radius
         image.clipsToBounds = true
     }
     
-    private func setupImageArrow(image: UIImageView) {
+    private func setImageArrow(image: UIImageView) {
         let size = UIImage.SymbolConfiguration(pointSize: 25)
         image.image = UIImage(systemName: "chevron.right", withConfiguration: size)
         image.tintColor = .white
     }
-}
-// MARK: - Setup progress view
-extension FlagCell {
-    private func setupProgressView(subview: UIProgressView) {
-        subview.progressTintColor = .white
-        subview.trackTintColor = .white.withAlphaComponent(0.3)
-        subview.layer.cornerRadius = 4
-        subview.clipsToBounds = true
+    
+    private func setProgressView(progressView: UIProgressView) {
+        progressView.progressTintColor = .white
+        progressView.trackTintColor = .white.withAlphaComponent(0.3)
+        progressView.layer.cornerRadius = progressView.frame.height / 2
+        progressView.clipsToBounds = true
     }
-}
-// MARK: - Setup properties of labels
-extension FlagCell {
-    private func setupLabel(label: UILabel) {
-        label.font = UIFont(name: "mr_fontick", size: 23)
+    
+    private func setLabel(label: UILabel) {
+        label.font = UIFont(name: "GillSans", size: 22)
         label.textColor = .white
         label.textAlignment = .center
     }
 }
-// MARK: - Setup constraints
+
 extension FlagCell {
-    private func setupConstraints() {
+    private func setConstraints() {
         NSLayoutConstraint.activate([
             image.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),

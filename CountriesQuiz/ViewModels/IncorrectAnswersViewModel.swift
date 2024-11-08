@@ -12,9 +12,11 @@ protocol IncorrectAnswersViewModelProtocol {
     var backgroundMedium: UIColor { get }
     var backgroundDark: UIColor { get }
     var title: String { get }
+    var titleDetails: String { get }
     var cell: AnyClass { get }
     var numberOfRows: Int { get }
     var heightForRow: CGFloat { get }
+    var delegate: ResultsViewControllerDelegate! { get set }
     var favorites: [Favorites] { get }
     
     init(mode: Setting, game: Games, results: [Incorrects], favourites: [Favorites])
@@ -23,7 +25,7 @@ protocol IncorrectAnswersViewModelProtocol {
     func setSubviews(subviews: UIView..., on subviewOther: UIView)
     func customCell(cell: UITableViewCell, indexPath: IndexPath)
     func setView(color: UIColor, radius: CGFloat) -> UIView
-    func setLabel(title: String, color: UIColor, size: CGFloat) -> UILabel
+    func setLabel(title: String, font: String, color: UIColor, size: CGFloat) -> UILabel
     func setImage(image: String, color: UIColor, size: CGFloat) -> UIImageView
     func setButtonFavorite(_ button: UIButton, and indexPath: IndexPath)
     func setDetails(_ viewDetails: UIView,_ view: UIView, and indexPath: IndexPath)
@@ -52,7 +54,18 @@ class IncorrectAnswersViewModel: IncorrectAnswersViewModelProtocol {
     var backgroundDark: UIColor {
         game.swap
     }
-    var title: String = "Неправильные ответы"
+    var title: String {
+        switch mode.language {
+        case .russian: "Неверные ответы"
+        default: "Incorrect answers"
+        }
+    }
+    var titleDetails: String {
+        switch mode.language {
+        case .russian: "Подробнее"
+        default: "Details"
+        }
+    }
     var cell: AnyClass {
         isFlag ? FlagCell.self : NameCell.self
     }
@@ -62,6 +75,7 @@ class IncorrectAnswersViewModel: IncorrectAnswersViewModelProtocol {
     var heightForRow: CGFloat {
         isFlag ? 70 : 95
     }
+    var delegate: ResultsViewControllerDelegate!
     
     var favorites: [Favorites]
     private let mode: Setting
@@ -69,6 +83,12 @@ class IncorrectAnswersViewModel: IncorrectAnswersViewModelProtocol {
     private let incorrects: [Incorrects]
     
     private var indexPath: IndexPath!
+    private var titleTimeUp: String {
+        switch mode.language {
+        case .russian: "Время вышло!"
+        default: "Time is up!"
+        }
+    }
     private var isFlag: Bool {
         mode.flag ? true : false
     }
@@ -140,10 +160,10 @@ class IncorrectAnswersViewModel: IncorrectAnswersViewModelProtocol {
         return view
     }
     
-    func setLabel(title: String, color: UIColor, size: CGFloat) -> UILabel {
+    func setLabel(title: String, font: String, color: UIColor, size: CGFloat) -> UILabel {
         let label = UILabel()
         label.text = title
-        label.font = UIFont(name: "mr_fontick", size: size)
+        label.font = UIFont(name: font, size: size)
         label.textColor = color
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -172,9 +192,9 @@ class IncorrectAnswersViewModel: IncorrectAnswersViewModelProtocol {
         viewSecondary = setView(color: backgroundLight, radius: 0)
         subview = setName(incorrect: incorrect)
         progressView = setProgressView(incorrect: incorrect)
-        labelNumber = setLabel(title: setText(value: incorrect.currentQuestion), color: .white, size: 22)
+        labelNumber = setLabel(title: setText(value: incorrect.currentQuestion), font: "GillSans", color: .white, size: 22)
         stackView = setStackView(incorrect: incorrect, and: view)
-        timeUp = setLabel(title: title(incorrect), color: .white, size: 22)
+        timeUp = setLabel(title: title(incorrect), font: "GillSans", color: .white, size: 22)
         setSubviews(subviews: viewSecondary, on: viewDetails)
         setSubviews(subviews: subview, progressView, labelNumber, stackView, timeUp, on: viewSecondary)
         setConstraints(incorrect: incorrect, on: viewDetails)
@@ -416,19 +436,19 @@ extension IncorrectAnswersViewModel {
     }
     
     private func title(_ incorrect: Incorrects) -> String {
-        incorrect.timeUp ? "Время вышло!" : ""
+        incorrect.timeUp ? titleTimeUp : ""
     }
     
     private func constant(incorrect: Incorrects) -> CGFloat {
-        (isFlag ? 0.66 : 0.56) + name(incorrect) + timeUp(incorrect)
+        (isFlag ? 0.65 : 0.55) + name(incorrect) + timeUp(incorrect)
     }
     
     private func name(_ incorrect: Incorrects) -> CGFloat {
-        isFlag ? 0 : incorrect.question.name.count > 23 ? 0.035 : 0
+        isFlag ? 0 : incorrect.question.name.count > 23 ? 0.045 : 0
     }
     
     private func timeUp(_ incorrect: Incorrects) -> CGFloat {
-        isTimeUp() ? 0.035 : 0
+        isTimeUp() ? 0.045 : 0
     }
     
     private func setImage(_ flag: String) -> String {
@@ -510,7 +530,7 @@ extension IncorrectAnswersViewModel {
         if isFlag {
             setImage(image: incorrect.question.flag)
         } else {
-            setLabel(title: incorrect.question.name, color: .white, size: 28)
+            setLabel(title: incorrect.question.name, font: "GillSans-SemiBold", color: .white, size: 28)
         }
     }
     
@@ -594,7 +614,7 @@ extension IncorrectAnswersViewModel {
         if game.gameType == .questionnaire {
             let subview = subview(incorrect, name, and: tag)
             let checkmark = setImage(image: checkmark(incorrect, name, tag),
-                                     color: color(incorrect, name, tag), size: 26)
+                                     color: color(incorrect, name, tag), size: 25)
             setSubviews(subviews: subview, checkmark, on: button)
             setConstraints(checkmark, and: subview, on: button, name, view)
         } else {
@@ -608,7 +628,7 @@ extension IncorrectAnswersViewModel {
                          and tag: Int) -> UIView {
         if isFlag {
             let color = textColor(incorrect, name, and: tag)
-            return setLabel(title: name, color: color, size: 21)
+            return setLabel(title: name, font: "GillSans-SemiBold", color: color, size: 19)
         } else {
             return setSubview(incorrect, name, and: tag)
         }
@@ -618,7 +638,7 @@ extension IncorrectAnswersViewModel {
                             and tag: Int) -> UIView {
         if game.gameType == .quizOfCapitals {
             let color = textColor(incorrect, name, and: tag)
-            return setLabel(title: name, color: color, size: 21)
+            return setLabel(title: name, font: "GillSans-SemiBold", color: color, size: 19)
         } else {
             return setImage(image: name, radius: 8)
         }

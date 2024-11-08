@@ -255,7 +255,6 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     }()
     
     var viewModel: ResultsViewModelProtocol!
-    weak var delegate: ViewControllerInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -279,9 +278,9 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
                                 viewDescription, stackViewAnswers, stackViewTime,
                                 imageInfinity, buttonComplete, on: view)
     }
-    // MARK: - Press done button
+    // MARK: - Press complete button
     @objc private func exitToMenu() {
-        delegate.dataToMenu(setting: viewModel.mode, favourites: viewModel.favorites)
+        viewModel.delegate.dataToMenu(setting: viewModel.mode, favorites: viewModel.favorites)
     }
     // MARK: - Show ratio
     @objc private func showRatio() {
@@ -307,7 +306,7 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
         let incorrectAnswersVC = IncorrectAnswersViewController()
         let navigationVC = UINavigationController(rootViewController: incorrectAnswersVC)
         incorrectAnswersVC.viewModel = incorrectAnswers
-        incorrectAnswersVC.delegate = self
+        incorrectAnswersVC.viewModel.delegate = self
         navigationVC.modalPresentationStyle = .custom
         present(navigationVC, animated: true)
     }

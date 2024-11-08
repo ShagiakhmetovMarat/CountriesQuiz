@@ -33,39 +33,35 @@ class NameCell: UITableViewCell {
     }
     
     private func setConfigure() {
-        setupLabel(label: nameCountry, size: 26)
-        setupProgressView(subview: progressView)
-        setupLabel(label: labelNumber, size: 23)
-        setupImageArrow(image: imageArrow)
+        setLabel(label: nameCountry, size: 25)
+        setProgressView(progressView: progressView)
+        setLabel(label: labelNumber, size: 22)
+        setImageArrow(image: imageArrow)
     }
 }
 
 extension NameCell {
-    private func setupProgressView(subview: UIProgressView) {
-        subview.progressTintColor = .white
-        subview.trackTintColor = .white.withAlphaComponent(0.3)
-        subview.layer.cornerRadius = 4
-        subview.clipsToBounds = true
+    private func setProgressView(progressView: UIProgressView) {
+        progressView.progressTintColor = .white
+        progressView.trackTintColor = .white.withAlphaComponent(0.3)
+        progressView.layer.cornerRadius = progressView.frame.height / 2
+        progressView.clipsToBounds = true
     }
-}
-// MARK: - Setup properties of labels
-extension NameCell {
-    private func setupLabel(label: UILabel, size: CGFloat) {
-        label.font = UIFont(name: "mr_fontick", size: size)
+    
+    private func setLabel(label: UILabel, size: CGFloat) {
+        label.font = UIFont(name: "GillSans", size: size)
         label.textColor = .white
         label.numberOfLines = 0
         label.textAlignment = .center
     }
-}
-// MARK: - Setup images
-extension NameCell {
-    private func setupImageArrow(image: UIImageView) {
+    
+    private func setImageArrow(image: UIImageView) {
         let size = UIImage.SymbolConfiguration(pointSize: 25)
         image.image = UIImage(systemName: "chevron.right", withConfiguration: size)
         image.tintColor = .white
     }
 }
-// MARK: - Setup constraints
+
 extension NameCell {
     private func setConstraints() {
         NSLayoutConstraint.activate([

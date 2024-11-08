@@ -8,8 +8,6 @@
 import UIKit
 
 protocol GameTypeViewModelProtocol {
-    var mode: Setting { get }
-    var tag: Int { get }
     var countQuestions: Int { get }
     var countContinents: Int { get }
     var titleNumberOfQuestions: String { get }
@@ -21,6 +19,9 @@ protocol GameTypeViewModelProtocol {
     var titleItems: [String] { get }
     var titleOk: String { get }
     var titleCancel: String { get }
+    var delegate: MenuViewControllerInput! { get set }
+    var mode: Setting { get }
+    var tag: Int { get }
     var favorites: [Favorites] { get }
     
     var allCountries: Bool { get }
@@ -240,6 +241,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
         default: "Cancel"
         }
     }
+    var delegate: MenuViewControllerInput!
     
     var mode: Setting
     let tag: Int

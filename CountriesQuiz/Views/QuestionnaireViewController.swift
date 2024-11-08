@@ -7,7 +7,7 @@
 
 import UIKit
 
-class QuestionnaireViewController: UIViewController, ViewControllerInput {
+class QuestionnaireViewController: UIViewController, MenuViewControllerDelegate {
     private lazy var buttonExit: UIButton = {
         setButton(image: "multiply", action: #selector(exitToGameType))
     }()
@@ -119,7 +119,6 @@ class QuestionnaireViewController: UIViewController, ViewControllerInput {
     }()
     
     var viewModel: QuestionnaireViewModelProtocol!
-    weak var delegate: GameTypeViewControllerInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,8 +145,8 @@ class QuestionnaireViewController: UIViewController, ViewControllerInput {
         resultsVC()
     }
     
-    func dataToMenu(setting: Setting, favourites: [Favorites]) {
-        delegate.dataToMenu(setting: setting, favourites: favourites)
+    func dataToMenu(setting: Setting, favorites: [Favorites]) {
+        viewModel.delegate.dataToMenu(setting: setting, favorites: favorites)
     }
     // MARK: - General methods
     private func setupData() {
@@ -321,7 +320,7 @@ extension QuestionnaireViewController {
         let resultsViewModel = viewModel.resultsViewController()
         let resultsVC = ResultsViewController()
         resultsVC.viewModel = resultsViewModel
-        resultsVC.delegate = self
+        resultsVC.viewModel.delegate = self
         navigationController?.pushViewController(resultsVC, animated: true)
     }
 }

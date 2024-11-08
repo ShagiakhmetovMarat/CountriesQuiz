@@ -261,7 +261,7 @@ extension MenuViewController {
         let gameTypeViewModel = viewModel.gameTypeViewModel(tag: tag)
         let gameTypeVC = GameTypeViewController()
         gameTypeVC.viewModel = gameTypeViewModel
-        gameTypeVC.delegate = self
+        gameTypeVC.viewModel.delegate = self
         navigationController?.pushViewController(gameTypeVC, animated: true)
     }
     

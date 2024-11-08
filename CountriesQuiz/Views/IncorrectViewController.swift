@@ -45,7 +45,7 @@ class IncorrectViewController: UIViewController {
     }()
     
     private lazy var titleCountry: UILabel = {
-        viewModel.setLabel(text: viewModel.name, color: .white, font: "GillSans", size: 24)
+        viewModel.setLabel(text: viewModel.name, color: .white, font: "GillSans", size: 22.5)
     }()
     
     private lazy var viewCountryDetails: UIView = {
@@ -61,7 +61,7 @@ class IncorrectViewController: UIViewController {
     }()
     
     private lazy var titleCapital: UILabel = {
-        viewModel.setLabel(text: viewModel.capital, color: .white, font: "GillSans", size: 24)
+        viewModel.setLabel(text: viewModel.capital, color: .white, font: "GillSans", size: 22.5)
     }()
     
     private lazy var viewCapitalDetails: UIView = {
@@ -77,7 +77,7 @@ class IncorrectViewController: UIViewController {
     }()
     
     private lazy var titleContinent: UILabel = {
-        viewModel.setLabel(text: viewModel.continent, color: .white, font: "GillSans", size: 24)
+        viewModel.setLabel(text: viewModel.continent, color: .white, font: "GillSans", size: 22.5)
     }()
     
     private lazy var viewContinentDetails: UIView = {
@@ -104,7 +104,7 @@ class IncorrectViewController: UIViewController {
     }()
     
     private lazy var labelNumber: UILabel = {
-        viewModel.setLabel(text: viewModel.numberQuestion, color: .white, font: "mr_fontick", size: 23)
+        viewModel.setLabel(text: viewModel.numberQuestion, color: .white, font: "GillSans", size: 22.5)
     }()
     
     private lazy var viewNumberDetails: UIView = {
@@ -160,7 +160,7 @@ class IncorrectViewController: UIViewController {
     }()
     
     private lazy var timeUp: UILabel = {
-        viewModel.setLabel(text: viewModel.timeUp, color: .white, font: "mr_fontick", size: 24)
+        viewModel.setLabel(text: viewModel.timeUp, color: .white, font: "GillSans", size: 24)
     }()
     
     private lazy var viewAnswers: UIView = {
@@ -189,7 +189,7 @@ class IncorrectViewController: UIViewController {
         let image = UIImage(systemName: viewModel.image, withConfiguration: size)
         let button = Button(type: .system)
         button.setTitle(viewModel.title, for: .normal)
-        button.titleLabel?.font = UIFont(name: "mr_fontick", size: 25)
+        button.titleLabel?.font = UIFont(name: "GillSans", size: 25)
         button.setImage(image, for: .normal)
         button.tintColor = viewModel.background
         button.backgroundColor = .white
@@ -204,7 +204,6 @@ class IncorrectViewController: UIViewController {
     }()
     
     var viewModel: IncorrectViewModelProtocol!
-    var delegate: IncorrectAnswersViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -229,7 +228,7 @@ class IncorrectViewController: UIViewController {
     }
     
     @objc private func backToList() {
-        delegate.dataToIncorrectAnswers(favourites: viewModel.favorites)
+        viewModel.delegate.dataToIncorrectAnswers(favourites: viewModel.favorites)
         navigationController?.popViewController(animated: true)
     }
     
@@ -277,7 +276,7 @@ extension IncorrectViewController {
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1.15)
+            contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: viewModel.heightContent)
         ])
         
         NSLayoutConstraint.activate([
@@ -291,21 +290,21 @@ extension IncorrectViewController {
             viewCountryDetails.topAnchor.constraint(equalTo: viewFlagDetails.bottomAnchor, constant: 8),
             viewCountryDetails.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             viewCountryDetails.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            viewCountryDetails.heightAnchor.constraint(equalToConstant: 50)
+            viewCountryDetails.heightAnchor.constraint(equalToConstant: 55)
         ])
         
         NSLayoutConstraint.activate([
             viewCapitalDetails.topAnchor.constraint(equalTo: viewCountryDetails.bottomAnchor, constant: 5),
             viewCapitalDetails.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             viewCapitalDetails.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            viewCapitalDetails.heightAnchor.constraint(equalToConstant: 50)
+            viewCapitalDetails.heightAnchor.constraint(equalToConstant: 55)
         ])
         
         NSLayoutConstraint.activate([
             viewContinentDetails.topAnchor.constraint(equalTo: viewCapitalDetails.bottomAnchor, constant: 5),
             viewContinentDetails.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             viewContinentDetails.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            viewContinentDetails.heightAnchor.constraint(equalToConstant: 50)
+            viewContinentDetails.heightAnchor.constraint(equalToConstant: 55)
         ])
         
         NSLayoutConstraint.activate([

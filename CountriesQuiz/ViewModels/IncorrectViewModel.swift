@@ -26,8 +26,11 @@ protocol IncorrectViewModelProtocol {
     var continent: String { get }
     var timeUp: String { get }
     var height: CGFloat { get }
+    var heightContent: CGFloat { get }
+    var delegate: IncorrectAnswersViewControllerDelegate! { get set }
     
     init(mode: Setting, game: Games, incorrect: Incorrects, favorites: [Favorites])
+    
     func setSubviews(subviews: UIView..., on otherSubview: UIView)
     func setBarButton(_ buttonBack: UIButton,_ navigationItem: UINavigationItem)
     
@@ -81,9 +84,9 @@ class IncorrectViewModel: IncorrectViewModelProtocol {
     }
     var title: String {
         if let _ = favorites.first(where: { $0.flag == flag }) {
-            "   Удалить из избранных"
+            "   \(titleDelete)"
         } else {
-            "   Добавить в избранное"
+            "   \(titleAdd)"
         }
     }
     var image: String {
@@ -103,11 +106,15 @@ class IncorrectViewModel: IncorrectViewModelProtocol {
         setContinent()
     }
     var timeUp: String {
-        incorrect.timeUp ? "Время вышло!" : ""
+        incorrect.timeUp ? titleTimeUp : ""
     }
     var height: CGFloat {
         heightStackView + constant + (incorrect.timeUp ? 44 : 0) + 10
     }
+    var heightContent: CGFloat {
+        incorrect.timeUp ? 1.2 : 1.15
+    }
+    var delegate: IncorrectAnswersViewControllerDelegate!
     
     var favorites: [Favorites]
     private let mode: Setting
@@ -115,6 +122,24 @@ class IncorrectViewModel: IncorrectViewModelProtocol {
     private let incorrect: Incorrects
     private var isFlag: Bool {
         mode.flag ? true : false
+    }
+    private var titleTimeUp: String {
+        switch mode.language {
+        case .russian: "Время вышло!"
+        default: "Time is up!"
+        }
+    }
+    private var titleDelete: String {
+        switch mode.language {
+        case .russian: "Удалить из избранных"
+        default: "Delete from favorites"
+        }
+    }
+    private var titleAdd: String {
+        switch mode.language {
+        case .russian: "Добавить в избранное"
+        default: "Add to favorites"
+        }
     }
     private var answerFirst: String {
         buttonName(buttonFirst)
@@ -186,7 +211,7 @@ class IncorrectViewModel: IncorrectViewModelProtocol {
     
     func subview(button: Countries, and tag: Int) -> UIView {
         if isFlag {
-            setLabel(text: text(button), color: textColor(button, tag), font: "mr_fontick", size: 23)
+            setLabel(text: text(button), color: textColor(button, tag), font: "GillSans-SemiBold", size: 20)
         } else {
             setSubview(button: button, tag: tag)
         }
@@ -485,7 +510,7 @@ extension IncorrectViewModel {
     
     private func setSubview(button: Countries, tag: Int) -> UIView {
         if game.gameType == .quizOfCapitals {
-            setLabel(text: button.capitals, color: textColor(button, tag), font: "mr_fontick", size: 23)
+            setLabel(text: button.capitals, color: textColor(button, tag), font: "GillSans-SemiBold", size: 20)
         } else {
             setImage(image: UIImage(named: button.flag))
         }
@@ -666,7 +691,7 @@ extension IncorrectViewModel {
 extension IncorrectViewModel {
     private func setButton(_ button: UIButton, isFill: Bool) {
         let systemName = isFill ? "star.fill" : "star"
-        let title = isFill ? "Удалить из избранных" : "Добавить в избранное"
+        let title = isFill ? titleDelete : titleAdd
         let size = UIImage.SymbolConfiguration(pointSize: 25)
         let image = UIImage(systemName: systemName, withConfiguration: size)
         button.setImage(image, for: .normal)

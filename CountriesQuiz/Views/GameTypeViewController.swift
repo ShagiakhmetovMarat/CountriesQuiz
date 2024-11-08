@@ -8,7 +8,7 @@
 import UIKit
 
 protocol GameTypeViewControllerInput: AnyObject {
-    func dataToMenu(setting: Setting, favourites: [Favorites])
+    func dataToMenu(setting: Setting, favorites: [Favorites])
     func favoritesToGameType(favorites: [Favorites])
     func disableFavoriteButton()
 }
@@ -316,7 +316,6 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }()
     
     var viewModel: GameTypeViewModelProtocol!
-    weak var delegate: MenuViewControllerInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -378,8 +377,8 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         closeViewSetting()
     }
     // MARK: - GameTypeViewControllerInput
-    func dataToMenu(setting: Setting, favourites: [Favorites]) {
-        delegate.dataToMenu(setting: setting, favorites: favourites)
+    func dataToMenu(setting: Setting, favorites: [Favorites]) {
+        viewModel.delegate.dataToMenu(setting: setting, favorites: favorites)
     }
     
     func favoritesToGameType(favorites: [Favorites]) {
@@ -389,7 +388,9 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func disableFavoriteButton() {
         viewModel.buttonOnOff(button: buttonFavorites, isOn: false)
     }
-    // MARK: - General methods
+}
+// MARK: - General methods
+extension GameTypeViewController {
     private func setupDesign() {
         view.backgroundColor = viewModel.background
         imageInfinity.isHidden = viewModel.isCountdown()
@@ -416,7 +417,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     // MARK: - Bar buttons activate
     @objc private func backToMenu() {
-        delegate.dataToMenu(setting: viewModel.mode, favorites: viewModel.favorites)
+        viewModel.delegate.dataToMenu(setting: viewModel.mode, favorites: viewModel.favorites)
     }
     
     @objc private func showViewHelp(sender: UIButton) {
@@ -450,7 +451,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let quizOfFlagsViewModel = viewModel.quizOfFlagsViewModel()
         let quizOfFlagsVC = QuizOfFlagsViewController()
         quizOfFlagsVC.viewModel = quizOfFlagsViewModel
-        quizOfFlagsVC.delegate = self
+        quizOfFlagsVC.viewModel.delegate = self
         navigationController?.pushViewController(quizOfFlagsVC, animated: true)
     }
     
@@ -458,7 +459,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let questionnaireViewModel = viewModel.questionnaireViewModel()
         let questionnaireVC = QuestionnaireViewController()
         questionnaireVC.viewModel = questionnaireViewModel
-        questionnaireVC.delegate = self
+        questionnaireVC.viewModel.delegate = self
         navigationController?.pushViewController(questionnaireVC, animated: true)
     }
     
@@ -476,7 +477,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let quizOfCapitalsViewModel = viewModel.quizOfCapitalsViewModel()
         let startGameVC = QuizOfCapitalsViewController()
         startGameVC.viewModel = quizOfCapitalsViewModel
-        startGameVC.delegate = self
+        startGameVC.viewModel.delegate = self
         navigationController?.pushViewController(startGameVC, animated: true)
     }
     
@@ -485,7 +486,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let favoritesVC = FavoritesViewController()
         let navigationVC = UINavigationController(rootViewController: favoritesVC)
         favoritesVC.viewModel = favorites
-        favoritesVC.delegate = self
+        favoritesVC.viewModel.delegate = self
         navigationVC.modalPresentationStyle = .custom
         present(navigationVC, animated: true)
     }

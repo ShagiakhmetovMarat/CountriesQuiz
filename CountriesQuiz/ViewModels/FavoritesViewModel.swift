@@ -17,6 +17,7 @@ protocol FavoritesViewModelProtocol {
     var title: String { get }
     var titleError: String { get }
     var titleDetails: String { get }
+    var delegate: GameTypeViewControllerInput! { get set }
     var favorites: [Favorites] { get }
     
     init(mode: Setting, game: Games, favorites: [Favorites])
@@ -76,17 +77,19 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
         default: "Details"
         }
     }
-    var titleTimeUp: String {
-        switch mode.language {
-        case .russian: "Время вышло!"
-        default: "Time is up!"
-        }
-    }
+    var delegate: GameTypeViewControllerInput!
     
     var favorites: [Favorites]
     private let mode: Setting
     private let game: Games
     private var indexPath: IndexPath!
+    
+    private var titleTimeUp: String {
+        switch mode.language {
+        case .russian: "Время вышло!"
+        default: "Time is up!"
+        }
+    }
     
     private var viewSecondary: UIView!
     private var subview: UIView!

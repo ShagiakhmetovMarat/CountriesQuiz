@@ -31,6 +31,7 @@ protocol QuestionnaireViewModelProtocol {
     var answerFourth: Countries { get }
     
     var shapeLayer: CAShapeLayer { get }
+    var delegate: GameTypeViewControllerInput! { get set }
     
     init(mode: Setting, game: Games, favorites: [Favorites])
     
@@ -149,6 +150,7 @@ class QuestionnaireViewModel: QuestionnaireViewModelProtocol {
     }
     
     var shapeLayer = CAShapeLayer()
+    var delegate: GameTypeViewControllerInput!
     
     private var data: (questions: [Countries], buttonFirst: [Countries],
                        buttonSecond: [Countries], buttonThird: [Countries],

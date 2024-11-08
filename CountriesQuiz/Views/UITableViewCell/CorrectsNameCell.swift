@@ -11,7 +11,6 @@ class CorrectsNameCell: UITableViewCell {
     let name = UILabel()
     let progressView = UIProgressView()
     let number = UILabel()
-    private let radius: CGFloat = 4
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -32,25 +31,25 @@ class CorrectsNameCell: UITableViewCell {
     }
     
     private func setConfigure() {
-        setLabel(label: name, size: 26)
-        setProgressView(subview: progressView)
-        setLabel(label: number, size: 23)
+        setLabel(label: name, size: 25)
+        setProgressView(progressView: progressView)
+        setLabel(label: number, size: 22)
     }
 }
 
 extension CorrectsNameCell {
     private func setLabel(label: UILabel, size: CGFloat) {
-        label.font = UIFont(name: "mr_fontick", size: size)
+        label.font = UIFont(name: "GillSans", size: size)
         label.textColor = .white
         label.numberOfLines = 0
         label.textAlignment = .center
     }
     
-    private func setProgressView(subview: UIProgressView) {
-        subview.progressTintColor = .white
-        subview.trackTintColor = .white.withAlphaComponent(0.3)
-        subview.layer.cornerRadius = radius
-        subview.clipsToBounds = true
+    private func setProgressView(progressView: UIProgressView) {
+        progressView.progressTintColor = .white
+        progressView.trackTintColor = .white.withAlphaComponent(0.3)
+        progressView.layer.cornerRadius = progressView.frame.height / 2
+        progressView.clipsToBounds = true
     }
 }
 
@@ -65,7 +64,7 @@ extension CorrectsNameCell {
         NSLayoutConstraint.activate([
             progressView.centerYAnchor.constraint(equalTo: number.centerYAnchor),
             progressView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            progressView.heightAnchor.constraint(equalToConstant: radius * 2)
+            progressView.heightAnchor.constraint(equalToConstant: 8)
         ])
         
         NSLayoutConstraint.activate([

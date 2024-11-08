@@ -29,6 +29,7 @@ protocol QuizOfFlagsViewModelProtocol {
     var buttonFourth: Countries { get }
     
     var shapeLayer: CAShapeLayer { get }
+    var delegate: GameTypeViewControllerInput! { get set }
     
     init(mode: Setting, game: Games, favorites: [Favorites])
     
@@ -138,6 +139,7 @@ class QuizOfFlagsViewModel: QuizOfFlagsViewModelProtocol {
         "0 / \(countQuestions)"
     }
     let shapeLayer = CAShapeLayer()
+    var delegate: GameTypeViewControllerInput!
     
     private let mode: Setting
     private let game: Games

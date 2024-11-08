@@ -131,7 +131,7 @@ extension ScrabbleViewController {
     private func setupLabel(title: String, size: CGFloat, opacity: Float? = nil) -> UILabel {
         let label = UILabel()
         label.text = title
-        label.font = UIFont(name: "mr_fontick", size: size)
+        label.font = UIFont(name: "GillSans", size: size)
         label.textColor = .white
         label.numberOfLines = 0
         label.textAlignment = .center

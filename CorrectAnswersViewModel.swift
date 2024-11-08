@@ -22,7 +22,7 @@ protocol CorrectAnswersViewModelProtocol {
     func setSubviews(subviews: UIView..., on otherSubview: UIView)
     func customCell(cell: UITableViewCell, indexPath: IndexPath)
     func setView(color: UIColor, radius: CGFloat, tag: Int?) -> UIView
-    func setLabel(title: String, size: CGFloat, color: UIColor) -> UILabel
+    func setLabel(title: String, font: String, size: CGFloat, color: UIColor) -> UILabel
     func setDetails(_ viewDetails: UIView,_ view: UIView, and indexPath: IndexPath)
     
     func setSquare(button: UIButton, sizes: CGFloat)
@@ -44,7 +44,12 @@ class CorrectAnswersViewModel: CorrectAnswersViewModelProtocol {
     var backgroundDark: UIColor {
         game.swap
     }
-    var title = "Правильные ответы"
+    var title: String {
+        switch mode.language {
+        case .russian: "Верные ответы"
+        default: "Correct answers"
+        }
+    }
     var cell: AnyClass {
         isFlag ? CorrectsFlagCell.self : CorrectsNameCell.self
     }
@@ -110,10 +115,10 @@ class CorrectAnswersViewModel: CorrectAnswersViewModelProtocol {
         return view
     }
     
-    func setLabel(title: String, size: CGFloat, color: UIColor) -> UILabel {
+    func setLabel(title: String, font: String, size: CGFloat, color: UIColor) -> UILabel {
         let label = UILabel()
         label.text = title
-        label.font = UIFont(name: "mr_fontick", size: size)
+        label.font = UIFont(name: font, size: size)
         label.textColor = color
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -126,7 +131,7 @@ class CorrectAnswersViewModel: CorrectAnswersViewModelProtocol {
         viewSecondary = setView(color: backgroundLight, radius: 15, tag: 1)
         subview = setName(correct: correct)
         progressView = progressView(correct: correct)
-        labelNumber = setLabel(title: setText(value: correct.currentQuestion), size: 22, color: .white)
+        labelNumber = setLabel(title: setText(value: correct.currentQuestion), font: "GillSans", size: 22, color: .white)
         stackView = setStackView(correct: correct, and: view)
         setSubviews(subviews: viewSecondary, on: viewDetails)
         setSubviews(subviews: subview, progressView, labelNumber, stackView, on: viewSecondary)
@@ -309,7 +314,7 @@ extension CorrectAnswersViewModel {
         if isFlag {
             setImage(image: correct.question.flag)
         } else {
-            setLabel(title: correct.question.name, size: 28, color: .white)
+            setLabel(title: correct.question.name, font: "GillSans-SemiBold", size: 28, color: .white)
         }
     }
     
@@ -382,7 +387,7 @@ extension CorrectAnswersViewModel {
     private func subview(correct: Corrects, and name: String) -> UIView {
         if isFlag {
             let color = textColor(correct: correct, name: name)
-            return setLabel(title: name, size: 21, color: color)
+            return setLabel(title: name, font: "GillSans-SemiBold", size: 19, color: color)
         } else {
             return setSubview(correct: correct, and: name)
         }
@@ -391,7 +396,7 @@ extension CorrectAnswersViewModel {
     private func setSubview(correct: Corrects, and name: String) -> UIView {
         if game.gameType == .quizOfCapitals {
             let color = textColor(correct: correct, name: name)
-            return setLabel(title: name, size: 21, color: color)
+            return setLabel(title: name, font: "GillSans-SemiBold", size: 19, color: color)
         } else {
             return setImage(image: name, radius: 8)
         }

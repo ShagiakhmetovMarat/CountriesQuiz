@@ -31,11 +31,11 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     }()
     
     private lazy var labelTitle: UILabel = {
-        viewModel.setLabel(title: viewModel.title, font: "GillSans-Bold", size: 29, color: .white)
+        viewModel.setLabel(title: viewModel.title, font: "GillSans-Bold", size: 28, color: .white)
     }()
     
     private lazy var imageTitle: UIImageView = {
-        let size = UIImage.SymbolConfiguration(pointSize: 29)
+        let size = UIImage.SymbolConfiguration(pointSize: 28)
         let image = UIImage(systemName: "star.fill", withConfiguration: size)
         let imageView = UIImageView(image: image)
         imageView.tintColor = .white
@@ -72,7 +72,6 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     }()
     
     var viewModel: FavoritesViewModelProtocol!
-    var delegate: GameTypeViewControllerInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,7 +109,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.reloadData()
         guard viewModel.favorites.isEmpty else { return }
         exitToGameType()
-        delegate.disableFavoriteButton()
+        viewModel.delegate.disableFavoriteButton()
     }
     
     private func setDesign() {
@@ -129,7 +128,7 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @objc private func exitToGameType() {
         dismiss(animated: true)
-        delegate.favoritesToGameType(favorites: viewModel.favorites)
+        viewModel.delegate.favoritesToGameType(favorites: viewModel.favorites)
     }
     
     @objc private func closeDetails() {
@@ -142,14 +141,14 @@ class FavoritesViewController: UIViewController, UITableViewDelegate, UITableVie
         viewModel.deleteRow(tableView: tableView)
         guard viewModel.favorites.isEmpty else { return }
         exitToGameType()
-        delegate.disableFavoriteButton()
+        viewModel.delegate.disableFavoriteButton()
     }
     
     @objc private func moreInfo() {
         let detailsViewModel = viewModel.detailsViewController()
         let detailsVC = DetailsViewController()
         detailsVC.viewModel = detailsViewModel
-        detailsVC.delegate = self
+        detailsVC.viewModel.delegate = self
         navigationController?.pushViewController(detailsVC, animated: true)
         viewModel.buttonOnOff(button: buttonClose, isOn: true)
         viewModel.hideAnimationView(viewDetails, buttonDelete, and: visualEffectBlur)

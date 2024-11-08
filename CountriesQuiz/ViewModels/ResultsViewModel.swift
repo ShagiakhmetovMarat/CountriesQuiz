@@ -23,6 +23,7 @@ protocol ResultsViewModelProtocol {
     var answeredQuestions: Int { get }
     var description: String { get }
     var height: CGFloat { get }
+    var delegate: MenuViewControllerDelegate! { get set }
     var favorites: [Favorites] { get }
     
     var mode: Setting { get }
@@ -120,6 +121,7 @@ class ResultsViewModel: ResultsViewModelProtocol {
     var height: CGFloat {
         mode.language == .russian ? 150 : 125
     }
+    var delegate: MenuViewControllerDelegate!
     
     let mode: Setting
     let game: Games

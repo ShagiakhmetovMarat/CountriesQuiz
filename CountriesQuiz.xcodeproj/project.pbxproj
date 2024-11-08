@@ -51,7 +51,6 @@
 		C3B324882C6DE1F9003BB31F /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B324872C6DE1F9003BB31F /* FavoritesViewController.swift */; };
 		C3B3248A2C6DE277003BB31F /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B324892C6DE277003BB31F /* FavoritesViewModel.swift */; };
 		C3B3248C2C6DF843003BB31F /* FavoritesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B3248B2C6DF843003BB31F /* FavoritesCell.swift */; };
-		C3B35F20293FADC300A8493F /* fontick.otf in Resources */ = {isa = PBXBuildFile; fileRef = C3B35F1F293FADC300A8493F /* fontick.otf */; };
 		C3B972F42CB6496E0013A32F /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B972F32CB6496E0013A32F /* SettingCell.swift */; };
 		C3B972F82CB6A11D0013A32F /* CountQuestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B972F72CB6A11D0013A32F /* CountQuestionsViewController.swift */; };
 		C3B972FA2CB6A16A0013A32F /* CountQuestionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B972F92CB6A15B0013A32F /* CountQuestionsViewModel.swift */; };
@@ -117,7 +116,6 @@
 		C3B324872C6DE1F9003BB31F /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		C3B324892C6DE277003BB31F /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		C3B3248B2C6DF843003BB31F /* FavoritesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesCell.swift; sourceTree = "<group>"; };
-		C3B35F1F293FADC300A8493F /* fontick.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fontick.otf; sourceTree = "<group>"; };
 		C3B972F32CB6496E0013A32F /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		C3B972F72CB6A11D0013A32F /* CountQuestionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountQuestionsViewController.swift; sourceTree = "<group>"; };
 		C3B972F92CB6A15B0013A32F /* CountQuestionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountQuestionsViewModel.swift; sourceTree = "<group>"; };
@@ -204,7 +202,6 @@
 			isa = PBXGroup;
 			children = (
 				C38139EA293C9A890067D374 /* echorevival.otf */,
-				C3B35F1F293FADC300A8493F /* fontick.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -402,7 +399,6 @@
 			files = (
 				C38139EB293C9A890067D374 /* echorevival.otf in Resources */,
 				C3E2EB392938E7F400AB40AD /* Assets.xcassets in Resources */,
-				C3B35F20293FADC300A8493F /* fontick.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,6 +27,7 @@ protocol QuizOfCapitalsViewModelProtocol {
     var titleQuiz: String { get }
     var titleDescription: String { get }
     var answerSelect: Bool { get }
+    var delegate: GameTypeViewControllerInput! { get set }
     
     init(mode: Setting, game: Games, favorites: [Favorites])
     
@@ -125,6 +126,7 @@ class QuizOfCapitalsViewModel: QuizOfCapitalsViewModelProtocol {
         }
     }
     var answerSelect = false
+    var delegate: GameTypeViewControllerInput!
     
     private var issueSpring: NSLayoutConstraint!
     private var stackViewSpring: NSLayoutConstraint!

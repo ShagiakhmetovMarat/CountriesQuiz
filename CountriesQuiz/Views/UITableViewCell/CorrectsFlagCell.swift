@@ -53,7 +53,7 @@ extension CorrectsFlagCell {
     }
     
     private func setLabel(label: UILabel) {
-        label.font = UIFont(name: "mr_fontick", size: 23)
+        label.font = UIFont(name: "GillSans", size: 22)
         label.textColor = .white
         label.textAlignment = .center
     }

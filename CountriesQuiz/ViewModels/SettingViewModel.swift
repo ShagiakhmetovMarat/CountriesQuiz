@@ -37,12 +37,7 @@ protocol SettingViewModelProtocol {
 }
 
 class SettingViewModel: SettingViewModelProtocol {
-    var title: String {
-        switch mode.language {
-        case .russian: "Настройки"
-        default: "Settings"
-        }
-    }
+    var title = "Setting.title".localized
     var cell: AnyClass = SettingCell.self
     var heightOfRow: CGFloat = 55
     var numberOfSections = 2
@@ -98,102 +93,22 @@ class SettingViewModel: SettingViewModelProtocol {
     private var isEnabled: Bool {
         !allCountries && countQuestions > 50 ? true : false
     }
-    private var titleSeconds: String {
-        switch mode.language {
-        case .russian: "сек."
-        default: "sec."
-        }
-    }
-    private var titleNo: String {
-        switch mode.language {
-        case .russian: "Нет."
-        default: "No."
-        }
-    }
-    private var titleAlert: String {
-        switch mode.language {
-        case .russian: "Сбросить настройки"
-        default: "Reset settings"
-        }
-    }
-    private var titleMessage: String {
-        switch mode.language {
-        case .russian: "Вы действительно хотите сбросить настройки до заводских?"
-        default: "Do you really want to reset settings to default?"
-        }
-    }
-    private var titleNumberOfQuestions: String {
-        switch mode.language {
-        case .russian: "Количество вопросов"
-        default: "Number of questions"
-        }
-    }
-    private var titleContinents: String {
-        switch mode.language {
-        case .russian: "Континенты"
-        default: "Continents"
-        }
-    }
-    private var titleTime: String {
-        switch mode.language {
-        case .russian: "Время для вопросов"
-        default: "Time for questions"
-        }
-    }
-    private var titleLanguage: String {
-        switch mode.language {
-        case .russian: "Язык"
-        default: "Language"
-        }
-    }
-    private var titleAppearence: String {
-        switch mode.language {
-        case .russian: "Оформление"
-        default: "Appearence"
-        }
-    }
-    private var titleDialect: String {
-        switch mode.language {
-        case .russian: "Русский"
-        default: "English"
-        }
-    }
-    private var titleAllCountries: String {
-        switch mode.language {
-        case .russian: "Все страны"
-        default: "All countries"
-        }
-    }
-    private var titleAmerica: String {
-        switch mode.language {
-        case .russian: "Америка"
-        default: "America"
-        }
-    }
-    private var titleEurope: String {
-        switch mode.language {
-        case .russian: "Европа"
-        default: "Europe"
-        }
-    }
-    private var titleAfrica: String {
-        switch mode.language {
-        case .russian: "Африка"
-        default: "Africa"
-        }
-    }
-    private var titleAsia: String {
-        switch mode.language {
-        case .russian: "Азия"
-        default: "Asia"
-        }
-    }
-    private var titleOceania: String {
-        switch mode.language {
-        case .russian: "Океания"
-        default: "Oceania"
-        }
-    }
+    private var titleSeconds = "Setting.seconds.title".localized
+    private var titleNo = "Setting.no.title".localized
+    private var titleAlert = "Setting.alert.title".localized
+    private var titleMessage = "Setting.message.title".localized
+    private var titleNumberOfQuestions = "Setting.number_of_questions.title".localized
+    private var titleContinents = "Setting.continents.title".localized
+    private var titleTime = "Setting.time.title".localized
+    private var titleLanguage = "Setting.language.title".localized
+    private var titleAppearence = "Setting.appearence.title".localized
+    private var titleDialect = "Setting.dialect.title".localized
+    private var titleAllCountries = "Setting.all_countries".localized
+    private var titleAmerica = "Setting.america.title".localized
+    private var titleEurope = "Setting.europe.title".localized
+    private var titleAfrica = "Setting.africa.title".localized
+    private var titleAsia = "Setting.asia.title".localized
+    private var titleOceania = "Setting.oceania.title".localized
     
     required init(mode: Setting) {
         self.mode = mode

@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  CountriesQuiz
+
+  Created by Marat Shagiakhmetov on 30.01.2025.
+  
+*/
+
+"Main.Quiz_of_flags.title" = "Викторина флагов";
+"Main.Questionnaire.title" = "Опрос";
+"Main.Quiz_of_maps.title" = "Викторина карт";
+"Main.Scrabble.title" = "Эрудит";
+"Main.Quiz_of_capitals.title" = "Викторина столиц";
+
+"Setting.title" = "Настройки";
+"Setting.seconds.title" = "сек.";
+"Setting.no.title" = "Нет.";
+"Setting.alert.title" = "Сбросить настройки";
+"Setting.message.title" = "Вы действительно хотите сбросить настройки до заводских?";
+"Setting.number_of_questions.title" = "Количество вопросов";
+"Setting.continents.title" = "Континенты";
+"Setting.time.title" = "Время для вопросов";
+"Setting.language.title" = "Язык";
+"Setting.appearence.title" = "Оформление";
+"Setting.dialect.title" = "Русский";
+"Setting.all_countries" = "Все страны";
+"Setting.america.title" = "Америка";
+"Setting.europe.title" = "Европа";
+"Setting.africa.title" = "Африка";
+"Setting.asia.title" = "Азия";
+"Setting.oceania.title" = "Океания";
+
+"Language.title" = "Язык";
+"Language.description" = "Выберите нужный вам язык для интерфейса.";

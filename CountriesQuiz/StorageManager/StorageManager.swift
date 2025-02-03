@@ -12,6 +12,7 @@ class StorageManager {
     
     private let userDefaults = UserDefaults.standard
     private let settingKey = "setting"
+    private let languageKey = "appLanguage"
     
     private init() {}
     
@@ -24,6 +25,23 @@ class StorageManager {
         guard let data = userDefaults.object(forKey: settingKey) as? Data else { return Setting.getSettingDefault(.english) }
         guard let setting = try? JSONDecoder().decode(Setting.self, from: data) else { return Setting.getSettingDefault(.english) }
         return setting
+    }
+    
+    func saveLanguage(language: String) {
+        userDefaults.set(language, forKey: languageKey)
+    }
+    
+    func loadLanguage() {
+        if let language = userDefaults.string(forKey: languageKey) {
+            Bundle.setLanguage(language)
+        } else {
+            Bundle.setLanguage("en")
+        }
+    }
+    
+    func fetchLanguage() -> String {
+        guard let language = userDefaults.string(forKey: languageKey) else { return "en" }
+        return language
     }
     
     func addFavorite(favorite: Favorites, key: String) {

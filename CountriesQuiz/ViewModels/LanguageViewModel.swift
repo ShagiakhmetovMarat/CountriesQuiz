@@ -29,18 +29,8 @@ protocol LanguageViewModelProtocol {
 }
 
 class LanguageViewModel: LanguageViewModelProtocol {
-    var title: String {
-        switch dialects {
-        case .russian: "Язык"
-        default: "Language"
-        }
-    }
-    var description: String {
-        switch dialects {
-        case .russian: "Выберите нужный вам язык для интерфейса."
-        default: "Select the language you need for the interface."
-        }
-    }
+    var title = "Language.title".localized
+    var description = "Language.description".localized
     var cell: AnyClass = LanguageCell.self
     var numberOfRows = Dialect.allCases.count
     var heightOfRows: CGFloat = 60
@@ -49,6 +39,9 @@ class LanguageViewModel: LanguageViewModelProtocol {
     
     private var dialects: Dialect {
         mode.language
+    }
+    private var language: String {
+        StorageManager.shared.fetchLanguage()
     }
     private var timer = Timer()
     
@@ -134,8 +127,8 @@ extension LanguageViewModel {
     
     private func checkmark(_ row: Int) -> UITableViewCell.AccessoryType {
         switch row {
-        case 0: dialects == .russian ? .checkmark : .none
-        default: dialects == .english ? .checkmark : .none
+        case 0: language == "ru" ? .checkmark : .none
+        default: language == "en" ? .checkmark : .none
         }
     }
     
@@ -143,10 +136,47 @@ extension LanguageViewModel {
         mode.language = language
     }
     
+    private func setLanguage(language: String) {
+        Bundle.setLanguage(language)
+        StorageManager.shared.saveLanguage(language: language)
+    }
+    
+    private func reloadApp() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else { return }
+        
+        let currentVC = getTopViewController(from: window.rootViewController)
+        let rootViewController = MenuViewController()
+        let navigationVC = UINavigationController(rootViewController: rootViewController)
+        
+        if let currentVC = currentVC {
+            navigationVC.pushViewController(currentVC, animated: false)
+        }
+        
+        window.rootViewController = navigationVC
+        window.makeKeyAndVisible()
+    }
+    
+    func getTopViewController(from rootViewController: UIViewController?) -> UIViewController? {
+        if let navigaitonVC = rootViewController as? UINavigationController {
+            return navigaitonVC.visibleViewController
+        } else if let tabBarController = rootViewController as? UITabBarController,
+                  let selectedController = tabBarController.selectedViewController {
+            return getTopViewController(from: selectedController)
+        } else if let presented = rootViewController?.presentedViewController {
+            return getTopViewController(from: presented)
+        }
+        return rootViewController
+    }
+    
     private func changeLanguage(_ indexPath: IndexPath) {
         switch indexPath.row {
-        case 0: setLanguage(language: .russian)
-        default: setLanguage(language: .english)
+        case 0:
+            setLanguage(language: "ru")
+//            setLanguage(language: .russian)
+        default:
+            setLanguage(language: "en")
+//            setLanguage(language: .english)
         }
     }
     
@@ -160,6 +190,7 @@ extension LanguageViewModel {
                             and indexPath: IndexPath) {
         cell.indicator.stopAnimating()
         reloadCells(tableView, and: indexPath)
+        reloadApp()
         reloadTitles()
     }
     

@@ -5,7 +5,6 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>echorevival.otf</string>
-		<string>fontick.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  CountriesQuiz
+
+  Created by Marat Shagiakhmetov on 30.01.2025.
+  
+*/
+
+"Main.Quiz_of_flags.title" = "Quiz of flags";
+"Main.Questionnaire.title" = "Questionnaire";
+"Main.Quiz_of_maps.title" = "Quiz of maps";
+"Main.Scrabble.title" = "Scrabble";
+"Main.Quiz_of_capitals.title" = "Quiz of capitals";
+
+"Setting.title" = "Settings";
+"Setting.seconds.title" = "sec.";
+"Setting.no.title" = "No.";
+"Setting.alert.title" = "Reset settings";
+"Setting.message.title" = "Do you really want to reset settings to default?";
+"Setting.number_of_questions.title" = "Number of questions";
+"Setting.continents.title" = "Continents";
+"Setting.time.title" = "Time for questions";
+"Setting.language.title" = "Language";
+"Setting.appearence.title" = "Appearence";
+"Setting.dialect.title" = "English";
+"Setting.all_countries" = "All countries";
+"Setting.america.title" = "America";
+"Setting.europe.title" = "Europe";
+"Setting.africa.title" = "Africa";
+"Setting.asia.title" = "Asia";
+"Setting.oceania.title" = "Oceania";
+
+"Language.title" = "Language";
+"Language.description" = "Select the language you need for the interface.";

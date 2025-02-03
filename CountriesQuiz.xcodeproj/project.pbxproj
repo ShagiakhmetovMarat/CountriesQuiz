@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C326BEF02D4B9ADE00CFF0A7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C326BEEE2D4B9ADE00CFF0A7 /* Localizable.strings */; };
+		C326BEF52D4BA20500CFF0A7 /* String + Localized.swift in Sources */ = {isa = PBXBuildFile; fileRef = C326BEF42D4BA20500CFF0A7 /* String + Localized.swift */; };
 		C327453F2CBFD765001F7C2A /* TimeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C327453E2CBFD765001F7C2A /* TimeViewController.swift */; };
 		C32745412CBFD83D001F7C2A /* TimeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32745402CBFD83D001F7C2A /* TimeViewModel.swift */; };
 		C32C24392C7722880088D40D /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32C24382C7722880088D40D /* DetailsViewController.swift */; };
@@ -22,6 +24,7 @@
 		C33669D62B998F990081C39A /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33669D52B998F990081C39A /* Game.swift */; };
 		C33762AE2BC4386700A417AB /* IncorrectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33762AD2BC4386700A417AB /* IncorrectViewModel.swift */; };
 		C33BB07E2C70B7EC0083D907 /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33BB07D2C70B7EC0083D907 /* Favorites.swift */; };
+		C33F93062D4CB82800188543 /* Bundle + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33F93052D4CB82800188543 /* Bundle + Extension.swift */; };
 		C340723B2A690F4F00E5C9A4 /* UIColorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C340723A2A690F4F00E5C9A4 /* UIColorManager.swift */; };
 		C341078E2BBFE4C800D0E993 /* ResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341078D2BBFE4C800D0E993 /* ResultsViewModel.swift */; };
 		C34BA42A2A9E2C9B006E191D /* QuestionnaireViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34BA4292A9E2C9B006E191D /* QuestionnaireViewController.swift */; };
@@ -72,6 +75,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C326BEEF2D4B9ADE00CFF0A7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C326BEF12D4B9B0800CFF0A7 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C326BEF42D4BA20500CFF0A7 /* String + Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Localized.swift"; sourceTree = "<group>"; };
 		C327453E2CBFD765001F7C2A /* TimeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeViewController.swift; sourceTree = "<group>"; };
 		C32745402CBFD83D001F7C2A /* TimeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeViewModel.swift; sourceTree = "<group>"; };
 		C32C24382C7722880088D40D /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +93,7 @@
 		C33669D52B998F990081C39A /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		C33762AD2BC4386700A417AB /* IncorrectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncorrectViewModel.swift; sourceTree = "<group>"; };
 		C33BB07D2C70B7EC0083D907 /* Favorites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
+		C33F93052D4CB82800188543 /* Bundle + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle + Extension.swift"; sourceTree = "<group>"; };
 		C340723A2A690F4F00E5C9A4 /* UIColorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorManager.swift; sourceTree = "<group>"; };
 		C341078D2BBFE4C800D0E993 /* ResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewModel.swift; sourceTree = "<group>"; };
 		C34BA4292A9E2C9B006E191D /* QuestionnaireViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireViewController.swift; sourceTree = "<group>"; };
@@ -186,6 +193,8 @@
 			children = (
 				C340723A2A690F4F00E5C9A4 /* UIColorManager.swift */,
 				C36F58F72A7288FB0023E98F /* UIButton + Extension.swift */,
+				C326BEF42D4BA20500CFF0A7 /* String + Localized.swift */,
+				C33F93052D4CB82800188543 /* Bundle + Extension.swift */,
 			);
 			path = "Extensions + UIKit";
 			sourceTree = "<group>";
@@ -294,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				C3E2EB3D2938E7F400AB40AD /* Info.plist */,
+				C326BEEE2D4B9ADE00CFF0A7 /* Localizable.strings */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -381,6 +391,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = C3E2EB232938E7F300AB40AD;
 			productRefGroup = C3E2EB2D2938E7F300AB40AD /* Products */;
@@ -398,6 +409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C38139EB293C9A890067D374 /* echorevival.otf in Resources */,
+				C326BEF02D4B9ADE00CFF0A7 /* Localizable.strings in Resources */,
 				C3E2EB392938E7F400AB40AD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,6 +431,7 @@
 				C36773F1296BF9E10096BCC5 /* QuizOfFlagsViewController.swift in Sources */,
 				C38DF4DE2A8F4A5B00550BCC /* FlagCell.swift in Sources */,
 				C3B972F82CB6A11D0013A32F /* CountQuestionsViewController.swift in Sources */,
+				C326BEF52D4BA20500CFF0A7 /* String + Localized.swift in Sources */,
 				C3E853492BD7845500D244F8 /* QuizOfCapitalsViewModel.swift in Sources */,
 				C392B18A2C36864900779A53 /* RatioViewModel.swift in Sources */,
 				C3E3C2DA295B602900054A1F /* AlertController.swift in Sources */,
@@ -445,6 +458,7 @@
 				C3C0AF8B2CCFBC3700B8F309 /* LanguageCell.swift in Sources */,
 				C3E2EB4B2938EA6800AB40AD /* FlagsOfCountries.swift in Sources */,
 				C33669D22B98A13D0081C39A /* MenuViewModel.swift in Sources */,
+				C33F93062D4CB82800188543 /* Bundle + Extension.swift in Sources */,
 				C3E7C9962A7C19F80046A883 /* GameType.swift in Sources */,
 				C3B187C82ADFBF6F0086EC49 /* QuizOfCapitalsViewController.swift in Sources */,
 				C33669D42B998DC30081C39A /* GameTypeViewModel.swift in Sources */,
@@ -473,6 +487,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C326BEEE2D4B9ADE00CFF0A7 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C326BEEF2D4B9ADE00CFF0A7 /* en */,
+				C326BEF12D4B9B0800CFF0A7 /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C3E2EB3E2938E7F400AB40AD /* Debug */ = {

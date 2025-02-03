@@ -38,36 +38,11 @@ protocol MenuViewModelProtocol {
 }
 
 class MenuViewModel: MenuViewModelProtocol {
-    var titleQuizOfFlags: String {
-        switch mode?.language {
-        case .russian: "Викторина флагов"
-        default: "Quiz of flags"
-        }
-    }
-    var titleQuestionnaire: String {
-        switch mode?.language {
-        case .russian: "Опрос"
-        default: "Questionnaire"
-        }
-    }
-    var titleQuizOfMaps: String {
-        switch mode?.language {
-        case .russian: "Викторина карт"
-        default: "Quiz of maps"
-        }
-    }
-    var titleScrabble: String {
-        switch mode?.language {
-        case .russian: "Эрудит"
-        default: "Scrabble"
-        }
-    }
-    var titleQuizOfCapitals: String {
-        switch mode?.language {
-        case .russian: "Викторина столиц"
-        default: "Quiz of capitals"
-        }
-    }
+    var titleQuizOfFlags = "Main.Quiz_of_flags.title".localized
+    var titleQuestionnaire = "Main.Questionnaire.title".localized
+    var titleQuizOfMaps = "Main.Quiz_of_maps.title".localized
+    var titleScrabble = "Main.Scrabble.title".localized
+    var titleQuizOfCapitals = "Main.Quiz_of_capitals.title".localized
     var mode: Setting?
     
     private var games: [Games] = []
@@ -101,6 +76,7 @@ class MenuViewModel: MenuViewModelProtocol {
     func fetchData() {
         mode = StorageManager.shared.fetchSetting()
         games = getGames(dialect: mode?.language ?? .english)
+        StorageManager.shared.loadLanguage()
     }
     
     func size(view: UIView?) -> CGSize {

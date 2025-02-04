@@ -103,7 +103,7 @@ class SettingViewModel: SettingViewModelProtocol {
     private var titleLanguage = "Setting.language.title".localized
     private var titleAppearence = "Setting.appearence.title".localized
     private var titleDialect = "Setting.dialect.title".localized
-    private var titleAllCountries = "Setting.all_countries".localized
+    private var titleAllCountries = "Setting.all_countries.title".localized
     private var titleAmerica = "Setting.america.title".localized
     private var titleEurope = "Setting.europe.title".localized
     private var titleAfrica = "Setting.africa.title".localized

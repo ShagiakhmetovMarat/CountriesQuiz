@@ -23,12 +23,31 @@
 "Setting.language.title" = "Язык";
 "Setting.appearence.title" = "Оформление";
 "Setting.dialect.title" = "Русский";
-"Setting.all_countries" = "Все страны";
+"Setting.all_countries.title" = "Все страны";
 "Setting.america.title" = "Америка";
 "Setting.europe.title" = "Европа";
 "Setting.africa.title" = "Африка";
 "Setting.asia.title" = "Азия";
 "Setting.oceania.title" = "Океания";
+
+"CountQuestions.title" = "Количество вопросов";
+"CountQuestions.description" = "Установите определенное количество вопросов, на которые вы будете отвечать. Минимальное значение - 10, а максимальное -";
+
+"Continents.title" = "Континенты";
+"Continents.description" = "Выберите континенты и в вопросах будут выпадать те государства, которые входят в той или иной континент.";
+"Continents.all_countries.title" = "Все страны мира";
+"Continents.american_continent.title" = "Континент Америки";
+"Continents.european_continent.title" = "Континент Европы";
+"Continents.african_continent.title" = "Континент Африки";
+"Continents.asian_continent.title" = "Континент Азии";
+"Continents.oceanian_continent.title" = "Континент Океании";
+"Continents.number_of_countries.title" = "Количество стран:";
+
+"Time.title" = "Время для вопросов";
+"Time.description" = "Установите таймер для одного вопроса или же таймер для всех вопросов. При истечении времени для одного вопроса, станет недоступным сам вопрос, а для всех вопросов - завершается игра.";
+"Time.countdown.title" = "Обратный отсчет";
+"Time.one_question.title" = "Один вопрос";
+"Time.all_questions.title" = "Все вопросы";
 
 "Language.title" = "Язык";
 "Language.description" = "Выберите нужный вам язык для интерфейса.";

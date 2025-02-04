@@ -12,6 +12,43 @@
 "Main.Scrabble.title" = "Scrabble";
 "Main.Quiz_of_capitals.title" = "Quiz of capitals";
 
+"GameType.quiz_of_flags.title" = "Quiz of flags";
+"GameType.questionnaire.title" = "Questionnaire";
+"GameType.quiz_of_maps.title" = "Quiz of maps";
+"GameType.scrabble.title" = "Scrabble";
+"GameType.quiz_of_capitals.title" = "Quiz of capitals";
+"GameType.number_of_questions.title" = "Number of questions";
+"GameType.continents.title" = "Continents";
+"GameType.yes.title" = "Yes";
+"GameType.no.title" = "No";
+"GameType.countdown.title" = "Countdown";
+"GameType.on_off.title" = "On / Off";
+"GameType.one_question.title" = "One question";
+"GameType.all_questions.title" = "All questions";
+"GameType.ok.title" = "Ok";
+"GameType.cancel.title" = "Cancel";
+"GameType.time_all_questions.title" = "Time for all questions";
+"GameType.time_one_question" = "Time for one question";
+"GameType.map_mode.title" = "Map mode";
+"GameType.flag_mode.title" = "Flag mode";
+"GameType.capital_city_mode.title" = "Capital city mode";
+"GameType.naming_mode.title" = "Naming mode";
+"GameType.flag_mode.description" = "The country flag is set as question and user must choose the country name.";
+"GameType.map_mode.description" = "The geographical map of country is set as question and user must choose the country name. (Button is inactive)";
+"GameType.scrabble.description" = "The country flag is set as question and user must compouse a word from letters of country name.";
+"GameType.capital_city_mode.description" = "The country flag is set as question and user must choose the capital city name.";
+"GameType.naming_mode.description" = "The country name is set as question and user must choose the country flag.";
+"GameType.capital_city_mode.two.description" = "The country name is set as question and user must choose the capital city name.";
+"GameType.map_mode.two.description" = "The geographical map is set as question and user must compose a word from letters of the country name.";
+"GameType.capital_city_mode.three.description" = "The capital city name is set as question and user must compose a word from letters of the country name.";
+"GameType.type_of_game.title" = "Type of game";
+"GameType.number_of_countries.title" = "Number of countries:";
+"GameType.first.tag.description" = "Choosing the answer to a question about the country's flag. One of the four answers is correct.";
+"GameType.second.tag.description" = "Survey about the flags of countries and choosing the answers in the whole survey. One of the four answers is correct.";
+"GameType.third.tag.description" = "Choosing the answer to a question about the geographical map of the country. One of the four answers is correct.";
+"GameType.fourth.tag.description" = "Making a qord from the missing letters. You are given letters in random order. To move on to the next question, you must fully compose the word from the letters.";
+"GameType.fifth.tag.description" = "Choosing the answer to a question about the country's capital. One of the four answers is correct.";
+
 "Setting.title" = "Settings";
 "Setting.seconds.title" = "sec.";
 "Setting.no.title" = "No.";
@@ -23,12 +60,31 @@
 "Setting.language.title" = "Language";
 "Setting.appearence.title" = "Appearence";
 "Setting.dialect.title" = "English";
-"Setting.all_countries" = "All countries";
+"Setting.all_countries.title" = "All countries";
 "Setting.america.title" = "America";
 "Setting.europe.title" = "Europe";
 "Setting.africa.title" = "Africa";
 "Setting.asia.title" = "Asia";
 "Setting.oceania.title" = "Oceania";
+
+"CountQuestions.title" = "Number of questions";
+"CountQuestions.description" = "Set a certain number of questions for you will answer. Minimun value is 10 and maximum value is";
+
+"Continents.title" = "Continents";
+"Continents.description" = "Select continents and in questions will be displayed countries that belong to the selected continent.";
+"Continents.all_countries.title" = "All countries in the world";
+"Continents.american_continent.title" = "American continent";
+"Continents.european_continent.title" = "European continent";
+"Continents.african_continent.title" = "African continent";
+"Continents.asian_continent.title" = "Asian continent";
+"Continents.oceanian_continent.title" = "Oceanian continent";
+"Continents.number_of_countries.title" = "Number of countries:";
+
+"Time.title" = "Time for questions";
+"Time.description" = "Set a timer for one question or for all questions. When the timer for one question expires, the question becomes unavailable and for all questions the game ends.";
+"Time.countdown.title" = "Countdown";
+"Time.one_question.title" = "One question";
+"Time.all_questions.title" = "All questions";
 
 "Language.title" = "Language";
 "Language.description" = "Select the language you need for the interface.";

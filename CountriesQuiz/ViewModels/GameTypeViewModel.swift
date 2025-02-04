@@ -207,7 +207,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     }
     var titleNo: String {
         switch mode.language {
-        case .russian: "No"
+        case .russian: "Нет"
         default: "No"
         }
     }

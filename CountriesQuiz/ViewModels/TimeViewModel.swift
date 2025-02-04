@@ -43,33 +43,13 @@ protocol TimeViewModelProtocol {
 }
 
 class TimeViewModel: TimeViewModelProtocol {
-    var title: String {
-        switch mode.language {
-        case .russian: "Время для вопросов"
-        default: "Time for questions"
-        }
-    }
-    var description: String {
-        switch mode.language {
-        case .russian: "Установите таймер для одного вопроса или же таймер для всех вопросов. При истечении времени для одного вопроса, станет недоступным сам вопрос, а для всех вопросов - завершается игра."
-        default: "Set a timer for one question or for all questions. When the timer for one question expires, the question becomes unavailable and for all questions the game ends."
-        }
-    }
-    var titleTimer: String {
-        switch mode.language {
-        case .russian: "Обратный отсчет"
-        default: "Countdown"
-        }
-    }
+    var title = "Time.title".localized
+    var description = "Time.description".localized
+    var titleTimer = "Time.countdown.title".localized
     var isOn: Bool {
         isTime
     }
-    var items: [String] {
-        switch mode.language {
-        case .russian: ["Один вопрос", "Все вопросы"]
-        default: ["One question", "All questions"]
-        }
-    }
+    var items = ["Time.one_question.title".localized, "Time.all_questions.title".localized]
     var font = UIFont(name: "GillSans", size: 24)
     var isTime: Bool {
         mode.timeElapsed.timeElapsed ? true : false

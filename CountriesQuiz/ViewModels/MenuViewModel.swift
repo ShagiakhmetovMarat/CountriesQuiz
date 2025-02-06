@@ -38,11 +38,11 @@ protocol MenuViewModelProtocol {
 }
 
 class MenuViewModel: MenuViewModelProtocol {
-    var titleQuizOfFlags = "Main.Quiz_of_flags.title".localized
-    var titleQuestionnaire = "Main.Questionnaire.title".localized
-    var titleQuizOfMaps = "Main.Quiz_of_maps.title".localized
-    var titleScrabble = "Main.Scrabble.title".localized
-    var titleQuizOfCapitals = "Main.Quiz_of_capitals.title".localized
+    var titleQuizOfFlags = "Quiz_of_flags.title".localized
+    var titleQuestionnaire = "Questionnaire.title".localized
+    var titleQuizOfMaps = "Quiz_of_maps.title".localized
+    var titleScrabble = "Scrabble.title".localized
+    var titleQuizOfCapitals = "Quiz_of_capitals.title".localized
     var mode: Setting?
     
     private var games: [Games] = []

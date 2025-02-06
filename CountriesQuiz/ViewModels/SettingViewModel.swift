@@ -97,18 +97,18 @@ class SettingViewModel: SettingViewModelProtocol {
     private var titleNo = "Setting.no.title".localized
     private var titleAlert = "Setting.alert.title".localized
     private var titleMessage = "Setting.message.title".localized
-    private var titleNumberOfQuestions = "Setting.number_of_questions.title".localized
+    private var titleNumberOfQuestions = "Number_of_questions.title".localized
     private var titleContinents = "Setting.continents.title".localized
     private var titleTime = "Setting.time.title".localized
     private var titleLanguage = "Setting.language.title".localized
     private var titleAppearence = "Setting.appearence.title".localized
     private var titleDialect = "Setting.dialect.title".localized
-    private var titleAllCountries = "Setting.all_countries.title".localized
-    private var titleAmerica = "Setting.america.title".localized
-    private var titleEurope = "Setting.europe.title".localized
-    private var titleAfrica = "Setting.africa.title".localized
-    private var titleAsia = "Setting.asia.title".localized
-    private var titleOceania = "Setting.oceania.title".localized
+    private var titleAllCountries = "All_countries.title".localized
+    private var titleAmerica = "America.title".localized
+    private var titleEurope = "Europe.title".localized
+    private var titleAfrica = "Africa.title".localized
+    private var titleAsia = "Asia.title".localized
+    private var titleOceania = "Oceania.title".localized
     
     required init(mode: Setting) {
         self.mode = mode

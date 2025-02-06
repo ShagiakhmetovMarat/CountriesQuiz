@@ -178,69 +178,20 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     var name: String {
         names[tag]
     }
-    var names: [String] {
-        switch mode.language {
-        case .russian: ["Викторина флагов", "Опрос", "Викторина карт", "Эрудит",
-                        "Викторина столиц"]
-        default: ["Quiz of flags", "Questionnaire", "Quiz of maps", "Scrabble",
-                  "Quiz of capitals"]
-        }
-    }
+    var names = [
+        "Quiz_of_flags.title".localized, "Questionnaire.title".localized,
+        "Quiz_of_maps.title".localized, "Scrabble.title".localized,
+        "Quiz_of_capitals.title".localized]
     var popUpViewHelp: Bool = false
-    var titleNumberOfQuestions: String {
-        switch mode.language {
-        case .russian: "Количество вопросов"
-        default: "Number of questions"
-        }
-    }
-    var titleContinents: String {
-        switch mode.language {
-        case .russian: "Континенты"
-        default: "Continents"
-        }
-    }
-    var titleYes: String {
-        switch mode.language {
-        case .russian: "Да"
-        default: "Yes"
-        }
-    }
-    var titleNo: String {
-        switch mode.language {
-        case .russian: "Нет"
-        default: "No"
-        }
-    }
-    var titleCountdown: String {
-        switch mode.language {
-        case .russian: "Обратный отсчет"
-        default: "Countdown"
-        }
-    }
-    var titleOnOff: String {
-        switch mode.language {
-        case .russian: "Вкл / Выкл"
-        default: "On / Off"
-        }
-    }
-    var titleItems: [String] {
-        switch mode.language {
-        case .russian: ["Один вопрос", "Все вопросы"]
-        default: ["One question", "All questions"]
-        }
-    }
-    var titleOk: String {
-        switch mode.language {
-        case .russian: "Ок"
-        default: "Ok"
-        }
-    }
-    var titleCancel: String {
-        switch mode.language {
-        case .russian: "Отмена"
-        default: "Cancel"
-        }
-    }
+    var titleNumberOfQuestions = "Number_of_questions.title".localized
+    var titleContinents = "Continents.title".localized
+    var titleYes = "GameType.yes.title".localized
+    var titleNo = "GameType.no.title".localized
+    var titleCountdown = "Countdown.title".localized
+    var titleOnOff = "GameType.on_off.title".localized
+    var titleItems = ["One_question.title".localized, "All_questions.title".localized]
+    var titleOk = "GameType.ok.title".localized
+    var titleCancel = "GameType.cancel.title".localized
     var delegate: MenuViewControllerInput!
     
     var mode: Setting
@@ -249,42 +200,12 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     private let game: Games
     
     private var countRowsDefault = DefaultSetting.countRows.rawValue
-    private var titleTimeAllQuestions: String {
-        switch mode.language {
-        case .russian: "Время всех вопросов"
-        default: "Time for all questions"
-        }
-    }
-    private var titleTimeOneQuestion: String {
-        switch mode.language {
-        case .russian: "Время одного вопроса"
-        default: "Time for one question"
-        }
-    }
-    private var titleMapMode: String {
-        switch mode.language {
-        case .russian: "Режим карты"
-        default: "Map mode"
-        }
-    }
-    private var titleFlagMode: String {
-        switch mode.language {
-        case .russian: "Режим флага"
-        default: "Flag mode"
-        }
-    }
-    private var titleCapitalCityMode: String {
-        switch mode.language {
-        case .russian: "Режим столицы"
-        default: "Capital city mode"
-        }
-    }
-    private var titleNamingMode: String {
-        switch mode.language {
-        case .russian: "Режим наименования"
-        default: "Naming mode"
-        }
-    }
+    private var titleTimeAllQuestions = "GameType.time_all_questions.title".localized
+    private var titleTimeOneQuestion = "GameType.time_one_question".localized
+    private var titleMapMode = "GameType.map_mode.title".localized
+    private var titleFlagMode = "GameType.flag_mode.title".localized
+    private var titleCapitalCityMode = "GameType.capital_city_mode.title".localized
+    private var titleNamingMode = "GameType.naming_mode.title".localized
     private var titleFirst: String {
         tag == 2 ? titleMapMode : titleFlagMode
     }
@@ -303,30 +224,10 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
         default: descriptionCapitalCityMode
         }
     }
-    private var descriptionFlagMode: String {
-        switch mode.language {
-        case .russian: "В качестве вопроса задается флаг страны и пользователь должен выбрать ответ наименования страны."
-        default: "The country flag is set as question and user must choose the country name."
-        }
-    }
-    private var descriptionMapMode: String {
-        switch mode.language {
-        case .russian: "В качестве вопроса задается географическая карта страны и пользователь должен выбрать ответ наименования страны. (Кнопка неактивна)"
-        default: "The geographical map of country is set as question and user must choose the country name. (Button is inactive)"
-        }
-    }
-    private var descriptionScrabble: String {
-        switch mode.language {
-        case .russian: "В качестве вопроса задается флаг страны и пользователь должен составить слово из букв наименования страны."
-        default: "The country flag is set as question and user must compouse a word from letters of country name."
-        }
-    }
-    private var descriptionCapitalCityMode: String {
-        switch mode.language {
-        case .russian: "В качестве вопроса задается флаг страны и пользователь должен выбрать ответ наименования столицы."
-        default: "The country flag is set as question and user must choose the capital city name."
-        }
-    }
+    private var descriptionFlagMode = "GameType.flag_mode.description".localized
+    private var descriptionMapMode = "GameType.map_mode.description".localized
+    private var descriptionScrabble = "GameType.scrabble.description".localized
+    private var descriptionCapitalCityMode = "GameType.capital_city_mode.description".localized
     private var descriptionSecond: String {
         switch tag {
         case 0, 1: descriptionNamingMode
@@ -334,42 +235,12 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
         default: descriptionMapModeSecond
         }
     }
-    private var descriptionNamingMode: String {
-        switch mode.language {
-        case .russian: "В качестве вопроса задается наименование страны и пользователь должен выбрать ответ флага страны."
-        default: "The country name is set as question and user must choose the country flag."
-        }
-    }
-    private var descriptionCapitalCityModeSecond: String {
-        switch mode.language {
-        case .russian: "В качестве вопроса задается наименование страны и пользователь должен выбрать ответ наименования столицы"
-        default: "The country name is set as question and user must choose the capital city name."
-        }
-    }
-    private var descriptionMapModeSecond: String {
-        switch mode.language {
-        case .russian: "В качестве вопроса задается географическая карта страны и пользователь должен составить слово из букв наименования страны."
-        default: "The geographical map is set as question and user must compose a word from letters of the country name."
-        }
-    }
-    private var descriptionThird: String {
-        switch mode.language {
-        case .russian: "В качестве вопроса задается наименование столицы и пользователь должен составить слово из букв наименования страны."
-        default: "The capital city name is set as question and user must compose a word from letters of the country name."
-        }
-    }
-    private var titleTypeOfGame: String {
-        switch mode.language {
-        case .russian: "Тип игры"
-        default: "Type of game"
-        }
-    }
-    private var titleNumberOfCountries: String {
-        switch mode.language {
-        case .russian: "Количество стран:"
-        default: "Number of countries:"
-        }
-    }
+    private var descriptionNamingMode = "GameType.naming_mode.description".localized
+    private var descriptionCapitalCityModeSecond = "GameType.capital_city_mode.two.description".localized
+    private var descriptionMapModeSecond = "GameType.map_mode.two.description".localized
+    private var descriptionThird = "GameType.capital_city_mode.three.description".localized
+    private var titleTypeOfGame = "GameType.type_of_game.title".localized
+    private var titleNumberOfCountries = "GameType.number_of_countries.title".localized
     
     private var labelTitle: UILabel!
     private var labelDescription: UILabel!
@@ -898,105 +769,51 @@ extension GameTypeViewModel {
     }
     
     private func descriptions() -> [String] {
-        switch mode.language {
-        case .russian: [
-            "Выбор ответа на заданный вопрос о флаге страны. Один из четырех ответов - правильный.",
-            "Опрос о флагах стран и выбор ответов во всем опросе. Один из четырех ответов - правильный.",
-            "Выбор ответа на заданный вопрос о географической карты страны. Один из четырех ответов - правильный.",
-            "Составление слова из недостающих букв. Вам представлены буквы случайным образом. Для перехода к следующему вопросу, вы должны полностью составить слово из букв.",
-            "Выбор ответа на заданный вопрос о столице страны. Вам предоставляются четыре ответа на выбор. Один из четырех ответов - правильный."]
-        default: [
-            "Choosing the answer to a question about the country's flag. One of the four answers is correct.",
-            "Survey about the flags of countries and choosing the answers in the whole survey. One of the four answers is correct.",
-            "Choosing the answer to a question about the geographical map of the country. One of the four answers is correct.",
-            "Making a qord from the missing letters. You are given letters in random order. To move on to the next question, you must fully compose the word from the letters.",
-            "Choosing the answer to a question about the country's capital. One of the four answers is correct."]
-        }
+        ["GameType.first.tag.description".localized,
+         "GameType.second.tag.description".localized,
+         "GameType.third.tag.description".localized,
+         "GameType.fourth.tag.description".localized,
+         "GameType.fifth.tag.description".localized]
     }
     
     private func bulletsQuizOfFlags() -> [String] {
-        switch mode.language {
-        case .russian: [
-            "Одна попытка для выбора ответа, чтобы перейти к следующему вопросу.",
-            "Вопрос о флаге страны и выбор ответа наименования страны или же вопрос о наименовании страны и выбор ответа флага страны.",
-            "Зеленый цвет - правильный ответ и красный цвет - неправильный ответ.",
-            "Обратный отсчет для одного вопроса восстанавливается при следующем вопросе.",
-            "Обратный отсчет для всех вопросов не восстанавливается при следующем вопросе."]
-        default: [
-            "One attempt to select an answer to move to the next question.",
-            "The question about country's flag and choise of answer on the country's name or the question about the country's name and choise of answer on the country's flag.",
-            "Green is correct answer and red is wrong answer.",
-            "The countdown for one question is restored at the next question.",
-            "The countdown for all questions is not restored at the next question."]
-        }
+        ["Gametype.quiz_of_flags.first.bullets".localized,
+         "Gametype.quiz_of_flags.second.bullets".localized,
+         "Gametype.quiz_of_flags.third.bullets".localized,
+         "Gametype.quiz_of_flags.fourth.bullets".localized,
+         "Gametype.quiz_of_flags.fifth.bullets".localized]
     }
     
     private func bulletsQuestionnaire() -> [String] {
-        switch mode.language {
-        case .russian: [
-            "Любое количество попыток для выбора ответа.",
-            "Возможность вернуться к предыдущим вопросам для выбора другого ответа.",
-            "Вопрос о флаге страны и выбор ответа наименования страны или же вопрос о наименовании страны и выбор ответа флага страны.",
-            "О правильных и неправильных ответах узнаете только после окончания опроса.",
-            "Игра завершается при касании экрана в последнем вопросе.",
-            "Обратный отсчет только для всех вопросов и не восстанавливается до конца игры."]
-        default: [
-            "Any number of attempts to select an answer.",
-            "You can go back to previous questions to choose a different answer.",
-            "The question about country's flag and choise of answer on the country's name or the question about the country's name and choise of answer on the country's flag.",
-            "You will learn about correct and incorrect answers only after end of the survey ",
-            "The game ends when you touch the screen in the last question.",
-            "The countdown only for all questions and it doesn't reset during the game."]
-        }
+        ["Gametype.questionnaire.first.bullets".localized,
+         "Gametype.questionnaire.second.bullets".localized,
+         "Gametype.questionnaire.third.bullets".localized,
+         "Gametype.questionnaire.fourth.bullets".localized,
+         "Gametype.questionnaire.fifth.bullets".localized,
+         "Gametype.questionnaire.sixth.bullets".localized]
     }
     
     private func bulletsQuizOfMaps() -> [String] {
-        switch mode.language {
-        case .russian: [
-            "Одна попытка для выбора ответа, чтобы перейти к следующему вопросу.",
-            "Зеленый цвет - правильный ответ и красный цвет - неправильный ответ.",
-            "Обратный отсчет для одного вопроса восстанавливается при следующем вопросе.",
-            "Обратный отсчет для всех вопросов не восстанавливается при следующем вопросе."]
-        default: [
-            "One attempt to select an answer to move to the next question.",
-            "Green is correct answer and red is wrong answer.",
-            "The countdown for one question is restored at the next question.",
-            "The countdown for all questions is not restored at the next question."]
-        }
+        ["Gametype.quiz_of_maps.first.bullets".localized,
+         "Gametype.quiz_of_maps.second.bullets".localized,
+         "Gametype.quiz_of_maps.third.bullets".localized,
+         "Gametype.quiz_of_maps.fourth.bullets".localized]
     }
     
     private func bulletsScrabble() -> [String] {
-        switch mode.language {
-        case .russian: [
-            "Одна попытка для выбора ответа, чтобы перейти к следующему вопросу.",
-            "Вопрос о флаге страны / о географической карты страны / о столице страны",
-            "Зеленый цвет - правильный ответ и красный цвет - неправильный ответ.",
-            "Обратный отсчет для одного вопроса восстанавливается при следующем вопросе.",
-            "Обратный отсчет для всех вопросов не восстанавливается при следующем вопросе."]
-        default: [
-            "One attempt to select an answer to move to the next question.",
-            "Question about a country's flag / a geographical map of the country / a country's capital",
-            "Green is correct answer and red is wrong answer.",
-            "The countdown for one question is restored at the next question.",
-            "The countdown for all questions is not restored at the next question."]
-        }
+        ["Gametype.scrabble.first.bullets".localized,
+         "Gametype.scrabble.second.bullets".localized,
+         "Gametype.scrabble.third.bullets".localized,
+         "Gametype.scrabble.fourth.bullets".localized,
+         "Gametype.scrabble.fifth.bullets".localized]
     }
     
     private func bulletsQuizOfCapitals() -> [String] {
-        switch mode.language {
-        case .russian: [
-            "Одна попытка для выбора ответа, чтобы перейти к следующему вопросу.",
-            "Вопрос о флаге страны и выбор ответа столицы страны или же вопрос о наименовании страны и выбор ответа столицы страны.",
-            "Зеленый цвет - правильный ответ и красный цвет - неправильный ответ.",
-            "Обратный отсчет для одного вопроса восстанавливается при следующем вопросе.",
-            "Обратный отсчет для всех вопросов не восстанавливается при следующем вопросе."]
-        default: [
-            "One attempt to select an answer to move to the next question.",
-            "The question about country's flag and choice of answer on the country's capital or the question about a country's name and choice of answer on the country's capital.",
-            "Green is correct answer and red is wrong answer.",
-            "The countdown for one question is restored at the next question.",
-            "The countdown for all questions is not restored at the next question."]
-        }
+        ["Gametype.quiz_of_capitals.first.bullets".localized,
+         "Gametype.quiz_of_capitals.second.bullets".localized,
+         "Gametype.quiz_of_capitals.third.bullets".localized,
+         "Gametype.quiz_of_capitals.fourth.bullets".localized,
+         "Gametype.quiz_of_capitals.fifth.bullets".localized]
     }
     
     private func bullets(list: [String]) -> [ParagraphData] {
@@ -1577,45 +1394,27 @@ extension GameTypeViewModel {
     }
     
     private func titleAllCountries(tag: Int) -> String {
-        switch mode.language {
-        case .russian: tag == 0 ? "Все страны" : "Все страны мира"
-        default: tag == 0 ? "All countries" : "All countries of the world"
-        }
+        tag == 0 ? "All_countries.title".localized : "All_countries.title".localized
     }
     
     private func titleAmericaContinent(tag: Int) -> String {
-        switch mode.language {
-        case .russian: tag == 0 ? "Америка" : "Континент Америки"
-        default: tag == 0 ? "America" : "American continent"
-        }
+        tag == 0 ? "America.title".localized : "American_continent.title".localized
     }
     
     private func titleEuropeContinent(tag: Int) -> String {
-        switch mode.language {
-        case .russian: tag == 0 ? "Европа" : "Континент Европы"
-        default: tag == 0 ? "Europe" : "European continent"
-        }
+        tag == 0 ? "Europe.title".localized : "European_continent.title".localized
     }
     
     private func titleAfricaContinent(tag: Int) -> String {
-        switch mode.language {
-        case .russian: tag == 0 ? "Африка" : "Континент Африки"
-        default: tag == 0 ? "Africa" : "African continent"
-        }
+        tag == 0 ? "Africa.title".localized : "African_continent.title".localized
     }
     
     private func titleAsiaContinent(tag: Int) -> String {
-        switch mode.language {
-        case .russian: tag == 0 ? "Азия" : "Континент Азии"
-        default: tag == 0 ? "Asia" : "Asian continent"
-        }
+        tag == 0 ? "Asia.title".localized : "Asian_continent.title".localized
     }
     
     private func titleOceaniaContinent(tag: Int) -> String {
-        switch mode.language {
-        case .russian: tag == 0 ? "Океания" : "Континент Океании"
-        default: tag == 0 ? "Oceania" : "Oceanian continent"
-        }
+        tag == 0 ? "Oceania.title".localized : "Oceanian_continent.title".localized
     }
     
     private func isOnSegment() -> Bool {

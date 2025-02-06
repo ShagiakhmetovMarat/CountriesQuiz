@@ -28,7 +28,7 @@ protocol CountQuestionsViewModelProtocol {
 }
 
 class CountQuestionsViewModel: CountQuestionsViewModelProtocol {
-    var title = "CountQuestions.title".localized
+    var title = "Number_of_questions.title".localized
     var description: String {
         "CountQuestions.description".localized + " \(numberOfRows + 9)"
     }

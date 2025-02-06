@@ -45,11 +45,11 @@ protocol TimeViewModelProtocol {
 class TimeViewModel: TimeViewModelProtocol {
     var title = "Time.title".localized
     var description = "Time.description".localized
-    var titleTimer = "Time.countdown.title".localized
+    var titleTimer = "Countdown.title".localized
     var isOn: Bool {
         isTime
     }
-    var items = ["Time.one_question.title".localized, "Time.all_questions.title".localized]
+    var items = ["One_question.title".localized, "All_questions.title".localized]
     var font = UIFont(name: "GillSans", size: 24)
     var isTime: Bool {
         mode.timeElapsed.timeElapsed ? true : false

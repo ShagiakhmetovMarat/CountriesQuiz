@@ -13,7 +13,7 @@ protocol LanguageViewModelProtocol {
     var cell: AnyClass { get }
     var numberOfRows: Int { get }
     var heightOfRows: CGFloat { get }
-    var delegate: SettingViewControllerInput! { get set }
+    var delegate: SettingsViewControllerInput! { get set }
     var mode: Setting { get }
     
     init(mode: Setting)
@@ -35,7 +35,7 @@ class LanguageViewModel: LanguageViewModelProtocol {
     var numberOfRows = Dialect.allCases.count
     var heightOfRows: CGFloat = 60
     var mode: Setting
-    var delegate: SettingViewControllerInput!
+    var delegate: SettingsViewControllerInput!
     
     private var dialects: Dialect {
         mode.language
@@ -142,11 +142,12 @@ extension LanguageViewModel {
     }
     
     private func reloadApp() {
+        /*
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = windowScene.windows.first else { return }
         
         let currentVC = getTopViewController(from: window.rootViewController)
-        let rootViewController = MenuViewController()
+        let rootViewController = MenuViewController(viewModel: <#any MenuViewModelProtocol#>)
         let navigationVC = UINavigationController(rootViewController: rootViewController)
         
         if let currentVC = currentVC {
@@ -155,6 +156,7 @@ extension LanguageViewModel {
         
         window.rootViewController = navigationVC
         window.makeKeyAndVisible()
+         */
     }
     
     func getTopViewController(from rootViewController: UIViewController?) -> UIViewController? {

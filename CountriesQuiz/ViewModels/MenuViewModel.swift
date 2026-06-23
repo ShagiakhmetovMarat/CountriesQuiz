@@ -14,27 +14,17 @@ protocol MenuViewModelProtocol {
     var titleScrabble: String { get }
     var titleQuizOfCapitals: String { get }
     var mode: Setting? { get set }
+    var gameModes: [GameMode] { get }
     
-    func setSubviews(subviews: UIView..., on subviewOther: UIView)
-    func setImage(image: String, color: UIColor, size: CGFloat) -> UIImageView
-    func setLabel(title: String, size: CGFloat, style: String, color: UIColor) -> UILabel
     func fetchData()
-    func size(view: UIView?) -> CGSize
+    func getGameModes()
     func forPresented(_ button: UIButton) -> Transition
     func forDismissed(_ button: UIButton) -> Transition
     func setMode(_ setting: Setting)
     func setData(_ setting: Setting, newFavorites: [Favorites])
-    func reloadTitles(_ quizOfFlags: UILabel, _ questionnaire: UILabel, _ quizOfMaps: UILabel,
-                      _ scrabble: UILabel, _ quizOfCapitals: UILabel)
     
     func gameTypeViewModel(tag: Int) -> GameTypeViewModelProtocol
-    func settingViewModel() -> SettingViewModelProtocol
-    
-    func setSquare(subview: UIView, sizes: CGFloat)
-    func setCenterSubview(subview: UIView, on subviewOther: UIView)
-    func setConstraintsList(button: UIButton, image: UIImageView, label: UILabel,
-                            circle: UIImageView, imageGame: UIImageView,
-                            layout: NSLayoutYAxisAnchor, view: UIView)
+    func settingsViewModel() -> SettingsViewModelProtocol
 }
 
 class MenuViewModel: MenuViewModelProtocol {
@@ -45,45 +35,57 @@ class MenuViewModel: MenuViewModelProtocol {
     var titleQuizOfCapitals = "Quiz_of_capitals.title".localized
     var mode: Setting?
     
+    var gameModes: [GameMode] = []
     private var games: [Games] = []
     private var favorites: [Favorites] = []
     private let transition = Transition()
     
-    func setSubviews(subviews: UIView..., on subviewOther: UIView) {
-        subviews.forEach { subview in
-            subviewOther.addSubview(subview)
-        }
-    }
-    
-    func setImage(image: String, color: UIColor, size: CGFloat) -> UIImageView {
-        let size = UIImage.SymbolConfiguration(pointSize: size)
-        let image = UIImage(systemName: image, withConfiguration: size)
-        let imageView = UIImageView(image: image)
-        imageView.tintColor = color
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }
-    
-    func setLabel(title: String, size: CGFloat, style: String, color: UIColor) -> UILabel {
-        let label = UILabel()
-        label.text = title
-        label.font = UIFont(name: style, size: size)
-        label.textColor = color
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+    func getGameModes() {
+        gameModes = [
+            GameMode(
+                color: .cyanDark,
+                modeImage: "flag",
+                title: "Викторина флагов",
+                gameImage: "filemenu.and.selection"
+            ),
+            GameMode(
+                color: .greenHarlequin,
+                modeImage: "checkmark.circle.badge.questionmark",
+                title: "Опрос",
+                gameImage: "checklist"
+            ),
+            GameMode(
+                color: .redYellowBrown,
+                modeImage: "map",
+                title: "Викторина карт",
+                gameImage: "globe.desk"
+            ),
+            GameMode(
+                color: .indigo,
+                modeImage: "textformat.abc",
+                title: "Эрудит",
+                gameImage: "a.square"
+            ),
+            GameMode(
+                color: .redTangerineTango,
+                modeImage: "house.and.flag",
+                title: "Викторина столиц",
+                gameImage: "building.2"
+            )
+        ]
     }
     
     func fetchData() {
         mode = StorageManager.shared.fetchSetting()
         games = getGames(dialect: mode?.language ?? .english)
-        StorageManager.shared.loadLanguage()
+//        StorageManager.shared.loadLanguage()
     }
-    
+    /*
     func size(view: UIView?) -> CGSize {
         guard let view = view else { return CGSize(width: 0, height: 0) }
         return CGSize(width: view.frame.width, height: view.frame.height + 5)
     }
-    
+    */
     func forPresented(_ button: UIButton) -> Transition {
         transition.transitionMode = .present
         transition.startingPoint = button.center
@@ -105,15 +107,6 @@ class MenuViewModel: MenuViewModelProtocol {
         favorites = newFavorites
     }
     
-    func reloadTitles(_ quizOfFlags: UILabel, _ questionnaire: UILabel,
-                      _ quizOfMaps: UILabel, _ scrabble: UILabel, _ quizOfCapitals: UILabel) {
-        quizOfFlags.text = titleQuizOfFlags
-        questionnaire.text = titleQuestionnaire
-        quizOfMaps.text = titleQuizOfMaps
-        scrabble.text = titleScrabble
-        quizOfCapitals.text = titleQuizOfCapitals
-    }
-    
     func gameTypeViewModel(tag: Int) -> GameTypeViewModelProtocol {
         let mode = mode ?? Setting.getSettingDefault(mode?.language ?? .english)
         let game = games[tag]
@@ -121,50 +114,9 @@ class MenuViewModel: MenuViewModelProtocol {
         return GameTypeViewModel(mode: mode, game: game, tag: tag, favorites: favorites)
     }
     
-    func settingViewModel() -> SettingViewModelProtocol {
+    func settingsViewModel() -> SettingsViewModelProtocol {
         let mode = mode ?? Setting.getSettingDefault(mode?.language ?? .english)
-        return SettingViewModel(mode: mode)
-    }
-    
-    func setSquare(subview: UIView, sizes: CGFloat) {
-        NSLayoutConstraint.activate([
-            subview.widthAnchor.constraint(equalToConstant: sizes),
-            subview.heightAnchor.constraint(equalToConstant: sizes)
-        ])
-    }
-    
-    func setCenterSubview(subview: UIView, on subviewOther: UIView) {
-        NSLayoutConstraint.activate([
-            subview.centerXAnchor.constraint(equalTo: subviewOther.centerXAnchor),
-            subview.centerYAnchor.constraint(equalTo: subviewOther.centerYAnchor)
-        ])
-    }
-    
-    func setConstraintsList(button: UIButton, image: UIImageView, label: UILabel, 
-                            circle: UIImageView, imageGame: UIImageView,
-                            layout: NSLayoutYAxisAnchor, view: UIView) {
-        NSLayoutConstraint.activate([
-            button.topAnchor.constraint(equalTo: layout, constant: 15),
-            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            button.heightAnchor.constraint(equalToConstant: 120)
-        ])
-        
-        NSLayoutConstraint.activate([
-            image.topAnchor.constraint(equalTo: button.topAnchor, constant: 20),
-            image.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 20)
-        ])
-        
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 20),
-            label.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -20)
-        ])
-        
-        NSLayoutConstraint.activate([
-            circle.topAnchor.constraint(equalTo: button.topAnchor),
-            circle.trailingAnchor.constraint(equalTo: button.trailingAnchor)
-        ])
-        setCenterSubview(subview: imageGame, on: circle)
+        return SettingsViewModel(mode: mode)
     }
 }
 

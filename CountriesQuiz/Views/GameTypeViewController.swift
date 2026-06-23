@@ -332,7 +332,6 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         viewModel.numberOfRows(pickerView)
     }
-    
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         viewModel.titles(pickerView, row, and: segmentedControl)
     }

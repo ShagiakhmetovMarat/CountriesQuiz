@@ -13,7 +13,7 @@ protocol CountQuestionsViewModelProtocol {
     var numberOfRows: Int { get }
     var heightOfRows: CGFloat { get }
     var currentRow: Int { get }
-    var delegate: SettingViewControllerInput! { get set }
+    var delegate: SettingsViewControllerInput! { get set }
     var mode: Setting { get }
     
     init(mode: Setting)
@@ -40,7 +40,7 @@ class CountQuestionsViewModel: CountQuestionsViewModelProtocol {
     var currentRow: Int {
         mode.countQuestions - 10
     }
-    var delegate: SettingViewControllerInput!
+    var delegate: SettingsViewControllerInput!
     
     var mode: Setting
     

@@ -16,7 +16,7 @@ protocol ContinentsViewModelProtocol {
     var africaContinent: Bool { get }
     var asiaContinent: Bool { get }
     var oceaniaContinent: Bool { get }
-    var delegate: SettingViewControllerInput! { get set }
+    var delegate: SettingsViewControllerInput! { get set }
     var mode: Setting { get }
     
     init(mode: Setting)
@@ -55,18 +55,18 @@ class ContinentsViewModel: ContinentsViewModelProtocol {
     var oceaniaContinent: Bool {
         mode.oceaniaContinent
     }
-    var delegate: SettingViewControllerInput!
+    var delegate: SettingsViewControllerInput!
     
     var mode: Setting
     
     private var countContinents = 0
     private var background: UIColor = .blueMiddlePersian
-    private var titleAllCountries = "Continents.all_countries.title".localized
-    private var titleAmericaContinent = "Continents.american_continent.title".localized
-    private var titleEuropeContinent = "Continents.european_continent.title".localized
-    private var titleAfricaContinent = "Continents.african_continent.title".localized
-    private var titleAsiaContinent = "Continents.asian_continent.title".localized
-    private var titleOceaniaContinent = "Continents.oceanian_continent.title".localized
+    private var titleAllCountries = "All_countries.title".localized
+    private var titleAmericaContinent = "American_continent.title".localized
+    private var titleEuropeContinent = "European_continent.title".localized
+    private var titleAfricaContinent = "African_continent.title".localized
+    private var titleAsiaContinent = "Asian_continent.title".localized
+    private var titleOceaniaContinent = "Oceanian_continent.title".localized
     private var titleNumberOfCountries = "Continents.number_of_countries.title".localized
     
     private var buttonAllCountries: UIButton!

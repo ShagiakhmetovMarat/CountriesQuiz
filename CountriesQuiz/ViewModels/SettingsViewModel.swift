@@ -1,5 +1,5 @@
 //
-//  SettingViewModel.swift
+//  SettingsViewModel.swift
 //  CountriesQuiz
 //
 //  Created by Marat Shagiakhmetov on 19.05.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol SettingViewModelProtocol {
+protocol SettingsViewModelProtocol {
     var title: String { get }
     var cell: AnyClass { get }
     var heightOfRow: CGFloat { get }
@@ -36,7 +36,7 @@ protocol SettingViewModelProtocol {
     func languageViewController() -> LanguageViewModelProtocol
 }
 
-class SettingViewModel: SettingViewModelProtocol {
+class SettingsViewModel: SettingsViewModelProtocol {
     var title = "Setting.title".localized
     var cell: AnyClass = SettingCell.self
     var heightOfRow: CGFloat = 55
@@ -98,7 +98,7 @@ class SettingViewModel: SettingViewModelProtocol {
     private var titleAlert = "Setting.alert.title".localized
     private var titleMessage = "Setting.message.title".localized
     private var titleNumberOfQuestions = "Number_of_questions.title".localized
-    private var titleContinents = "Setting.continents.title".localized
+    private var titleContinents = "Continents.title".localized
     private var titleTime = "Setting.time.title".localized
     private var titleLanguage = "Setting.language.title".localized
     private var titleAppearence = "Setting.appearence.title".localized
@@ -212,7 +212,7 @@ class SettingViewModel: SettingViewModelProtocol {
     }
 }
 // MARK: - Constants
-extension SettingViewModel {
+extension SettingsViewModel {
     private func color(_ section: Int) -> [UIColor] {
         switch section {
         case 0: [.gummigut, .greenEmerald, .redTangerineTango]

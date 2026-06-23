@@ -14,7 +14,7 @@
 		C32C24392C7722880088D40D /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32C24382C7722880088D40D /* DetailsViewController.swift */; };
 		C32C243B2C7722A80088D40D /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C32C243A2C7722A80088D40D /* DetailsViewModel.swift */; };
 		C3301D6D2B9C8D3E00024479 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3301D6C2B9C8D3E00024479 /* Box.swift */; };
-		C33167C72BF9F7EB00504F47 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33167C62BF9F7EB00504F47 /* SettingViewModel.swift */; };
+		C33167C72BF9F7EB00504F47 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33167C62BF9F7EB00504F47 /* SettingsViewModel.swift */; };
 		C333038A2BBAA3B700AEE04E /* GameTypeViewController + UIKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33303892BBAA3B700AEE04E /* GameTypeViewController + UIKit.swift */; };
 		C333038C2BBAB14D00AEE04E /* QuizOfFlagsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C333038B2BBAB14D00AEE04E /* QuizOfFlagsViewModel.swift */; };
 		C3342B352ACD9E6600C75C6E /* IncorrectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3342B342ACD9E6600C75C6E /* IncorrectViewController.swift */; };
@@ -29,8 +29,12 @@
 		C341078E2BBFE4C800D0E993 /* ResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341078D2BBFE4C800D0E993 /* ResultsViewModel.swift */; };
 		C34BA42A2A9E2C9B006E191D /* QuestionnaireViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34BA4292A9E2C9B006E191D /* QuestionnaireViewController.swift */; };
 		C34EC0702986694900300585 /* Incorrects.swift in Sources */ = {isa = PBXBuildFile; fileRef = C34EC06F2986694900300585 /* Incorrects.swift */; };
+		C3522D9A2FE4163E00271F8A /* CountriesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3522D992FE4163800271F8A /* CountriesData.swift */; };
 		C35568F22C89C6BC00F2D4DD /* CorrectsFlagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35568F12C89C6BC00F2D4DD /* CorrectsFlagCell.swift */; };
 		C35568F42C8B609600F2D4DD /* CorrectsNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C35568F32C8B609600F2D4DD /* CorrectsNameCell.swift */; };
+		C356E3E32FE67BC6006CFFA9 /* UIKit + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C356E3E22FE67BBE006CFFA9 /* UIKit + Extension.swift */; };
+		C356E44D2FE682BF006CFFA9 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C356E44C2FE682B6006CFFA9 /* UILabel + Extension.swift */; };
+		C356E44F2FE6C715006CFFA9 /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C356E44E2FE6C710006CFFA9 /* GameMode.swift */; };
 		C359C3092BC1947300473B33 /* IncorrectAnswersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C359C3082BC1947300473B33 /* IncorrectAnswersViewModel.swift */; };
 		C3613A712A7FB82C006C0F1E /* GameTypeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3613A702A7FB82C006C0F1E /* GameTypeManager.swift */; };
 		C36773F1296BF9E10096BCC5 /* QuizOfFlagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36773F0296BF9E10096BCC5 /* QuizOfFlagsViewController.swift */; };
@@ -61,7 +65,7 @@
 		C3C0AF872CCFB53700B8F309 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0AF862CCFB53700B8F309 /* LanguageViewController.swift */; };
 		C3C0AF892CCFB55500B8F309 /* LanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0AF882CCFB55500B8F309 /* LanguageViewModel.swift */; };
 		C3C0AF8B2CCFBC3700B8F309 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0AF8A2CCFBC3700B8F309 /* LanguageCell.swift */; };
-		C3D292EB293F5F0900786752 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D292EA293F5F0900786752 /* SettingViewController.swift */; };
+		C3D292EB293F5F0900786752 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D292EA293F5F0900786752 /* SettingsViewController.swift */; };
 		C3E2EB302938E7F300AB40AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E2EB2F2938E7F300AB40AD /* AppDelegate.swift */; };
 		C3E2EB322938E7F300AB40AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E2EB312938E7F300AB40AD /* SceneDelegate.swift */; };
 		C3E2EB342938E7F300AB40AD /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E2EB332938E7F300AB40AD /* MenuViewController.swift */; };
@@ -83,7 +87,7 @@
 		C32C24382C7722880088D40D /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		C32C243A2C7722A80088D40D /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		C3301D6C2B9C8D3E00024479 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
-		C33167C62BF9F7EB00504F47 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		C33167C62BF9F7EB00504F47 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		C33303892BBAA3B700AEE04E /* GameTypeViewController + UIKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameTypeViewController + UIKit.swift"; sourceTree = "<group>"; };
 		C333038B2BBAB14D00AEE04E /* QuizOfFlagsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizOfFlagsViewModel.swift; sourceTree = "<group>"; };
 		C3342B342ACD9E6600C75C6E /* IncorrectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncorrectViewController.swift; sourceTree = "<group>"; };
@@ -98,8 +102,12 @@
 		C341078D2BBFE4C800D0E993 /* ResultsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsViewModel.swift; sourceTree = "<group>"; };
 		C34BA4292A9E2C9B006E191D /* QuestionnaireViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionnaireViewController.swift; sourceTree = "<group>"; };
 		C34EC06F2986694900300585 /* Incorrects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Incorrects.swift; sourceTree = "<group>"; };
+		C3522D992FE4163800271F8A /* CountriesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesData.swift; sourceTree = "<group>"; };
 		C35568F12C89C6BC00F2D4DD /* CorrectsFlagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectsFlagCell.swift; sourceTree = "<group>"; };
 		C35568F32C8B609600F2D4DD /* CorrectsNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectsNameCell.swift; sourceTree = "<group>"; };
+		C356E3E22FE67BBE006CFFA9 /* UIKit + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit + Extension.swift"; sourceTree = "<group>"; };
+		C356E44C2FE682B6006CFFA9 /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
+		C356E44E2FE6C710006CFFA9 /* GameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
 		C359C3082BC1947300473B33 /* IncorrectAnswersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncorrectAnswersViewModel.swift; sourceTree = "<group>"; };
 		C3613A702A7FB82C006C0F1E /* GameTypeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTypeManager.swift; sourceTree = "<group>"; };
 		C36773F0296BF9E10096BCC5 /* QuizOfFlagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizOfFlagsViewController.swift; sourceTree = "<group>"; };
@@ -130,7 +138,7 @@
 		C3C0AF862CCFB53700B8F309 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
 		C3C0AF882CCFB55500B8F309 /* LanguageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewModel.swift; sourceTree = "<group>"; };
 		C3C0AF8A2CCFBC3700B8F309 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
-		C3D292EA293F5F0900786752 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		C3D292EA293F5F0900786752 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C3E2EB2C2938E7F300AB40AD /* CountriesQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountriesQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3E2EB2F2938E7F300AB40AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3E2EB312938E7F300AB40AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -179,7 +187,7 @@
 				C384F29A2C441B9200827B9F /* CorrectAnswersViewModel.swift */,
 				C359C3082BC1947300473B33 /* IncorrectAnswersViewModel.swift */,
 				C33762AD2BC4386700A417AB /* IncorrectViewModel.swift */,
-				C33167C62BF9F7EB00504F47 /* SettingViewModel.swift */,
+				C33167C62BF9F7EB00504F47 /* SettingsViewModel.swift */,
 				C3B972F92CB6A15B0013A32F /* CountQuestionsViewModel.swift */,
 				C3AF1F582CB7B70D0096EE1F /* ContinentsViewModel.swift */,
 				C32745402CBFD83D001F7C2A /* TimeViewModel.swift */,
@@ -191,6 +199,8 @@
 		C34072392A690F3500E5C9A4 /* Extensions + UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				C356E44C2FE682B6006CFFA9 /* UILabel + Extension.swift */,
+				C356E3E22FE67BBE006CFFA9 /* UIKit + Extension.swift */,
 				C340723A2A690F4F00E5C9A4 /* UIColorManager.swift */,
 				C36F58F72A7288FB0023E98F /* UIButton + Extension.swift */,
 				C326BEF42D4BA20500CFF0A7 /* String + Localized.swift */,
@@ -290,7 +300,7 @@
 				C384F2982C441B6F00827B9F /* CorrectAnswersViewController.swift */,
 				C38DF4DA2A8E4BF000550BCC /* IncorrectAnswersViewController.swift */,
 				C3342B342ACD9E6600C75C6E /* IncorrectViewController.swift */,
-				C3D292EA293F5F0900786752 /* SettingViewController.swift */,
+				C3D292EA293F5F0900786752 /* SettingsViewController.swift */,
 				C3B972F72CB6A11D0013A32F /* CountQuestionsViewController.swift */,
 				C3AF1F562CB7B6F60096EE1F /* ContinentsViewController.swift */,
 				C327453E2CBFD765001F7C2A /* TimeViewController.swift */,
@@ -319,6 +329,9 @@
 		C3E2EB472938E90D00AB40AD /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				C356E44E2FE6C710006CFFA9 /* GameMode.swift */,
+				C3613A702A7FB82C006C0F1E /* GameTypeManager.swift */,
+				C3522D992FE4163800271F8A /* CountriesData.swift */,
 				C3E2EB4A2938EA6800AB40AD /* FlagsOfCountries.swift */,
 				C3E2EB4C2938ED6800AB40AD /* CountriesManager.swift */,
 				C376AC062947261D00DE5E86 /* Setting.swift */,
@@ -326,7 +339,6 @@
 				C384F29C2C44206900827B9F /* Corrects.swift */,
 				C34EC06F2986694900300585 /* Incorrects.swift */,
 				C3E7C9952A7C19F80046A883 /* GameType.swift */,
-				C3613A702A7FB82C006C0F1E /* GameTypeManager.swift */,
 				C33669D52B998F990081C39A /* Game.swift */,
 			);
 			path = Models;
@@ -377,7 +389,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 2650;
 				TargetAttributes = {
 					C3E2EB2B2938E7F300AB40AD = {
 						CreatedOnToolsVersion = 14.1;
@@ -442,12 +454,13 @@
 				C32745412CBFD83D001F7C2A /* TimeViewModel.swift in Sources */,
 				C36F58F82A7288FB0023E98F /* UIButton + Extension.swift in Sources */,
 				C3C0AF892CCFB55500B8F309 /* LanguageViewModel.swift in Sources */,
+				C356E3E32FE67BC6006CFFA9 /* UIKit + Extension.swift in Sources */,
 				C38DF4DB2A8E4BF000550BCC /* IncorrectAnswersViewController.swift in Sources */,
 				C3B972F42CB6496E0013A32F /* SettingCell.swift in Sources */,
 				C35568F22C89C6BC00F2D4DD /* CorrectsFlagCell.swift in Sources */,
 				C36773F3296C3B880096BCC5 /* Transition.swift in Sources */,
 				C3613A712A7FB82C006C0F1E /* GameTypeManager.swift in Sources */,
-				C33167C72BF9F7EB00504F47 /* SettingViewModel.swift in Sources */,
+				C33167C72BF9F7EB00504F47 /* SettingsViewModel.swift in Sources */,
 				C3AF1F572CB7B6F60096EE1F /* ContinentsViewController.swift in Sources */,
 				C33BB07E2C70B7EC0083D907 /* Favorites.swift in Sources */,
 				C327453F2CBFD765001F7C2A /* TimeViewController.swift in Sources */,
@@ -456,11 +469,13 @@
 				C3342B352ACD9E6600C75C6E /* IncorrectViewController.swift in Sources */,
 				C3E2EB4D2938ED6800AB40AD /* CountriesManager.swift in Sources */,
 				C3C0AF8B2CCFBC3700B8F309 /* LanguageCell.swift in Sources */,
+				C356E44D2FE682BF006CFFA9 /* UILabel + Extension.swift in Sources */,
 				C3E2EB4B2938EA6800AB40AD /* FlagsOfCountries.swift in Sources */,
 				C33669D22B98A13D0081C39A /* MenuViewModel.swift in Sources */,
 				C33F93062D4CB82800188543 /* Bundle + Extension.swift in Sources */,
 				C3E7C9962A7C19F80046A883 /* GameType.swift in Sources */,
 				C3B187C82ADFBF6F0086EC49 /* QuizOfCapitalsViewController.swift in Sources */,
+				C3522D9A2FE4163E00271F8A /* CountriesData.swift in Sources */,
 				C33669D42B998DC30081C39A /* GameTypeViewModel.swift in Sources */,
 				C3B972FA2CB6A16A0013A32F /* CountQuestionsViewModel.swift in Sources */,
 				C3E7C9942A7B68AA0046A883 /* GameTypeViewController.swift in Sources */,
@@ -470,7 +485,7 @@
 				C33653282A94CFF7008CF2C6 /* NameCell.swift in Sources */,
 				C32C243B2C7722A80088D40D /* DetailsViewModel.swift in Sources */,
 				C3B324882C6DE1F9003BB31F /* FavoritesViewController.swift in Sources */,
-				C3D292EB293F5F0900786752 /* SettingViewController.swift in Sources */,
+				C3D292EB293F5F0900786752 /* SettingsViewController.swift in Sources */,
 				C384F2992C441B6F00827B9F /* CorrectAnswersViewController.swift in Sources */,
 				C3AF1F592CB7B7150096EE1F /* ContinentsViewModel.swift in Sources */,
 				C3B3248C2C6DF843003BB31F /* FavoritesCell.swift in Sources */,
@@ -480,6 +495,7 @@
 				C384F29D2C44206900827B9F /* Corrects.swift in Sources */,
 				C376AC0929474EB400DE5E86 /* StorageManager.swift in Sources */,
 				C34BA42A2A9E2C9B006E191D /* QuestionnaireViewController.swift in Sources */,
+				C356E44F2FE6C715006CFFA9 /* GameMode.swift in Sources */,
 				C333038C2BBAB14D00AEE04E /* QuizOfFlagsViewModel.swift in Sources */,
 				C340723B2A690F4F00E5C9A4 /* UIColorManager.swift in Sources */,
 				C33762AE2BC4386700A417AB /* IncorrectViewModel.swift in Sources */,
@@ -506,6 +522,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -536,6 +553,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = S4AD5RA4FS;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -558,6 +576,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -568,6 +587,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -598,6 +618,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = S4AD5RA4FS;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -613,6 +634,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
@@ -624,9 +646,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S4AD5RA4FS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CountriesQuiz/Supporting/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -640,6 +662,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Shagiakhmetov.CountriesQuiz1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -654,9 +677,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S4AD5RA4FS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CountriesQuiz/Supporting/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -670,6 +693,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = Shagiakhmetov.CountriesQuiz1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

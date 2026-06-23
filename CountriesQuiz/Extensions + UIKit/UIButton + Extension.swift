@@ -17,7 +17,7 @@ class Button: UIButton {
                 delay: 0,
                 options: [.beginFromCurrentState, .allowUserInteraction]) {
                     self.backgroundColor = color.withAlphaComponent(self.isHighlighted ? 0.4 : 1)
-            }
+                }
         }
     }
 }

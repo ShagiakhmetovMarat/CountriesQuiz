@@ -13,202 +13,143 @@ protocol MenuViewControllerInput: AnyObject {
 }
 
 class MenuViewController: UIViewController {
-    private lazy var labelMenu: UILabel = {
-        viewModel.setLabel(title: "Countries Quiz", size: 40, style: "echorevival", color: .blueBlackSea)
+    private var viewModel: MenuViewModelProtocol
+    
+    private let menuLabel = UILabel.label(
+        text: "Countries Quiz",
+        font: "echorevival",
+        color: .blueBlackSea,
+        size: 40
+    )
+    
+    private let settingsButton: UIButton = {
+        let button = Button(type: .system)
+        button.backgroundColor = .blueMiddlePersian
+        button.layer.cornerRadius = 12
+        button.layer.shadowOpacity = 0.4
+        button.layer.shadowColor = UIColor.blueMiddlePersian.cgColor
+        button.layer.shadowOffset = .init(width: 0, height: 6)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
-    private lazy var buttonSettings: UIButton = {
-        setButton(color: .blueMiddlePersian, image: imageSettings, action: #selector(setting))
+    private let settingsImage: UIImageView = {
+        let size = UIImage.SymbolConfiguration(pointSize: 26)
+        let image = UIImage(systemName: "gear", withConfiguration: size)
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = .white
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
     
-    private lazy var imageSettings: UIImageView = {
-        viewModel.setImage(image: "gear", color: .white, size: 26)
-    }()
-    
-    private lazy var stackViewMenu: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [labelMenu, buttonSettings])
+    private let menuStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.backgroundColor = .systemBackground
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
-    private lazy var contentView: UIView = {
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.backgroundColor = .systemBackground
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    private let contentView: UIView = {
         let contentView = UIView()
-        contentView.backgroundColor = .white
-        contentView.frame.size = viewModel.size(view: view)
+        contentView.backgroundColor = .systemBackground
         contentView.translatesAutoresizingMaskIntoConstraints = false
         return contentView
     }()
     
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.frame = view.bounds
-        scrollView.contentSize = viewModel.size(view: view)
-        return scrollView
+    private let modesStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 15
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
-    private lazy var buttonQuizOfFlags: UIButton = {
-        setButton(
-            color: .cyanDark,
-            image: imageFlag,
-            label: labelQuizOfFlags,
-            circle: circleQuizOfFlag,
-            imageGame: imageQuizOfFlags,
-            action: #selector(gameType))
-    }()
+    init(viewModel: MenuViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
-    private lazy var imageFlag: UIImageView = {
-        viewModel.setImage(image: "flag", color: .white, size: 20)
-    }()
-    
-    private lazy var labelQuizOfFlags: UILabel = {
-        viewModel.setLabel(
-            title: viewModel.titleQuizOfFlags,
-            size: 26,
-            style: "GillSans",
-            color: .white)
-    }()
-    
-    private lazy var circleQuizOfFlag: UIImageView = {
-        viewModel.setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
-    }()
-    
-    private lazy var imageQuizOfFlags: UIImageView = {
-        viewModel.setImage(image: "filemenu.and.selection", color: .cyanDark, size: 60)
-    }()
-    
-    private lazy var buttonQuestionnaire: UIButton = {
-        setButton(
-            color: .greenHarlequin,
-            image: imageCheckmark,
-            label: labelQuestionnaire,
-            circle: circleQuestionnare,
-            imageGame: imageQuestionnaire,
-            tag: 1,
-            action: #selector(gameType))
-    }()
-    
-    private lazy var imageCheckmark: UIImageView = {
-        viewModel.setImage(image: "checkmark.circle.badge.questionmark", color: .white, size: 20)
-    }()
-    
-    private lazy var labelQuestionnaire: UILabel = {
-        viewModel.setLabel(
-            title: viewModel.titleQuestionnaire,
-            size: 26,
-            style: "GillSans",
-            color: .white)
-    }()
-    
-    private lazy var circleQuestionnare: UIImageView = {
-        viewModel.setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
-    }()
-    
-    private lazy var imageQuestionnaire: UIImageView = {
-        viewModel.setImage(image: "checklist", color: .greenHarlequin, size: 60)
-    }()
-    
-    private lazy var buttonQuizOfMaps: UIButton = {
-        setButton(
-            color: .redYellowBrown,
-            image: imageMap,
-            label: labelQuizOfMaps,
-            circle: circleQuizOfMaps,
-            imageGame: imageQuizOfMaps,
-            tag: 2,
-            action: #selector(gameType))
-    }()
-    
-    private lazy var imageMap: UIImageView = {
-        viewModel.setImage(image: "map", color: .white, size: 20)
-    }()
-    
-    private lazy var labelQuizOfMaps: UILabel = {
-        viewModel.setLabel(
-            title: viewModel.titleQuizOfMaps,
-            size: 26,
-            style: "GillSans",
-            color: .white)
-    }()
-    
-    private lazy var circleQuizOfMaps: UIImageView = {
-        viewModel.setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
-    }()
-    
-    private lazy var imageQuizOfMaps: UIImageView = {
-        viewModel.setImage(image: "globe.desk", color: .redYellowBrown, size: 60)
-    }()
-    
-    private lazy var buttonScrabble: UIButton = {
-        setButton(
-            color: .indigo,
-            image: imageText,
-            label: labelScrabble,
-            circle: circleScrabble,
-            imageGame: imageScrabble,
-            tag: 3,
-            action: #selector(gameType))
-    }()
-    
-    private lazy var imageText: UIImageView = {
-        viewModel.setImage(image: "textformat.abc", color: .white, size: 20)
-    }()
-    
-    private lazy var labelScrabble: UILabel = {
-        viewModel.setLabel(
-            title: viewModel.titleScrabble,
-            size: 26,
-            style: "GillSans",
-            color: .white)
-    }()
-    
-    private lazy var circleScrabble: UIImageView = {
-        viewModel.setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
-    }()
-    
-    private lazy var imageScrabble: UIImageView = {
-        viewModel.setImage(image: "a.square", color: .indigo, size: 60)
-    }()
-    
-    private lazy var buttonQuizOfCapitals: UIButton = {
-        setButton(
-            color: .redTangerineTango,
-            image: imageHouse,
-            label: labelQuizOfCapitals,
-            circle: circleQuizOfCapitals,
-            imageGame: imageQuizOfCapitals,
-            tag: 4,
-            action: #selector(gameType))
-    }()
-    
-    private lazy var imageHouse: UIImageView = {
-        viewModel.setImage(image: "house.and.flag", color: .white, size: 20)
-    }()
-    
-    private lazy var labelQuizOfCapitals: UILabel = {
-        viewModel.setLabel(
-            title: viewModel.titleQuizOfCapitals,
-            size: 26,
-            style: "GillSans",
-            color: .white)
-    }()
-    
-    private lazy var circleQuizOfCapitals: UIImageView = {
-        viewModel.setImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
-    }()
-    
-    private lazy var imageQuizOfCapitals: UIImageView = {
-        viewModel.setImage(image: "building.2", color: .redTangerineTango, size: 60)
-    }()
-    
-    private var viewModel: MenuViewModelProtocol!
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDesign()
+        setupAppearance()
+        setupUI()
         setupSubviews()
-        setupSubviewOnContentView()
-        setupSubviewsOnScrollView()
-        setConstraints()
+        setupButtonsModes()
+        setupConstraints()
+    }
+    
+    private func setupAppearance() {
+        view.backgroundColor = .systemBackground
+        viewModel.fetchData()
+        viewModel.getGameModes()
+    }
+    
+    private func setupUI() {
+        view.addSubviews(menuStackView, scrollView)
+        menuStackView.addArrangedSubviews(menuLabel, settingsButton)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(modesStackView)
+    }
+    
+    private func setupSubviews() {
+        settingsButton.addSubview(settingsImage)
+        settingsButton.addTarget(self, action: #selector(navigateToSettings), for: .touchUpInside)
+    }
+    
+    private func setupButtonsModes() {
+        for (index, mode) in viewModel.gameModes.enumerated() {
+            let button = setupModeButton(mode: mode, tag: index)
+            modesStackView.addArrangedSubview(button)
+        }
+    }
+    
+    private func setupModeButton(mode: GameMode, tag: Int) -> UIButton {
+        let modeImage = setupImage(image: mode.modeImage, color: .white, size: 20)
+        let circleImage = setupImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
+        let gameImage = setupImage(image: mode.gameImage, color: mode.color, size: 60)
+        let modeLabel = setupModeLabel(mode: mode)
+        let button = Button(type: .custom)
+        button.backgroundColor = mode.color
+        button.layer.cornerRadius = 12
+        button.layer.shadowOpacity = 0.4
+        button.layer.shadowColor = mode.color.cgColor
+        button.layer.shadowOffset = .init(width: 0, height: 6)
+        button.tag = tag
+        button.addTarget(self, action: #selector(navigateToGameType), for: .touchUpInside)
+        button.addSubviews(modeImage, circleImage, gameImage, modeLabel)
+        setupConstraints(button: button, modeImage: modeImage, modeLabel: modeLabel,
+                         circleImage: circleImage, gameImage: gameImage)
+        return button
+    }
+    
+    private func setupImage(image: String, color: UIColor, size: CGFloat) -> UIImageView {
+        let size = UIImage.SymbolConfiguration(pointSize: size)
+        let image = UIImage(systemName: image, withConfiguration: size)
+        let imageView = UIImageView(image: image)
+        imageView.tintColor = color
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }
+    
+    private func setupModeLabel(mode: GameMode) -> UILabel {
+        let label = UILabel()
+        label.text = mode.title
+        label.font = UIFont(name: "GillSans", size: 26)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }
 }
 // MARK: - Delegates for send data
@@ -220,10 +161,11 @@ extension MenuViewController: MenuViewControllerInput {
     
     func modeToMenu(setting: Setting) {
         viewModel.setMode(setting)
-        viewModel.reloadTitles(labelQuizOfFlags, labelQuestionnaire, labelQuizOfMaps,
-                               labelScrabble, labelQuizOfCapitals)
+//        viewModel.reloadTitles(labelQuizOfFlags, labelQuestionnaire, labelQuizOfMaps,
+//                               labelScrabble, labelQuizOfCapitals)
     }
 }
+/*
 // MARK: - UIViewControllerTransitioningDelegate
 extension MenuViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -234,29 +176,10 @@ extension MenuViewController: UIViewControllerTransitioningDelegate {
         viewModel.forDismissed(buttonQuizOfFlags)
     }
 }
-// MARK: - General methods
+ */
+// MARK: - Navigate to other view controllers
 extension MenuViewController {
-    private func setupDesign() {
-        view.backgroundColor = .white
-        viewModel = MenuViewModel()
-        viewModel.fetchData()
-    }
-    
-    private func setupSubviews() {
-        viewModel.setSubviews(subviews: stackViewMenu, contentView, on: view)
-    }
-    
-    private func setupSubviewOnContentView() {
-        viewModel.setSubviews(subviews: scrollView, on: contentView)
-    }
-    
-    private func setupSubviewsOnScrollView() {
-        viewModel.setSubviews(subviews: buttonQuizOfFlags, buttonQuestionnaire,
-                              buttonQuizOfMaps, buttonScrabble, buttonQuizOfCapitals,
-                              on: scrollView)
-    }
-    // MARK: - Button activate. Press game type, setting
-    @objc private func gameType(sender: UIButton) {
+    @objc private func navigateToGameType(sender: UIButton) {
         let tag = sender.tag
         let gameTypeViewModel = viewModel.gameTypeViewModel(tag: tag)
         let gameTypeVC = GameTypeViewController()
@@ -265,76 +188,83 @@ extension MenuViewController {
         navigationController?.pushViewController(gameTypeVC, animated: true)
     }
     
-    @objc private func setting() {
-        let settingViewModel = viewModel.settingViewModel()
-        let settingVC = SettingViewController()
-        let navigationVC = UINavigationController(rootViewController: settingVC)
-        settingVC.viewModel = settingViewModel
-        settingVC.viewModel.delegate = self
-        navigationVC.transitioningDelegate = self
+    @objc private func navigateToSettings() {
+        let settingsViewModel = viewModel.settingsViewModel()
+        let settingsVC = SettingsViewController()
+        let navigationVC = UINavigationController(rootViewController: settingsVC)
+        settingsVC.viewModel = settingsViewModel
+        settingsVC.viewModel.delegate = self
+//        navigationVC.transitioningDelegate = self
         navigationVC.modalPresentationStyle = .custom
         present(navigationVC, animated: true)
     }
 }
-// MARK: - Setup subviews
-extension MenuViewController {
-    private func setButton(color: UIColor, image: UIView, label: UILabel? = nil,
-                           circle: UIView? = nil, imageGame: UIView? = nil,
-                           tag: Int? = nil, action: Selector) -> UIButton {
-        let button = Button(type: .custom)
-        button.backgroundColor = color
-        button.layer.cornerRadius = 12
-        button.layer.shadowOpacity = 0.4
-        button.layer.shadowColor = color.cgColor
-        button.layer.shadowOffset = CGSize(width: 0, height: 6)
-        button.tag = tag ?? 0
-        button.translatesAutoresizingMaskIntoConstraints = false
-        if let label = label, let circle = circle, let imageGame = imageGame {
-            viewModel.setSubviews(subviews: image, label, circle, imageGame, on: button)
-        } else {
-            viewModel.setSubviews(subviews: image, on: button)
-        }
-        button.addTarget(self, action: action, for: .touchUpInside)
-        return button
-    }
-}
 // MARK: - Set constraints
 extension MenuViewController {
-    private func setConstraints() {
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
-            stackViewMenu.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            stackViewMenu.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            stackViewMenu.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-        ])
-        viewModel.setSquare(subview: buttonSettings, sizes: 40)
-        viewModel.setCenterSubview(subview: imageSettings, on: buttonSettings)
-        
-        NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: stackViewMenu.bottomAnchor, constant: 10),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            menuStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            menuStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            menuStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
         
-        viewModel.setConstraintsList(button: buttonQuizOfFlags, image: imageFlag,
-                                     label: labelQuizOfFlags, circle: circleQuizOfFlag,
-                                     imageGame: imageQuizOfFlags,
-                                     layout: scrollView.topAnchor, view: view)
-        viewModel.setConstraintsList(button: buttonQuestionnaire, image: imageCheckmark,
-                                     label: labelQuestionnaire, circle: circleQuestionnare,
-                                     imageGame: imageQuestionnaire,
-                                     layout: buttonQuizOfFlags.bottomAnchor, view: view)
-        viewModel.setConstraintsList(button: buttonQuizOfMaps, image: imageMap,
-                                     label: labelQuizOfMaps, circle: circleQuizOfMaps,
-                                     imageGame: imageQuizOfMaps,
-                                     layout: buttonQuestionnaire.bottomAnchor, view: view)
-        viewModel.setConstraintsList(button: buttonScrabble, image: imageText,
-                                     label: labelScrabble, circle: circleScrabble,
-                                     imageGame: imageScrabble,
-                                     layout: buttonQuizOfMaps.bottomAnchor, view: view)
-        viewModel.setConstraintsList(button: buttonQuizOfCapitals, image: imageHouse,
-                                     label: labelQuizOfCapitals, circle: circleQuizOfCapitals,
-                                     imageGame: imageQuizOfCapitals,
-                                     layout: buttonScrabble.bottomAnchor, view: view)
+        NSLayoutConstraint.activate([
+            settingsButton.widthAnchor.constraint(equalToConstant: 40),
+            settingsButton.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        NSLayoutConstraint.activate([
+            settingsImage.centerXAnchor.constraint(equalTo: settingsButton.centerXAnchor),
+            settingsImage.centerYAnchor.constraint(equalTo: settingsButton.centerYAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: menuStackView.bottomAnchor, constant: 10),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            modesStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            modesStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            modesStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            modesStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+        ])
+    }
+    
+    private func setupConstraints(button: UIButton, modeImage: UIImageView,
+                                  modeLabel: UILabel, circleImage: UIImageView, gameImage: UIImageView) {
+        NSLayoutConstraint.activate([
+            button.heightAnchor.constraint(equalToConstant: 120)
+        ])
+        
+        NSLayoutConstraint.activate([
+            modeImage.topAnchor.constraint(equalTo: button.topAnchor, constant: 20),
+            modeImage.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 20)
+        ])
+        
+        NSLayoutConstraint.activate([
+            modeLabel.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 20),
+            modeLabel.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -20)
+        ])
+        
+        NSLayoutConstraint.activate([
+            circleImage.topAnchor.constraint(equalTo: button.topAnchor),
+            circleImage.trailingAnchor.constraint(equalTo: button.trailingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            gameImage.centerXAnchor.constraint(equalTo: circleImage.centerXAnchor),
+            gameImage.centerYAnchor.constraint(equalTo: circleImage.centerYAnchor)
+        ])
     }
 }

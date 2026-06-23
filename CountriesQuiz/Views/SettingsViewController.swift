@@ -1,5 +1,5 @@
 //
-//  SettingViewController.swift
+//  SettingsViewController.swift
 //  CountriesQuiz
 //
 //  Created by Marat Shagiakhmetov on 06.12.2022.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol SettingViewControllerInput {
+protocol SettingsViewControllerInput {
     func dataToSetting(mode: Setting)
 }
 
-class SettingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     private lazy var buttonBack: UIButton = {
         setButton(
             image: "multiply",
@@ -58,7 +58,7 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
         return tableView
     }()
     
-    var viewModel: SettingViewModelProtocol!
+    var viewModel: SettingsViewModelProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,7 +88,7 @@ class SettingViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
 }
 
-extension SettingViewController: SettingViewControllerInput {
+extension SettingsViewController: SettingsViewControllerInput {
     func dataToSetting(mode: Setting) {
         viewModel.setMode(mode)
         viewModel.setStatusButton(buttonDefault)
@@ -97,7 +97,7 @@ extension SettingViewController: SettingViewControllerInput {
     }
 }
 
-extension SettingViewController {
+extension SettingsViewController {
     private func setDesign() {
         view.backgroundColor = .blueBlackSea
     }
@@ -164,7 +164,7 @@ extension SettingViewController {
     }
 }
 
-extension SettingViewController {
+extension SettingsViewController {
     private func setButton(image: String, color: UIColor, action: Selector) -> UIButton {
         let size = UIImage.SymbolConfiguration(pointSize: 20)
         let image = UIImage(systemName: image, withConfiguration: size)
@@ -180,7 +180,7 @@ extension SettingViewController {
     }
 }
 
-extension SettingViewController {
+extension SettingsViewController {
     private func setConstraints() {
         viewModel.setSquare(subviews: buttonBack, buttonDefault, sizes: 40)
         

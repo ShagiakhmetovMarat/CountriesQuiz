@@ -118,7 +118,7 @@ extension GameTypeViewController {
     func setButton(title: String, color: UIColor, action: Selector) -> UIButton {
         let button = Button(type: .system)
         button.setTitle(title, for: .normal)
-        button.setTitleColor(viewModel.colorFavourite, for: .normal)
+        button.setTitleColor(viewModel.colorButtonFavourite, for: .normal)
         button.titleLabel?.font = UIFont(name: "GillSans-SemiBold", size: 25)
         button.backgroundColor = color
         button.layer.cornerRadius = 12

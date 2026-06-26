@@ -8,8 +8,8 @@
 import UIKit
 
 protocol MenuViewControllerInput: AnyObject {
-    func dataToMenu(setting: Setting, favorites: [Favorites])
-    func modeToMenu(setting: Setting)
+    func dataToMenu(setting: Settings, favorites: [Favorites])
+    func modeToMenu(setting: Settings)
 }
 
 class MenuViewController: UIViewController {
@@ -154,12 +154,12 @@ class MenuViewController: UIViewController {
 }
 // MARK: - Delegates for send data
 extension MenuViewController: MenuViewControllerInput {
-    func dataToMenu(setting: Setting, favorites: [Favorites]) {
+    func dataToMenu(setting: Settings, favorites: [Favorites]) {
         navigationController?.popToRootViewController(animated: true)
         viewModel.setData(setting, newFavorites: favorites)
     }
     
-    func modeToMenu(setting: Setting) {
+    func modeToMenu(setting: Settings) {
         viewModel.setMode(setting)
 //        viewModel.reloadTitles(labelQuizOfFlags, labelQuestionnaire, labelQuizOfMaps,
 //                               labelScrabble, labelQuizOfCapitals)

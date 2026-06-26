@@ -13,10 +13,10 @@ protocol SettingsViewModelProtocol {
     var heightOfRow: CGFloat { get }
     var numberOfSections: Int { get }
     var color: UIColor { get }
-    var mode: Setting { get }
+    var mode: Settings { get }
     var delegate: MenuViewControllerInput! { get set }
     
-    init(mode: Setting)
+    init(mode: Settings)
     
     func setBarButtons(_ buttonBack: UIButton, _ buttonDefault: UIButton, and navigationItem: UINavigationItem)
     func setSubviews(subviews: UIView..., on subviewOther: UIView)
@@ -24,10 +24,10 @@ protocol SettingsViewModelProtocol {
     func numberOfRows(_ section: Int) -> Int
     func customCell(cell: SettingCell, indexPath: IndexPath)
     
-    func setMode(_ mode: Setting)
+    func setMode(_ mode: Settings)
     func setStatusButton(_ button: UIButton)
     func setTitle(_ label: UILabel)
-    func showAlert(_ mode: Setting,_ button: UIButton, and tableView: UITableView) -> UIAlertController
+    func showAlert(_ mode: Settings,_ button: UIButton, and tableView: UITableView) -> UIAlertController
     func setSquare(subviews: UIView..., sizes: CGFloat)
     
     func countQuestionsViewController() -> CountQuestionsViewModelProtocol
@@ -45,7 +45,7 @@ class SettingsViewModel: SettingsViewModelProtocol {
         !allCountries && countQuestions > 50 ? .white : .grayStone
     }
     var delegate: MenuViewControllerInput!
-    var mode: Setting
+    var mode: Settings
     
     private var countQuestions: Int {
         mode.countQuestions
@@ -110,7 +110,7 @@ class SettingsViewModel: SettingsViewModelProtocol {
     private var titleAsia = "Asia.title".localized
     private var titleOceania = "Oceania.title".localized
     
-    required init(mode: Setting) {
+    required init(mode: Settings) {
         self.mode = mode
     }
     // MARK: - Subviews
@@ -155,7 +155,7 @@ class SettingsViewModel: SettingsViewModelProtocol {
         }
     }
     
-    func setMode(_ setting: Setting) {
+    func setMode(_ setting: Settings) {
         mode = setting
     }
     
@@ -170,7 +170,7 @@ class SettingsViewModel: SettingsViewModelProtocol {
         label.text = title
     }
     
-    func showAlert(_ mode: Setting, _ button: UIButton, and
+    func showAlert(_ mode: Settings, _ button: UIButton, and
                    tableView: UITableView) -> UIAlertController {
         let alert = AlertController(
             title: titleAlert,
@@ -277,6 +277,6 @@ extension SettingsViewModel {
     }
     
     private func resetSetting(dialect: Dialect) {
-        setMode(Setting.getSettingDefault(dialect))
+        setMode(Settings.getSettingDefault(dialect))
     }
 }

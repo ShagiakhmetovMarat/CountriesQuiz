@@ -145,7 +145,7 @@ class QuestionnaireViewController: UIViewController, MenuViewControllerDelegate 
         resultsVC()
     }
     
-    func dataToMenu(setting: Setting, favorites: [Favorites]) {
+    func dataToMenu(setting: Settings, favorites: [Favorites]) {
         viewModel.delegate.dataToMenu(setting: setting, favorites: favorites)
     }
     // MARK: - General methods

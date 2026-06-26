@@ -14,9 +14,9 @@ protocol CountQuestionsViewModelProtocol {
     var heightOfRows: CGFloat { get }
     var currentRow: Int { get }
     var delegate: SettingsViewControllerInput! { get set }
-    var mode: Setting { get }
+    var mode: Settings { get }
     
-    init(mode: Setting)
+    init(mode: Settings)
     
     func setBarButton(button: UIButton, navigationItem: UINavigationItem)
     func setSubviews(subviews: UIView..., on subviewOther: UIView)
@@ -42,9 +42,9 @@ class CountQuestionsViewModel: CountQuestionsViewModelProtocol {
     }
     var delegate: SettingsViewControllerInput!
     
-    var mode: Setting
+    var mode: Settings
     
-    required init(mode: Setting) {
+    required init(mode: Settings) {
         self.mode = mode
     }
     

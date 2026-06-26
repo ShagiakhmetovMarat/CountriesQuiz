@@ -11,6 +11,10 @@ extension UIView {
     func addSubviews(_ views: UIView...) {
         views.forEach { addSubview($0) }
     }
+    
+    func removeSubviews(_ views: UIView...) {
+        views.forEach { $0.removeFromSuperview() }
+    }
 }
 
 extension UIStackView {

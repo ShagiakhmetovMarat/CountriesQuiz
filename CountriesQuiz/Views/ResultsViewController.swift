@@ -29,7 +29,7 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
             title: viewModel.titleResults,
             font: "echorevival",
             size: 38,
-            color: viewModel.game.swap,
+            color: viewModel.game.buttonSwap,
             alignment: .natural)
     }()
     
@@ -38,19 +38,19 @@ class ResultsViewController: UIViewController, ResultsViewControllerDelegate {
     }()
     
     private lazy var imageCheckmark: UIImageView = {
-        viewModel.setImage(image: "checkmark", size: 21, color: viewModel.game.swap)
+        viewModel.setImage(image: "checkmark", size: 21, color: viewModel.game.buttonSwap)
     }()
     
     private lazy var imageMultiply: UIImageView = {
-        viewModel.setImage(image: "multiply", size: 21, color: viewModel.game.swap)
+        viewModel.setImage(image: "multiply", size: 21, color: viewModel.game.buttonSwap)
     }()
     
     private lazy var imageClock: UIImageView = {
-        viewModel.setImage(image: viewModel.imageTimeSpend, size: 21, color: viewModel.game.swap)
+        viewModel.setImage(image: viewModel.imageTimeSpend, size: 21, color: viewModel.game.buttonSwap)
     }()
     
     private lazy var imageQuestionmark: UIImageView = {
-        viewModel.setImage(image: "questionmark.bubble", size: 21, color: viewModel.game.swap)
+        viewModel.setImage(image: "questionmark.bubble", size: 21, color: viewModel.game.buttonSwap)
     }()
     
     private lazy var stackViewImages: UIStackView = {

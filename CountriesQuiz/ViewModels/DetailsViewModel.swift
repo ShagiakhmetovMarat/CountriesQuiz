@@ -24,7 +24,7 @@ protocol DetailsViewModelProtocol {
     var delegate: FavoritesViewControllerDelegate! { get set }
     var favorites: [Favorites] { get }
     
-    init(mode: Setting, game: Games, favorite: Favorites, favorites: [Favorites], indexPath: IndexPath)
+    init(mode: Settings, game: GameType, favorite: Favorites, favorites: [Favorites], indexPath: IndexPath)
     
     func setBarButton(_ button: UIButton,_ navigationItem: UINavigationItem)
     func setSubviews(subviews: UIView..., on otherSubview: UIView)
@@ -48,7 +48,7 @@ protocol DetailsViewModelProtocol {
 
 class DetailsViewModel: DetailsViewModelProtocol {
     var background: UIColor {
-        game.swap
+        game.buttonSwap
     }
     var flag: String {
         favorite.flag
@@ -95,8 +95,8 @@ class DetailsViewModel: DetailsViewModelProtocol {
     var delegate: FavoritesViewControllerDelegate!
     
     var favorites: [Favorites]
-    private let mode: Setting
-    private let game: Games
+    private let mode: Settings
+    private let game: GameType
     private let favorite: Favorites
     private let indexPath: IndexPath
     
@@ -108,13 +108,13 @@ class DetailsViewModel: DetailsViewModelProtocol {
         favorite.isFlag
     }
     private var question: String {
-        switch game.gameType {
+        switch game.mode {
         case .quizOfCapitals: favorite.capital
         default: isFlag ? name : flag
         }
     }
     
-    required init(mode: Setting, game: Games, favorite: Favorites,
+    required init(mode: Settings, game: GameType, favorite: Favorites,
                   favorites: [Favorites], indexPath: IndexPath) {
         self.mode = mode
         self.game = game
@@ -170,7 +170,7 @@ class DetailsViewModel: DetailsViewModelProtocol {
     }
     
     func setView(addSubview: UIView) -> UIView {
-        let view = setView(color: game.favorite)
+        let view = setView(color: game.buttonFavorite)
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
         view.addSubview(addSubview)
         setConstraints(subview: addSubview, on: view)
@@ -178,7 +178,7 @@ class DetailsViewModel: DetailsViewModelProtocol {
     }
     
     func setView(addFirst: UIView, addSecond: UIView) -> UIView {
-        let view = setView(color: game.favorite)
+        let view = setView(color: game.buttonFavorite)
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         setSubviews(subviews: addFirst, addSecond, on: view)
         setConstraints(addFirst, addSecond, on: view)
@@ -204,7 +204,7 @@ class DetailsViewModel: DetailsViewModelProtocol {
         let view = UIView()
         view.backgroundColor = backgroundColor(title, tag)
         view.layer.borderColor = UIColor.white.cgColor
-        view.layer.borderWidth = game.gameType == .questionnaire ? 1.5 : 0
+        view.layer.borderWidth = game.mode == .questionnaire ? 1.5 : 0
         view.layer.cornerRadius = 12
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubviews(subview: addSubview, on: view, and: title, tag: tag)
@@ -253,7 +253,7 @@ class DetailsViewModel: DetailsViewModelProtocol {
     func setConstraints(_ subview: UIView, on button: UIView, _ view: UIView, 
                         _ flag: String) {
         if isFlag {
-            let constant: CGFloat = game.gameType == .questionnaire ? 50 : 20
+            let constant: CGFloat = game.mode == .questionnaire ? 50 : 20
             NSLayoutConstraint.activate([
                 subview.centerYAnchor.constraint(equalTo: button.centerYAnchor),
                 subview.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: constant),
@@ -276,7 +276,7 @@ extension DetailsViewModel {
     }
     
     private func correctBackground() -> UIColor {
-        game.gameType == .questionnaire ? .white : .greenYellowBrilliant
+        game.mode == .questionnaire ? .white : .greenYellowBrilliant
     }
     
     private func incorrectBackground(_ tag: Int) -> UIColor {
@@ -284,7 +284,7 @@ extension DetailsViewModel {
     }
     
     private func checkSelect() -> UIColor {
-        switch game.gameType {
+        switch game.mode {
         case .quizOfFlags: .redTangerineTango
         case .questionnaire: .white
         default: .bismarkFuriozo
@@ -292,7 +292,7 @@ extension DetailsViewModel {
     }
     
     private func checkNotSelect() -> UIColor {
-        switch game.gameType {
+        switch game.mode {
         case .quizOfFlags: isFlag ? .whiteAlpha : .skyGrayLight
         case .questionnaire: .greenHarlequin
         default: .whiteAlpha
@@ -304,7 +304,7 @@ extension DetailsViewModel {
     }
     
     private func correctTextColor() -> UIColor {
-        game.gameType == .questionnaire ? .greenHarlequin : .white
+        game.mode == .questionnaire ? .greenHarlequin : .white
     }
     
     private func incorrectTextColor(_ tag: Int) -> UIColor {
@@ -312,11 +312,11 @@ extension DetailsViewModel {
     }
     
     private func checkSelectText() -> UIColor {
-        game.gameType == .questionnaire ? .redTangerineTango : .white
+        game.mode == .questionnaire ? .redTangerineTango : .white
     }
     
     private func checkNotSelectText() -> UIColor {
-        game.gameType == .questionnaire ? .white : .grayLight
+        game.mode == .questionnaire ? .white : .grayLight
     }
     
     private func checkmark(_ name: String, _ tag: Int) -> String {
@@ -337,7 +337,7 @@ extension DetailsViewModel {
     
     private func setWidth(_ view: UIView) -> CGFloat {
         let buttonWidth = (view.frame.width - 34) / 2
-        if game.gameType == .questionnaire {
+        if game.mode == .questionnaire {
             return buttonWidth - 45
         } else {
             return buttonWidth - 10
@@ -373,7 +373,7 @@ extension DetailsViewModel {
 // MARK: - Set subviews
 extension DetailsViewModel {
     private func setSubview(_ title: String, _ tag: Int) -> UIView {
-        if game.gameType == .quizOfCapitals {
+        if game.mode == .quizOfCapitals {
             setLabel(title: title, size: 20, style: "GillSans-SemiBold", color: textColor(title, tag))
         } else {
             setImage(image: UIImage(named: title))
@@ -382,7 +382,7 @@ extension DetailsViewModel {
     
     private func addSubviews(subview: UIView, on view: UIView, and name: String,
                              tag: Int) {
-        if game.gameType == .questionnaire {
+        if game.mode == .questionnaire {
             let checkmark = setImage(image: checkmark(name, tag),
                                      color: color(name, tag), size: 26)
             setSubviews(subviews: subview, checkmark, on: view)
@@ -431,7 +431,7 @@ extension DetailsViewModel {
     
     private func checkGameType(_ first: UIView, _ second: UIView, 
                                _ third: UIView, _ fourth: UIView) -> UIStackView {
-        if game.gameType == .quizOfCapitals {
+        if game.mode == .quizOfCapitals {
             return setStackView(first, second, third, fourth)
         } else {
             let stackViewOne = setStackView(first, second)
@@ -452,7 +452,7 @@ extension DetailsViewModel {
     
     private func layoutConstraint(subview: UIView, on button: UIView,
                                   _ view: UIView) -> NSLayoutConstraint {
-        if game.gameType == .questionnaire {
+        if game.mode == .questionnaire {
             let center = setCenter(view)
             return subview.centerXAnchor.constraint(equalTo: button.centerXAnchor, constant: center)
         } else {

@@ -16,14 +16,14 @@ class StorageManager {
     
     private init() {}
     
-    func saveSetting(setting: Setting) {
+    func saveSetting(setting: Settings) {
         guard let data = try? JSONEncoder().encode(setting) else { return }
         userDefaults.set(data, forKey: settingKey)
     }
     
-    func fetchSetting() -> Setting {
-        guard let data = userDefaults.object(forKey: settingKey) as? Data else { return Setting.getSettingDefault(.english) }
-        guard let setting = try? JSONDecoder().decode(Setting.self, from: data) else { return Setting.getSettingDefault(.english) }
+    func fetchSetting() -> Settings {
+        guard let data = userDefaults.object(forKey: settingKey) as? Data else { return Settings.getSettingDefault(.english) }
+        guard let setting = try? JSONDecoder().decode(Settings.self, from: data) else { return Settings.getSettingDefault(.english) }
         return setting
     }
     

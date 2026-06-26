@@ -25,7 +25,7 @@ protocol RatioViewModelProtocol {
     var isTime: Bool { get }
     var titleDone: String { get }
     
-    init(mode: Setting, game: Games, correctAnswers: [Corrects],
+    init(mode: Settings, game: GameType, correctAnswers: [Corrects],
          incorrectAnswers: [Incorrects], timeSpend: [CGFloat], answeredQuestions: Int)
     
     func setSubviews(subviews: UIView..., on subviewOther: UIView)
@@ -170,14 +170,14 @@ class RatioViewModel: RatioViewModelProtocol {
         stringWithoutNull(valueAnsweredQuestions * 100) + "%"
     }
     
-    private var mode: Setting
-    private var game: Games
+    private var mode: Settings
+    private var game: GameType
     private var correctAnswers: [Corrects]
     private var incorrectAnswers: [Incorrects]
     private var timeSpend: [CGFloat]
     private var answeredQuestions: Int
     
-    required init(mode: Setting, game: Games, correctAnswers: [Corrects], 
+    required init(mode: Settings, game: GameType, correctAnswers: [Corrects], 
                   incorrectAnswers: [Incorrects], timeSpend: [CGFloat], answeredQuestions: Int) {
         self.mode = mode
         self.game = game
@@ -330,7 +330,7 @@ extension RatioViewModel {
     }
     // MARK: - Set value time
     private func checkGameType() -> CGFloat {
-        game.gameType == .questionnaire ? setTimeSpend() : averageTime()
+        game.mode == .questionnaire ? setTimeSpend() : averageTime()
     }
     
     private func setTimeSpend() -> CGFloat {
@@ -368,7 +368,7 @@ extension RatioViewModel {
     }
     
     private func isQuestionnaire() -> String {
-        game.gameType == .questionnaire ? titleAllQuestions() : titleAverageTime
+        game.mode == .questionnaire ? titleAllQuestions() : titleAverageTime
     }
     
     private func titleAllQuestions() -> String {

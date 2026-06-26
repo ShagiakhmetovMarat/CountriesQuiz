@@ -20,7 +20,7 @@ protocol GameTypeViewModelProtocol {
     var titleOk: String { get }
     var titleCancel: String { get }
     var delegate: MenuViewControllerInput! { get set }
-    var mode: Setting { get }
+    var settings: Settings { get }
     var tag: Int { get }
     var favorites: [Favorites] { get }
     
@@ -32,10 +32,10 @@ protocol GameTypeViewModelProtocol {
     var oceaniaContinent: Bool { get }
     
     var background: UIColor { get }
-    var colorPlay: UIColor { get }
-    var colorFavourite: UIColor { get }
-    var colorSwap: UIColor { get }
-    var colorDone: UIColor { get }
+    var colorButtonPlay: UIColor { get }
+    var colorButtonFavourite: UIColor { get }
+    var colorButtonSwap: UIColor { get }
+    var colorButtonDone: UIColor { get }
     var image: String { get }
     var name: String { get }
     var diameter: CGFloat { get }
@@ -43,7 +43,7 @@ protocol GameTypeViewModelProtocol {
     var heightOfRows: CGFloat { get }
     var popUpViewHelp: Bool { get }
     
-    init(mode: Setting, game: Games, tag: Int, favorites: [Favorites])
+    init(settings: Settings, gameType: GameType, tag: Int, favorites: [Favorites])
     
     func numberOfComponents() -> Int
     func numberOfRows(_ pickerView: UIPickerView) -> Int
@@ -79,9 +79,7 @@ protocol GameTypeViewModelProtocol {
     func isSelect(isOn: Bool) -> UIColor
     func setCountContinents(_ count: Int)
     
-    func setSubviews(subviews: UIView..., on subviewOther: UIView)
     func removeSubviews(subviews: UIView...)
-    func setupBarButtons(_ buttonBack: UIButton,_ buttonHelp: UIButton,_ navigationItem: UINavigationItem)
     func setRowPickerView(tag: Int) -> Int
     func setButtonsContinent(button: UIButton)
     func setButtonCheckmark(button: UIButton)
@@ -131,41 +129,71 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     typealias ParagraphData = (bullet: String, paragraph: String)
     
     var countQuestions: Int {
-        mode.countQuestions
+        settings.countQuestions
     }
     var countContinents = 0
     var allCountries: Bool {
-        mode.allCountries
+        settings.allCountries
     }
     var americaContinent: Bool {
-        mode.americaContinent
+        settings.americaContinent
     }
     var europeContinent: Bool {
-        mode.europaContinent
+        settings.europaContinent
     }
     var africaContinent: Bool {
-        mode.africaContinent
+        settings.africaContinent
     }
     var asiaContinent: Bool {
-        mode.asiaContinent
+        settings.asiaContinent
     }
     var oceaniaContinent: Bool {
-        mode.oceaniaContinent
+        settings.oceaniaContinent
     }
     var background: UIColor {
-        game.background
+        switch gameType {
+        case .quizOfFlags: .cyanDark
+        case .questionnaire: .greenHarlequin
+        case .quizOfMaps: .redYellowBrown
+        case .scrabble: .indigo
+        case .quizOfCapitals: .redTangerineTango
+        }
     }
-    var colorPlay: UIColor {
-        game.play
+    var colorButtonPlay: UIColor {
+        switch gameType {
+        case .quizOfFlags: .skyBlueLight
+        case .questionnaire: .greenYellowBrilliant
+        case .quizOfMaps: .redBeige
+        case .scrabble: .fuchsiaCrayolaDeep
+        case .quizOfCapitals: .redCardinal
+        }
     }
-    var colorFavourite: UIColor {
-        game.favorite
+    var colorButtonFavourite: UIColor {
+        switch gameType {
+        case .quizOfFlags: .blueMiddlePersian
+        case .questionnaire: .greenEmerald
+        case .quizOfMaps: .brown
+        case .scrabble: .amethyst
+        case .quizOfCapitals: .bismarkFuriozo
+        }
     }
-    var colorSwap: UIColor {
-        game.swap
+    var colorButtonSwap: UIColor {
+        switch gameType {
+        case .quizOfFlags: .blueBlackSea
+        case .questionnaire: .greenDartmouth
+        case .quizOfMaps: .brownDeep
+        case .scrabble: .blueSlate
+        case .quizOfCapitals: .brownRed
+        }
     }
-    var colorDone: UIColor {
-        game.done
+    var colorButtonDone: UIColor {
+        switch gameType {
+        case .quizOfFlags: .skyCyanLight
+        case .questionnaire: .greenWhite
+        case .quizOfMaps: .somon
+        case .scrabble: .veryLightPurple
+        case .quizOfCapitals: .salmon
+        }
     }
     var diameter: CGFloat = 100
     var radius: CGFloat {
@@ -194,10 +222,10 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     var titleCancel = "GameType.cancel.title".localized
     var delegate: MenuViewControllerInput!
     
-    var mode: Setting
+    var settings: Settings
     let tag: Int
     var favorites: [Favorites]
-    private let game: Games
+    private let gameType: GameType
     
     private var countRowsDefault = DefaultSetting.countRows.rawValue
     private var titleTimeAllQuestions = "GameType.time_all_questions.title".localized
@@ -267,34 +295,21 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     private var stackViewCheckmark: UIStackView!
     private var stackViewTime: UIStackView!
     
-    required init(mode: Setting, game: Games, tag: Int, favorites: [Favorites]) {
-        self.mode = mode
-        self.game = game
+    required init(settings: Settings, gameType: GameType, tag: Int, favorites: [Favorites]) {
+        self.settings = settings
+        self.gameType = gameType
         self.tag = tag
         self.favorites = favorites
     }
     // MARK: - Set subviews
-    func setSubviews(subviews: UIView..., on subviewOther: UIView) {
-        subviews.forEach { subview in
-            subviewOther.addSubview(subview)
-        }
-    }
-    
     func removeSubviews(subviews: UIView...) {
         subviews.forEach { subview in
             subview.removeFromSuperview()
         }
     }
     
-    func setupBarButtons(_ buttonBack: UIButton, _ buttonHelp: UIButton, _ navigationItem: UINavigationItem) {
-        let leftBarButton = UIBarButtonItem(customView: buttonBack)
-        let rightBarButton = UIBarButtonItem(customView: buttonHelp)
-        navigationItem.leftBarButtonItem = leftBarButton
-        navigationItem.rightBarButtonItem = rightBarButton
-    }
-    
     func viewHelp() -> UIView {
-        let popUpView = setView(color: game.swap)
+        let popUpView = setView(color: game.buttonSwap)
         addSubviewsForPopUpView()
         setSubviews(subviews: labelTitle, scrollView, on: popUpView)
         setConstraints(popUpView)
@@ -302,7 +317,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     }
     
     func viewSetting() -> UIView {
-        let popUpView = setView(color: game.swap)
+        let popUpView = setView(color: game.buttonSwap)
         viewSecondary = setView(color: game.background)
         titleSetting = setLabel(title: "", size: 22, font: "GillSans")
         viewSecondary.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
@@ -323,9 +338,9 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     
     func numberOfRows(_ pickerView: UIPickerView) -> Int {
         switch pickerView.tag {
-        case 1: mode.countRows
+        case 1: settings.countRows
         case 2: 10
-        default: 6 * mode.countQuestions - 4 * mode.countQuestions + 1
+        default: 6 * settings.countQuestions - 4 * settings.countQuestions + 1
         }
     }
     
@@ -343,7 +358,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
             title = "\(row + 6)"
             attributed = setAttributed(title: title, tag: tag, segmented: segmented)
         default:
-            title = "\(row + 4 * mode.countQuestions)"
+            title = "\(row + 4 * settings.countQuestions)"
             attributed = setAttributed(title: title, tag: tag, segmented: segmented)
         }
         
@@ -354,7 +369,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     // MARK: - Constants
     func imageMode() -> String {
         switch tag {
-        case 0, 1, 4: return mode.flag ? "flag" : "building"
+        case 0, 1, 4: return settings.flag ? "flag" : "building"
         case 2: return "globe.europe.africa"
         default: return scrabbleType()
         }
@@ -369,19 +384,19 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     }
     
     func isCountdown() -> Bool {
-        mode.timeElapsed.timeElapsed ? true : false
+        settings.timeElapsed.timeElapsed ? true : false
     }
     
     func isOneQuestion() -> Bool {
-        mode.timeElapsed.questionSelect.oneQuestion
+        settings.timeElapsed.questionSelect.oneQuestion
     }
     
     func oneQuestionTime() -> Int {
-        mode.timeElapsed.questionSelect.questionTime.oneQuestionTime
+        settings.timeElapsed.questionSelect.questionTime.oneQuestionTime
     }
     
     func allQuestionsTime() -> Int {
-        mode.timeElapsed.questionSelect.questionTime.allQuestionsTime
+        settings.timeElapsed.questionSelect.questionTime.allQuestionsTime
     }
     
     func isCheckmark(isOn: Bool) -> String {
@@ -618,7 +633,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
                       buttonAfrica, buttonAsia, buttonOcean)
         setCountRows(continents: allCountries, americaContinent, europeContinent,
                      africaContinent, asiaContinent, oceaniaContinent)
-        setCountQuestions(countRows: mode.countRows)
+        setCountQuestions(countRows: settings.countRows)
         setTitlesContinents(labelContinents, labelQuestions, pickerView)
     }
     // MARK: - Press done for change setting, countdown
@@ -645,19 +660,19 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     }
     // MARK: - Transitions to other view controller
     func favouritesViewModel() -> FavoritesViewModelProtocol {
-        FavoritesViewModel(mode: mode, game: game, favorites: favorites)
+        FavoritesViewModel(mode: settings, game: gameType, favorites: favorites)
     }
     
     func quizOfFlagsViewModel() -> QuizOfFlagsViewModelProtocol {
-        QuizOfFlagsViewModel(mode: mode, game: game, favorites: favorites)
+        QuizOfFlagsViewModel(mode: settings, game: gameType, favorites: favorites)
     }
     
     func questionnaireViewModel() -> QuestionnaireViewModelProtocol {
-        QuestionnaireViewModel(mode: mode, game: game, favorites: favorites)
+        QuestionnaireViewModel(mode: settings, game: gameType, favorites: favorites)
     }
     
     func quizOfCapitalsViewModel() -> QuizOfCapitalsViewModelProtocol {
-        QuizOfCapitalsViewModel(mode: mode, game: game, favorites: favorites)
+        QuizOfCapitalsViewModel(mode: settings, game: gameType, favorites: favorites)
     }
     // MARK: - Constraints
     func setSquare(subviews: UIView..., sizes: CGFloat) {
@@ -892,7 +907,7 @@ extension GameTypeViewModel {
     private func topic(image: String, color: UIColor, title: String, 
                        description: String) -> UIStackView {
         let image = setImage(image: image, color: color)
-        let view = setView(color: game.swap, addImage: image)
+        let view = setView(color: game.buttonSwap, addImage: image)
         let title = setLabel(title: title, size: 24, font: "GillSans", alignment: .left)
         let description = setLabel(title: description, size: 19, font: "GillSans", alignment: .left)
         let stackViewOne = setStackView(title, description)
@@ -952,9 +967,9 @@ extension GameTypeViewModel {
     }
     // MARK: - Button change type game mode
     private func GameTypeFirst(button: UIButton) {
-        mode.flag ? imageSwap("building", button) : imageSwap("flag", button)
-        mode.flag.toggle()
-        StorageManager.shared.saveSetting(setting: mode)
+        settings.flag ? imageSwap("building", button) : imageSwap("flag", button)
+        settings.flag.toggle()
+        StorageManager.shared.saveSetting(setting: settings)
     }
     
     private func imageSwap(_ image: String, _ button: UIButton) {
@@ -964,21 +979,21 @@ extension GameTypeViewModel {
     }
     
     private func GameTypeSecond(button: UIButton) {
-        switch mode.scrabbleType {
-        case 0: imageSwap("globe.europe.africa", mode.scrabbleType + 1, button)
-        case 1: imageSwap("building.2", mode.scrabbleType + 1, button)
+        switch settings.scrabbleType {
+        case 0: imageSwap("globe.europe.africa", settings.scrabbleType + 1, button)
+        case 1: imageSwap("building.2", settings.scrabbleType + 1, button)
         default: imageSwap("flag", 0, button)
         }
     }
     
     private func imageSwap(_ image: String, _ scrabbleType: Int, _ button: UIButton) {
         imageSwap(image, button)
-        mode.scrabbleType = scrabbleType
-        StorageManager.shared.saveSetting(setting: mode)
+        settings.scrabbleType = scrabbleType
+        StorageManager.shared.saveSetting(setting: settings)
     }
     // MARK: - Attributted for picker view
     private func setAttributed(title: String, tag: Int, segmented: UISegmentedControl) -> NSAttributedString {
-        let color = tag == 1 ? game.favorite : color(tag: tag, segmented: segmented)
+        let color = tag == 1 ? game.buttonFavorite : color(tag: tag, segmented: segmented)
         return NSAttributedString(string: title, attributes: [
             .font: UIFont(name: "GillSans", size: 26) ?? "",
             .foregroundColor: color
@@ -988,9 +1003,9 @@ extension GameTypeViewModel {
     private func color(tag: Int, segmented: UISegmentedControl) -> UIColor {
         switch segmented.selectedSegmentIndex {
         case 0:
-            return tag == 2 ? game.favorite : .grayLight
+            return tag == 2 ? game.buttonFavorite : .grayLight
         default:
-            return tag == 2 ? .grayLight : game.favorite
+            return tag == 2 ? .grayLight : game.buttonFavorite
         }
     }
     // MARK: - Show / hide subviews
@@ -1089,7 +1104,7 @@ extension GameTypeViewModel {
     }
     
     private func setSegmentIndex() {
-        let index = game.gameType == .questionnaire ? 1 : 0
+        let index = game.mode == .questionnaire ? 1 : 0
         segmentedControl.selectedSegmentIndex = isOneQuestion() ? index : 1
         segmentedControl.isUserInteractionEnabled = isOnSegment()
     }
@@ -1224,7 +1239,7 @@ extension GameTypeViewModel {
     
     private func setButtonTime(_ button: UIButton) {
         button.isEnabled = isCountdown()
-        button.backgroundColor = isCountdown() ? colorSwap : .grayLight
+        button.backgroundColor = isCountdown() ? colorButtonSwap : .grayLight
     }
     // MARK: - Press done for change setting, time
     private func setSegmentedControl(_ segment: UISegmentedControl) {
@@ -1250,51 +1265,51 @@ extension GameTypeViewModel {
 // MARK: - Set change data
 extension GameTypeViewModel {
     private func setCountQuestions(_ countQuestions: Int) {
-        mode.countQuestions = countQuestions
+        settings.countQuestions = countQuestions
     }
     
     private func setCountRows(_ countRows: Int) {
-        mode.countRows = countRows
+        settings.countRows = countRows
     }
     
     private func setAllCountries(_ bool: Bool) {
-        mode.allCountries = bool
+        settings.allCountries = bool
     }
     
     private func setAmericaContinent(_ bool: Bool) {
-        mode.americaContinent = bool
+        settings.americaContinent = bool
     }
     
     private func setEuropeContinent(_ bool: Bool) {
-        mode.europaContinent = bool
+        settings.europaContinent = bool
     }
     
     private func setAfricaContinent(_ bool: Bool) {
-        mode.africaContinent = bool
+        settings.africaContinent = bool
     }
     
     private func setAsiaContinent(_ bool: Bool) {
-        mode.asiaContinent = bool
+        settings.asiaContinent = bool
     }
     
     private func setOceaniaContinent(_ bool: Bool) {
-        mode.oceaniaContinent = bool
+        settings.oceaniaContinent = bool
     }
     
     private func setCountdown(isOn: Bool) {
-        mode.timeElapsed.timeElapsed = isOn
+        settings.timeElapsed.timeElapsed = isOn
     }
     
     private func setOneQuestion(isOn: Bool) {
-        mode.timeElapsed.questionSelect.oneQuestion = isOn
+        settings.timeElapsed.questionSelect.oneQuestion = isOn
     }
     
     private func setTimeOneQuestion(time: Int) {
-        mode.timeElapsed.questionSelect.questionTime.oneQuestionTime = time
+        settings.timeElapsed.questionSelect.questionTime.oneQuestionTime = time
     }
     
     private func setTimeAllQuestions(time: Int) {
-        mode.timeElapsed.questionSelect.questionTime.allQuestionsTime = time
+        settings.timeElapsed.questionSelect.questionTime.allQuestionsTime = time
     }
     
     private func setRange(subString: String, fromString: String) -> NSRange {
@@ -1335,7 +1350,7 @@ extension GameTypeViewModel {
     }
     
     private func checkTimeGameType() -> String {
-        game.gameType == .questionnaire ? "\(allQuestionsTime())" : "\(oneQuestionTime())"
+        game.mode == .questionnaire ? "\(allQuestionsTime())" : "\(oneQuestionTime())"
     }
     
     private func titleSetting(tag: Int) -> String {
@@ -1348,11 +1363,11 @@ extension GameTypeViewModel {
     }
     
     private func checkTitleGameType() -> String {
-        game.gameType == .questionnaire ? titleTimeAllQuestions : titleTimeOneQuestion
+        game.mode == .questionnaire ? titleTimeAllQuestions : titleTimeOneQuestion
     }
     
     private func scrabbleType() -> String {
-        switch mode.scrabbleType {
+        switch settings.scrabbleType {
         case 0: "flag"
         case 1: "globe.europe.africa"
         default: "building.2"
@@ -1418,7 +1433,7 @@ extension GameTypeViewModel {
     }
     
     private func isOnSegment() -> Bool {
-        game.gameType == .questionnaire ? false : true
+        game.mode == .questionnaire ? false : true
     }
 }
 // MARK: - Set subviews for popup view help

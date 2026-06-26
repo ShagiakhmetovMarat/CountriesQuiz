@@ -29,7 +29,7 @@ protocol QuizOfCapitalsViewModelProtocol {
     var answerSelect: Bool { get }
     var delegate: GameTypeViewControllerInput! { get set }
     
-    init(mode: Setting, game: Games, favorites: [Favorites])
+    init(mode: Settings, game: GameType, favorites: [Favorites])
     
     func setupSubviews(subviews: UIView..., on subviewOther: UIView)
     func setBarButton(_ button: UIButton,_ navigationItem: UINavigationItem)
@@ -132,8 +132,8 @@ class QuizOfCapitalsViewModel: QuizOfCapitalsViewModelProtocol {
     private var stackViewSpring: NSLayoutConstraint!
     private var widthOfFlag: NSLayoutConstraint!
     
-    private let mode: Setting
-    private let game: Games
+    private let mode: Settings
+    private let game: GameType
     private let favorites: [Favorites]
     
     private var buttonFirst: UIButton!
@@ -171,7 +171,7 @@ class QuizOfCapitalsViewModel: QuizOfCapitalsViewModelProtocol {
     private var timeSpend: [CGFloat] = []
     private var answeredQuestions = 0
     
-    required init(mode: Setting, game: Games, favorites: [Favorites]) {
+    required init(mode: Settings, game: GameType, favorites: [Favorites]) {
         self.mode = mode
         self.game = game
         self.favorites = favorites

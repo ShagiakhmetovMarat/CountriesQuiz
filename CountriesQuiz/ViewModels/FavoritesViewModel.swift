@@ -20,7 +20,7 @@ protocol FavoritesViewModelProtocol {
     var delegate: GameTypeViewControllerInput! { get set }
     var favorites: [Favorites] { get }
     
-    init(mode: Setting, game: Games, favorites: [Favorites])
+    init(mode: Settings, game: GameType, favorites: [Favorites])
     
     func setBarButton(_ button: UIButton,_ navigationItem: UINavigationItem)
     func setSubviews(subviews: UIView..., on subviewOther: UIView)
@@ -46,10 +46,10 @@ protocol FavoritesViewModelProtocol {
 
 class FavoritesViewModel: FavoritesViewModelProtocol {
     var backgroundMedium: UIColor {
-        game.favorite
+        game.buttonFavorite
     }
     var backgroundDark: UIColor {
-        game.swap
+        game.buttonSwap
     }
     var backgroundLight: UIColor {
         game.background
@@ -80,8 +80,8 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     var delegate: GameTypeViewControllerInput!
     
     var favorites: [Favorites]
-    private let mode: Setting
-    private let game: Games
+    private let mode: Settings
+    private let game: GameType
     private var indexPath: IndexPath!
     
     private var titleTimeUp: String {
@@ -96,7 +96,7 @@ class FavoritesViewModel: FavoritesViewModelProtocol {
     private var stackView: UIStackView!
     private var timeUp: UILabel!
     
-    required init(mode: Setting, game: Games, favorites: [Favorites]) {
+    required init(mode: Settings, game: GameType, favorites: [Favorites]) {
         self.mode = mode
         self.game = game
         self.favorites = favorites
@@ -311,7 +311,7 @@ extension FavoritesViewModel {
     
     private func checkGameType(_ first: UIView, _ second: UIView,
                                _ third: UIView, _ fourth: UIView) -> UIStackView {
-        if game.gameType == .quizOfCapitals {
+        if game.mode == .quizOfCapitals {
             return setStackView(first, second, third, fourth)
         } else {
             let stackViewOne = setStackView(first, second)
@@ -325,14 +325,14 @@ extension FavoritesViewModel {
         let background = backgroundColor(favourite, name, and: tag)
         let button = setView(color: background, radius: 12)
         button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = game.gameType == .questionnaire ? 1.5 : 0
+        button.layer.borderWidth = game.mode == .questionnaire ? 1.5 : 0
         addSubviews(button, favourite, name, and: tag, view)
         return button
     }
     
     private func addSubviews(_ button: UIView, _ favourite: Favorites, 
                              _ name: String, and tag: Int, _ view: UIView) {
-        if game.gameType == .questionnaire {
+        if game.mode == .questionnaire {
             let subview = subview(favourite, name, and: tag)
             let checkmark = setImage(image: checkmark(favourite, name, tag),
                                      color: color(favourite, name, tag), size: 25)
@@ -357,7 +357,7 @@ extension FavoritesViewModel {
     
     private func setSubview(_ favourite: Favorites, _ name: String, 
                             and tag: Int) -> UIView {
-        if game.gameType == .quizOfCapitals {
+        if game.mode == .quizOfCapitals {
             let color = textColor(favourite, name, and: tag)
             return setLabel(title: name, font: "GillSans-SemiBold", size: 19, color: color)
         } else {
@@ -412,14 +412,14 @@ extension FavoritesViewModel {
     }
     
     private func question(_ favourite: Favorites) -> String {
-        switch game.gameType {
+        switch game.mode {
         case .quizOfCapitals: favourite.capital
         default: favourite.isFlag ? favourite.name : favourite.flag
         }
     }
     
     private func correctBackground() -> UIColor {
-        game.gameType == .questionnaire ? .white : .greenYellowBrilliant
+        game.mode == .questionnaire ? .white : .greenYellowBrilliant
     }
     
     private func incorrectBackground(_ favourite: Favorites, _ tag: Int) -> UIColor {
@@ -427,7 +427,7 @@ extension FavoritesViewModel {
     }
     
     private func checkSelect() -> UIColor {
-        switch game.gameType {
+        switch game.mode {
         case .quizOfFlags: .redTangerineTango
         case .questionnaire: .white
         default: .bismarkFuriozo
@@ -435,7 +435,7 @@ extension FavoritesViewModel {
     }
     
     private func checkNotSelect(_ favourite: Favorites) -> UIColor {
-        switch game.gameType {
+        switch game.mode {
         case .quizOfFlags: favourite.isFlag ? .whiteAlpha : .skyGrayLight
         case .questionnaire: .greenHarlequin
         default: .whiteAlpha
@@ -448,7 +448,7 @@ extension FavoritesViewModel {
     }
     
     private func correctTextColor() -> UIColor {
-        game.gameType == .questionnaire ? .greenHarlequin : .white
+        game.mode == .questionnaire ? .greenHarlequin : .white
     }
     
     private func incorrectTextColor(_ favorite: Favorites, _ tag: Int) -> UIColor {
@@ -456,11 +456,11 @@ extension FavoritesViewModel {
     }
     
     private func checkSelectText() -> UIColor {
-        game.gameType == .questionnaire ? .redTangerineTango : .white
+        game.mode == .questionnaire ? .redTangerineTango : .white
     }
     
     private func checkNotSelectText() -> UIColor {
-        game.gameType == .questionnaire ? .white : .grayLight
+        game.mode == .questionnaire ? .white : .grayLight
     }
     
     private func checkmark(_ favorite: Favorites, _ name: String,
@@ -490,7 +490,7 @@ extension FavoritesViewModel {
     
     private func setWidth(_ view: UIView) -> CGFloat {
         let buttonWidth = (view.frame.width - 49) / 2
-        if game.gameType == .questionnaire {
+        if game.mode == .questionnaire {
             return buttonWidth - 45
         } else {
             return buttonWidth - 10
@@ -553,7 +553,7 @@ extension FavoritesViewModel {
     private func setConstraints(favourite: Favorites, _ subview: UIView, 
                                 on button: UIView, _ name: String, _ view: UIView) {
         if favourite.isFlag {
-            let constant: CGFloat = game.gameType == .questionnaire ? 40 : 10
+            let constant: CGFloat = game.mode == .questionnaire ? 40 : 10
             NSLayoutConstraint.activate([
                 subview.centerYAnchor.constraint(equalTo: button.centerYAnchor),
                 subview.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: constant),
@@ -571,7 +571,7 @@ extension FavoritesViewModel {
     
     private func layoutConstraint(subview: UIView, on button: UIView,
                                   _ view: UIView) -> NSLayoutConstraint {
-        if game.gameType == .questionnaire {
+        if game.mode == .questionnaire {
             let center = setCenter(view)
             return subview.centerXAnchor.constraint(equalTo: button.centerXAnchor, constant: center)
         } else {

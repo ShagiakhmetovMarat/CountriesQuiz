@@ -31,7 +31,7 @@ protocol QuizOfFlagsViewModelProtocol {
     var shapeLayer: CAShapeLayer { get }
     var delegate: GameTypeViewControllerInput! { get set }
     
-    init(mode: Setting, game: Games, favorites: [Favorites])
+    init(mode: Settings, game: GameType, favorites: [Favorites])
     
     func setBarButton(_ button: UIButton,_ navigationItem: UINavigationItem)
     func setSubviews(subviews: UIView..., on subviewOther: UIView)
@@ -141,8 +141,8 @@ class QuizOfFlagsViewModel: QuizOfFlagsViewModelProtocol {
     let shapeLayer = CAShapeLayer()
     var delegate: GameTypeViewControllerInput!
     
-    private let mode: Setting
-    private let game: Games
+    private let mode: Settings
+    private let game: GameType
     private let favorites: [Favorites]
     
     private var correctAnswers: [Corrects] = []
@@ -188,7 +188,7 @@ class QuizOfFlagsViewModel: QuizOfFlagsViewModelProtocol {
     private var imageThird: UIImageView!
     private var imageFourth: UIImageView!
     
-    required init(mode: Setting, game: Games, favorites: [Favorites]) {
+    required init(mode: Settings, game: GameType, favorites: [Favorites]) {
         self.mode = mode
         self.game = game
         self.favorites = favorites

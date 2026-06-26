@@ -26,12 +26,12 @@ protocol ResultsViewModelProtocol {
     var delegate: MenuViewControllerDelegate! { get set }
     var favorites: [Favorites] { get }
     
-    var mode: Setting { get }
-    var game: Games { get }
+    var mode: Settings { get }
+    var game: GameType { get }
     var correctAnswers: [Corrects] { get }
     var incorrectAnswers: [Incorrects] { get }
     
-    init(mode: Setting, game: Games, correctAnswers: [Corrects],
+    init(mode: Settings, game: GameType, correctAnswers: [Corrects],
          incorrectAnswers: [Incorrects], timeSpend: [CGFloat],
          answeredQuestions: Int, favorites: [Favorites])
     
@@ -123,8 +123,8 @@ class ResultsViewModel: ResultsViewModelProtocol {
     }
     var delegate: MenuViewControllerDelegate!
     
-    let mode: Setting
-    let game: Games
+    let mode: Settings
+    let game: GameType
     let correctAnswers: [Corrects]
     let incorrectAnswers: [Incorrects]
     var answeredQuestions: Int
@@ -179,7 +179,7 @@ class ResultsViewModel: ResultsViewModelProtocol {
         percentCorrectAnswers()
     }
     
-    required init(mode: Setting, game: Games, correctAnswers: [Corrects],
+    required init(mode: Settings, game: GameType, correctAnswers: [Corrects],
                   incorrectAnswers: [Incorrects], timeSpend: [CGFloat],
                   answeredQuestions: Int, favorites: [Favorites]) {
         self.mode = mode
@@ -221,7 +221,7 @@ class ResultsViewModel: ResultsViewModelProtocol {
         let keyFont = NSAttributedString.Key.font
         let keyColor = NSAttributedString.Key.foregroundColor
         let font = UIFont(name: "GillSans-SemiBold", size: 22)
-        let color = game.favorite
+        let color = game.buttonFavorite
         let rangeHeading = getRange(subString: heading, fromString: text)
         let rangePercent = getRange(subString: percent, fromString: text)
         attributed.addAttribute(keyFont, value: font ?? "", range: rangeHeading)
@@ -348,7 +348,7 @@ class ResultsViewModel: ResultsViewModelProtocol {
     }
     
     private func isQuestionnaire() -> String {
-        game.gameType == .questionnaire ? titleAllQuestions() : titleAverageTime
+        game.mode == .questionnaire ? titleAllQuestions() : titleAverageTime
     }
     
     private func titleAllQuestions() -> String {

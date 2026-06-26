@@ -8,32 +8,25 @@
 import UIKit
 
 protocol GameTypeViewControllerInput: AnyObject {
-    func dataToMenu(setting: Setting, favorites: [Favorites])
+    func dataToMenu(setting: Settings, favorites: [Favorites])
     func favoritesToGameType(favorites: [Favorites])
     func disableFavoriteButton()
 }
 
 class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, GameTypeViewControllerInput {
-    private lazy var viewGameType: UIView = {
-        setView(color: .whiteAlphaLight, radius: viewModel.radius, sizes: viewModel.diameter)
-    }()
+    var viewModel: GameTypeViewModelProtocol!
     
-    private lazy var imageGameType: UIImageView = {
-        setImage(image: "\(viewModel.image)", color: viewModel.background, size: 60)
-    }()
-    
-    private lazy var labelGameName: UILabel = {
-        setLabel(color: .white, title: "\(viewModel.name)", size: 30, style: "GillSans")
-    }()
-    
-    private lazy var buttonBack: UIButton = {
-        setButton(image: "multiply", action: #selector(backToMenu), isBarButton: true)
-    }()
-    
-    private lazy var buttonHelp: UIButton = {
-        setButton(image: "questionmark", action: #selector(showViewHelp), isBarButton: true)
-    }()
-    
+    private let viewGameType = UIView()
+    private let imageGameType = UIImageView()
+    private var labelGameType = UILabel()
+    private lazy var buttonBack = makeBarButton(
+        image: "multiply",
+        selector: #selector(backToMenu)
+    )
+    private lazy var buttonHelp = makeBarButton(
+        image: "questionmark",
+        selector: #selector(showViewHelp)
+    )
     private lazy var viewHelp: UIView = {
         setView(action: #selector(closeView), view: viewModel.viewHelp())
     }()
@@ -49,13 +42,13 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }()
     
     private lazy var buttonStart: UIButton = {
-        setButton(image: "play", color: viewModel.colorPlay, action: #selector(startGame))
+        setButton(image: "play", color: viewModel.colorButtonPlay, action: #selector(startGame))
     }()
     
     private lazy var buttonFavorites: UIButton = {
         setButton(
             image: "star",
-            color: viewModel.colorFavourite,
+            color: viewModel.colorButtonFavourite,
             action: #selector(favorites),
             isEnabled: viewModel.haveFavourites())
     }()
@@ -63,7 +56,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     private lazy var buttonSwap: UIButton = {
         setButton(
             image: viewModel.imageMode(),
-            color: viewModel.colorSwap,
+            color: viewModel.colorButtonSwap,
             action: #selector(swap),
             isEnabled: viewModel.isEnabled())
     }()
@@ -77,7 +70,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     private lazy var buttonCountQuestions: UIButton = {
         setButton(
-            color: viewModel.colorSwap,
+            color: viewModel.colorButtonSwap,
             labelFirst: labelCountQuestion,
             labelSecond: labelCount,
             tag: 1)
@@ -93,7 +86,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     private lazy var buttonContinents: UIButton = {
         setButton(
-            color: viewModel.colorSwap,
+            color: viewModel.colorButtonSwap,
             labelFirst: labelContinents,
             labelSecond: labelContinentsDescription,
             tag: 2)
@@ -109,7 +102,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     private lazy var buttonCountdown: UIButton = {
         setButton(
-            color: viewModel.colorSwap,
+            color: viewModel.colorButtonSwap,
             labelFirst: labelCountdown,
             labelSecond: labelCountdownDesription,
             tag: 3)
@@ -133,7 +126,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     private lazy var buttonTime: UIButton = {
         setButton(
-            color: viewModel.isCountdown() ? viewModel.colorSwap : .grayLight,
+            color: viewModel.isCountdown() ? viewModel.colorButtonSwap : .grayLight,
             labelFirst: labelTime,
             labelSecond: labelTimeDesription,
             image: imageInfinity,
@@ -298,7 +291,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }()
     
     private lazy var buttonDone: UIButton = {
-        setButton(title: viewModel.titleOk, color: viewModel.colorDone, action: #selector(done))
+        setButton(title: viewModel.titleOk, color: viewModel.colorButtonDone, action: #selector(done))
     }()
     
     private lazy var buttonCancel: UIButton = {
@@ -315,13 +308,11 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         return view
     }()
     
-    var viewModel: GameTypeViewModelProtocol!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDesign()
         setupSubviews()
-        setupBarButton()
+        setupBarButtons()
         setupConstraints()
     }
     // MARK: - UIPickerView
@@ -376,7 +367,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         closeViewSetting()
     }
     // MARK: - GameTypeViewControllerInput
-    func dataToMenu(setting: Setting, favorites: [Favorites]) {
+    func dataToMenu(setting: Settings, favorites: [Favorites]) {
         viewModel.delegate.dataToMenu(setting: setting, favorites: favorites)
     }
     
@@ -388,7 +379,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         viewModel.buttonOnOff(button: buttonFavorites, isOn: false)
     }
 }
-// MARK: - General methods
+// MARK: - Setup UI
 extension GameTypeViewController {
     private func setupDesign() {
         view.backgroundColor = viewModel.background
@@ -396,14 +387,47 @@ extension GameTypeViewController {
     }
     
     private func setupSubviews() {
-        viewModel.setSubviews(subviews: viewGameType, imageGameType, labelGameName,
-                              stackViewButtons, buttonCountQuestions, buttonContinents,
-                              buttonCountdown, buttonTime, visualEffectView,
-                              on: view)
+        view.addSubviews(viewGameType, imageGameType, labelGameType, stackViewButtons,
+                         buttonCountQuestions, buttonContinents, buttonCountdown, buttonTime,
+                         visualEffectView)
     }
     
-    private func setupBarButton() {
-        viewModel.setupBarButtons(buttonBack, buttonHelp, navigationItem)
+    private func setupBarButtons() {
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.tintColor = .white
+        navigationItem.leftBarButtonItem = buttonBack
+        navigationItem.rightBarButtonItem = buttonHelp
+    }
+    
+    private func setupView() {
+        viewGameType.backgroundColor = viewModel.background
+        viewGameType.layer.cornerRadius = viewModel.radius
+    }
+    
+    private func setupImage() {
+        let size = UIImage.SymbolConfiguration(pointSize: 60)
+        let image = UIImage(systemName: viewModel.image, withConfiguration: size)
+        imageGameType.image = image
+        imageGameType.tintColor = viewModel.background
+    }
+    
+    private func setupLabel() {
+        labelGameType = UILabel.label(
+            text: viewModel.name,
+            font: "GillSans",
+            color: .white,
+            size: 30
+        )
+    }
+    
+    private func makeBarButton(image: String, selector: Selector) -> UIBarButtonItem {
+        let size = UIImage.SymbolConfiguration(pointSize: 26)
+        let image = UIImage(systemName: image, withConfiguration: size)
+        let button = UIButton(type: .system)
+        button.setImage(image, for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: selector, for: .touchUpInside)
+        return UIBarButtonItem(customView: button)
     }
     
     private func subview(tag: Int) -> UIView {
@@ -416,7 +440,7 @@ extension GameTypeViewController {
     }
     // MARK: - Bar buttons activate
     @objc private func backToMenu() {
-        viewModel.delegate.dataToMenu(setting: viewModel.mode, favorites: viewModel.favorites)
+        viewModel.delegate.dataToMenu(setting: viewModel.settings, favorites: viewModel.favorites)
     }
     
     @objc private func showViewHelp(sender: UIButton) {
@@ -501,6 +525,11 @@ extension GameTypeViewController {
 // MARK: - Setup constraints
 extension GameTypeViewController {
     private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            viewGameType.widthAnchor.constraint(equalToConstant: viewModel.diameter),
+            viewGameType.heightAnchor.constraint(equalToConstant: viewModel.diameter)
+        ])
+        
         viewModel.setSquare(subviews: buttonBack, buttonHelp, sizes: 40)
         
         NSLayoutConstraint.activate([
@@ -510,12 +539,12 @@ extension GameTypeViewController {
         viewModel.setCenterSubview(subview: imageGameType, on: viewGameType)
         
         NSLayoutConstraint.activate([
-            labelGameName.topAnchor.constraint(equalTo: viewGameType.bottomAnchor, constant: 10),
-            labelGameName.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            labelGameType.topAnchor.constraint(equalTo: viewGameType.bottomAnchor, constant: 10),
+            labelGameType.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            stackViewButtons.topAnchor.constraint(equalTo: labelGameName.bottomAnchor, constant: 15),
+            stackViewButtons.topAnchor.constraint(equalTo: labelGameType.bottomAnchor, constant: 15),
             stackViewButtons.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         viewModel.setSize(subview: stackViewButtons, width: 160, height: 40)

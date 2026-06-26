@@ -13,15 +13,15 @@ protocol MenuViewModelProtocol {
     var titleQuizOfMaps: String { get }
     var titleScrabble: String { get }
     var titleQuizOfCapitals: String { get }
-    var mode: Setting? { get set }
+    var mode: Settings? { get set }
     var gameModes: [GameMode] { get }
     
     func fetchData()
     func getGameModes()
     func forPresented(_ button: UIButton) -> Transition
     func forDismissed(_ button: UIButton) -> Transition
-    func setMode(_ setting: Setting)
-    func setData(_ setting: Setting, newFavorites: [Favorites])
+    func setMode(_ setting: Settings)
+    func setData(_ setting: Settings, newFavorites: [Favorites])
     
     func gameTypeViewModel(tag: Int) -> GameTypeViewModelProtocol
     func settingsViewModel() -> SettingsViewModelProtocol
@@ -33,10 +33,10 @@ class MenuViewModel: MenuViewModelProtocol {
     var titleQuizOfMaps = "Quiz_of_maps.title".localized
     var titleScrabble = "Scrabble.title".localized
     var titleQuizOfCapitals = "Quiz_of_capitals.title".localized
-    var mode: Setting?
+    var mode: Settings?
     
     var gameModes: [GameMode] = []
-    private var games: [Games] = []
+    private var gameTypes: [GameType] = []
     private var favorites: [Favorites] = []
     private let transition = Transition()
     
@@ -77,7 +77,7 @@ class MenuViewModel: MenuViewModelProtocol {
     
     func fetchData() {
         mode = StorageManager.shared.fetchSetting()
-        games = getGames(dialect: mode?.language ?? .english)
+//        games = getGames(dialect: mode?.language ?? .english)
 //        StorageManager.shared.loadLanguage()
     }
     /*
@@ -98,28 +98,84 @@ class MenuViewModel: MenuViewModelProtocol {
         return transition
     }
     
-    func setMode(_ setting: Setting) {
+    func setMode(_ setting: Settings) {
         mode = setting
     }
     
-    func setData(_ setting: Setting, newFavorites: [Favorites]) {
+    func setData(_ setting: Settings, newFavorites: [Favorites]) {
         mode = setting
         favorites = newFavorites
     }
     
     func gameTypeViewModel(tag: Int) -> GameTypeViewModelProtocol {
-        let mode = mode ?? Setting.getSettingDefault(mode?.language ?? .english)
-        let game = games[tag]
+        let mode = mode ?? Settings.getSettingDefault(mode?.language ?? .english)
+        let game = gameTypes[tag]
         favorites = StorageManager.shared.fetchFavorites(key: game.keys)
-        return GameTypeViewModel(mode: mode, game: game, tag: tag, favorites: favorites)
+        return GameTypeViewModel(settings: mode, gameType: game, tag: tag, favorites: favorites)
     }
     
     func settingsViewModel() -> SettingsViewModelProtocol {
-        let mode = mode ?? Setting.getSettingDefault(mode?.language ?? .english)
+        let mode = mode ?? Settings.getSettingDefault(mode?.language ?? .english)
         return SettingsViewModel(mode: mode)
     }
+    /*
+    private func getGameTypes() {
+        gameTypes = [
+            GameType(
+                mode: .quizOfFlags,
+                image: "filemenu.and.selection",
+                background: .cyanDark,
+                keys: "quizOfFlags",
+                buttonPlay: .skyBlueLight,
+                buttonFavorite: .blueMiddlePersian,
+                buttonSwap: .blueBlackSea,
+                buttonDone: .skyCyanLight
+            ),
+            GameType(
+                mode: .questionnaire,
+                image: "checklist",
+                background: .greenHarlequin,
+                keys: "questionnaire",
+                buttonPlay: .greenYellowBrilliant,
+                buttonFavorite: .greenEmerald,
+                buttonSwap: .greenDartmouth,
+                buttonDone: .greenWhite
+            ),
+            GameType(
+                mode: .quizOfMaps,
+                image: "globe.desk",
+                background: .redYellowBrown,
+                keys: "quizOfMaps",
+                buttonPlay: .redBeige,
+                buttonFavorite: .brown,
+                buttonSwap: .brownDeep,
+                buttonDone: .somon
+            ),
+            GameType(
+                mode: .scrabble,
+                image: "a.square",
+                background: .indigo,
+                keys: "scrabble",
+                buttonPlay: .fuchsiaCrayolaDeep,
+                buttonFavorite: .amethyst,
+                buttonSwap: .blueSlate,
+                buttonDone: .veryLightPurple
+            ),
+            GameType(
+                mode: .quizOfCapitals,
+                image: "building.2",
+                background: .redTangerineTango,
+                keys: "quizOfCapitals",
+                buttonPlay: .redCardinal,
+                buttonFavorite: .bismarkFuriozo,
+                buttonSwap: .brownRed,
+                buttonDone: .salmon
+            )
+        ]
+    }
+     */
 }
-
+/*
 extension MenuViewModel {
     private func getGames(dialect: Dialect) -> [Games] {
         var games: [Games] = []
@@ -151,3 +207,4 @@ extension MenuViewModel {
         return games
     }
 }
+*/

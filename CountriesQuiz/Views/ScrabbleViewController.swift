@@ -58,8 +58,8 @@ class ScrabbleViewController: UIViewController {
         setupLabel(title: "Составьте правильный ответ", size: 23, opacity: 1)
     }()
     
-    var mode: Setting!
-    var game: Games!
+    var mode: Settings!
+    var game: GameType!
     
     private var timer = Timer()
     private let shapeLayer = CAShapeLayer()

@@ -17,9 +17,9 @@ protocol ContinentsViewModelProtocol {
     var asiaContinent: Bool { get }
     var oceaniaContinent: Bool { get }
     var delegate: SettingsViewControllerInput! { get set }
-    var mode: Setting { get }
+    var mode: Settings { get }
     
-    init(mode: Setting)
+    init(mode: Settings)
     
     func setBarButton(button: UIButton, navigationItem: UINavigationItem)
     func setSubviews(subviews: UIView..., on subviewOther: UIView)
@@ -57,7 +57,7 @@ class ContinentsViewModel: ContinentsViewModelProtocol {
     }
     var delegate: SettingsViewControllerInput!
     
-    var mode: Setting
+    var mode: Settings
     
     private var countContinents = 0
     private var background: UIColor = .blueMiddlePersian
@@ -76,7 +76,7 @@ class ContinentsViewModel: ContinentsViewModelProtocol {
     private var buttonAsia: UIButton!
     private var buttonOcean: UIButton!
     
-    required init(mode: Setting) {
+    required init(mode: Settings) {
         self.mode = mode
     }
     

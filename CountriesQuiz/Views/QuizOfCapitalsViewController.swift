@@ -108,7 +108,7 @@ class QuizOfCapitalsViewController: UIViewController, MenuViewControllerDelegate
         }
     }
     
-    func dataToMenu(setting: Setting, favorites: [Favorites]) {
+    func dataToMenu(setting: Settings, favorites: [Favorites]) {
         viewModel.delegate.dataToMenu(setting: setting, favorites: favorites)
     }
     

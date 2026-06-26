@@ -1,5 +1,5 @@
 //
-//  Setting.swift
+//  Settings.swift
 //  CountriesQuiz
 //
 //  Created by Marat Shagiakhmetov on 12.12.2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Setting: Codable {
+struct Settings: Codable {
     var countQuestions: Int
     var countRows: Int
     var allCountries: Bool
@@ -37,9 +37,9 @@ struct QuestionTime: Codable {
     var allQuestionsTime: Int
 }
 
-extension Setting {
-    static func getSettingDefault(_ dialect: Dialect) -> Setting {
-        let setting = Setting(
+extension Settings {
+    static func getSettingDefault(_ dialect: Dialect) -> Settings {
+        let setting = Settings(
             countQuestions: DefaultSetting.countQuestions.rawValue,
             countRows: DefaultSetting.countRows.rawValue,
             allCountries: true,

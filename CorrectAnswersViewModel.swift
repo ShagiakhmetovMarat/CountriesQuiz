@@ -16,7 +16,7 @@ protocol CorrectAnswersViewModelProtocol {
     var numberOfRows: Int { get }
     var heightOfRow: CGFloat { get }
     
-    init(mode: Setting, game: Games, correctAnswers: [Corrects])
+    init(mode: Settings, game: GameType, correctAnswers: [Corrects])
     
     func setBarButton(_ button: UIButton,_ navigationItem: UINavigationItem)
     func setSubviews(subviews: UIView..., on otherSubview: UIView)
@@ -39,10 +39,10 @@ class CorrectAnswersViewModel: CorrectAnswersViewModelProtocol {
         game.background
     }
     var backgroundMedium: UIColor {
-        game.favorite
+        game.buttonFavorite
     }
     var backgroundDark: UIColor {
-        game.swap
+        game.buttonSwap
     }
     var title: String {
         switch mode.language {
@@ -60,8 +60,8 @@ class CorrectAnswersViewModel: CorrectAnswersViewModelProtocol {
         isFlag ? 70 : 95
     }
     
-    private let mode: Setting
-    private let game: Games
+    private let mode: Settings
+    private let game: GameType
     private let corrects: [Corrects]
     private var isFlag: Bool {
         mode.flag ? true : false
@@ -80,7 +80,7 @@ class CorrectAnswersViewModel: CorrectAnswersViewModelProtocol {
     private var labelNumber: UILabel!
     private var stackView: UIStackView!
     
-    required init(mode: Setting, game: Games, correctAnswers: [Corrects]) {
+    required init(mode: Settings, game: GameType, correctAnswers: [Corrects]) {
         self.game = game
         self.mode = mode
         self.corrects = correctAnswers
@@ -222,14 +222,14 @@ extension CorrectAnswersViewModel {
     }
     
     private func correctBackground() -> UIColor {
-        switch game.gameType {
+        switch game.mode {
         case .quizOfFlags, .quizOfCapitals: .greenYellowBrilliant
         default: .white
         }
     }
     
     private func notSelectBackground() -> UIColor {
-        switch game.gameType {
+        switch game.mode {
         case .quizOfFlags: isFlag ? .whiteAlpha : .skyGrayLight
         case .questionnaire: .greenHarlequin
         default: .whiteAlpha
@@ -241,14 +241,14 @@ extension CorrectAnswersViewModel {
     }
     
     private func correctTextColor() -> UIColor {
-        switch game.gameType {
+        switch game.mode {
         case .quizOfFlags, .quizOfCapitals: .white
         default: .greenHarlequin
         }
     }
     
     private func notSelectTextColor() -> UIColor {
-        switch game.gameType {
+        switch game.mode {
         case .quizOfFlags, .quizOfCapitals: .grayLight
         default: .white
         }
@@ -271,7 +271,7 @@ extension CorrectAnswersViewModel {
     
     private func setWidth(_ view: UIView) -> CGFloat {
         let buttonWidth = (view.frame.width - 49) / 2
-        if game.gameType == .questionnaire {
+        if game.mode == .questionnaire {
             return buttonWidth - 45
         } else {
             return buttonWidth - 10
@@ -291,7 +291,7 @@ extension CorrectAnswersViewModel {
     }
     
     private func title(_ name: Countries) -> String {
-        switch game.gameType {
+        switch game.mode {
         case .quizOfCapitals: name.capitals
         default: isFlag ? name.name : name.flag
         }
@@ -364,14 +364,14 @@ extension CorrectAnswersViewModel {
         let background = background(correct: correct, name: name)
         let button = setView(color: background, radius: 12)
         button.layer.borderColor = UIColor.white.cgColor
-        button.layer.borderWidth = game.gameType == .questionnaire ? 1.5 : 0
+        button.layer.borderWidth = game.mode == .questionnaire ? 1.5 : 0
         addSubviews(correct: correct, name, button, and: view)
         return button
     }
     
     private func addSubviews(correct: Corrects, _ name: String,
                              _ button: UIView, and view: UIView) {
-        if game.gameType == .questionnaire {
+        if game.mode == .questionnaire {
             let subview = subview(correct: correct, and: name)
             let checkmark = setImage(image: checkmark(correct, name),
                                      color: color(correct, name))
@@ -394,7 +394,7 @@ extension CorrectAnswersViewModel {
     }
     
     private func setSubview(correct: Corrects, and name: String) -> UIView {
-        if game.gameType == .quizOfCapitals {
+        if game.mode == .quizOfCapitals {
             let color = textColor(correct: correct, name: name)
             return setLabel(title: name, font: "GillSans-SemiBold", size: 19, color: color)
         } else {
@@ -425,7 +425,7 @@ extension CorrectAnswersViewModel {
     
     private func checkGameType(_ first: UIView, _ second: UIView,
                                _ third: UIView, _ fourth: UIView) -> UIStackView {
-        if game.gameType == .quizOfCapitals {
+        if game.mode == .quizOfCapitals {
             return setStackView(first, second, third, fourth)
         } else {
             let stackViewOne = setStackView(first, second)
@@ -477,7 +477,7 @@ extension CorrectAnswersViewModel {
     private func setConstraints(_ subview: UIView, on button: UIView,
                                 _ name: String, _ view: UIView) {
         if isFlag {
-            let constant: CGFloat = game.gameType == .questionnaire ? 40 : 10
+            let constant: CGFloat = game.mode == .questionnaire ? 40 : 10
             NSLayoutConstraint.activate([
                 subview.centerYAnchor.constraint(equalTo: button.centerYAnchor),
                 subview.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: constant),
@@ -495,7 +495,7 @@ extension CorrectAnswersViewModel {
     
     private func layoutConstraint(subview: UIView, on button: UIView,
                                   _ view: UIView) -> NSLayoutConstraint {
-        if game.gameType == .questionnaire {
+        if game.mode == .questionnaire {
             let center = setCenter(view)
             return subview.centerXAnchor.constraint(equalTo: button.centerXAnchor, constant: center)
         } else {

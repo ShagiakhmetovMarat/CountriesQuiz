@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SettingsViewControllerInput {
-    func dataToSetting(mode: Setting)
+    func dataToSetting(mode: Settings)
 }
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -89,7 +89,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 }
 
 extension SettingsViewController: SettingsViewControllerInput {
-    func dataToSetting(mode: Setting) {
+    func dataToSetting(mode: Settings) {
         viewModel.setMode(mode)
         viewModel.setStatusButton(buttonDefault)
         viewModel.setTitle(labelTitle)

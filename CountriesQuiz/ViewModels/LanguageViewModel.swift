@@ -14,9 +14,9 @@ protocol LanguageViewModelProtocol {
     var numberOfRows: Int { get }
     var heightOfRows: CGFloat { get }
     var delegate: SettingsViewControllerInput! { get set }
-    var mode: Setting { get }
+    var mode: Settings { get }
     
-    init(mode: Setting)
+    init(mode: Settings)
     
     func setBarButtonItem(button: UIButton, navigationItem: UINavigationItem)
     func setSubviews(subviews: UIView..., on subviewOther: UIView)
@@ -34,7 +34,7 @@ class LanguageViewModel: LanguageViewModelProtocol {
     var cell: AnyClass = LanguageCell.self
     var numberOfRows = Dialect.allCases.count
     var heightOfRows: CGFloat = 60
-    var mode: Setting
+    var mode: Settings
     var delegate: SettingsViewControllerInput!
     
     private var dialects: Dialect {
@@ -48,7 +48,7 @@ class LanguageViewModel: LanguageViewModelProtocol {
     private var labelTitle: UILabel!
     private var labelDescription: UILabel!
     
-    required init(mode: Setting) {
+    required init(mode: Settings) {
         self.mode = mode
     }
     

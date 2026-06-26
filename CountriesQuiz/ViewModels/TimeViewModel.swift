@@ -21,9 +21,9 @@ protocol TimeViewModelProtocol {
     var numberOfComponents: Int { get }
     var heightOfRows: CGFloat { get }
     var delegate: SettingsViewControllerInput! { get set}
-    var mode: Setting { get }
+    var mode: Settings { get }
     
-    init(mode: Setting)
+    init(mode: Settings)
     
     func setBarButton(button: UIButton, navigationItem: UINavigationItem)
     func setSubviews(subviews: UIView..., on subviewOther: UIView)
@@ -67,7 +67,7 @@ class TimeViewModel: TimeViewModelProtocol {
     var heightOfRows: CGFloat = 32
     var delegate: SettingsViewControllerInput!
     
-    var mode: Setting
+    var mode: Settings
     
     private var isOneQuestion: Bool {
         mode.timeElapsed.questionSelect.oneQuestion ? true : false
@@ -81,7 +81,7 @@ class TimeViewModel: TimeViewModelProtocol {
     private var pickerViewOne: UIPickerView!
     private var pickerViewTwo: UIPickerView!
     
-    required init(mode: Setting) {
+    required init(mode: Settings) {
         self.mode = mode
     }
     

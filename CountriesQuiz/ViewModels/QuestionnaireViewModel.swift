@@ -33,7 +33,7 @@ protocol QuestionnaireViewModelProtocol {
     var shapeLayer: CAShapeLayer { get }
     var delegate: GameTypeViewControllerInput! { get set }
     
-    init(mode: Setting, game: Games, favorites: [Favorites])
+    init(mode: Settings, game: GameType, favorites: [Favorites])
     
     func setSubviews(subviews: UIView..., on subviewOther: UIView)
     func setOpacity(subviews: UIView..., opacity: Float, duration: CGFloat)
@@ -164,8 +164,8 @@ class QuestionnaireViewModel: QuestionnaireViewModelProtocol {
     private var widthOfFlagThird: NSLayoutConstraint!
     private var widthOfFlagFourth: NSLayoutConstraint!
     
-    private let mode: Setting
-    private let game: Games
+    private let mode: Settings
+    private let game: GameType
     private let favorites: [Favorites]
     
     private var seconds = 0
@@ -221,7 +221,7 @@ class QuestionnaireViewModel: QuestionnaireViewModelProtocol {
     
     private var progressView: UIProgressView!
     
-    required init(mode: Setting, game: Games, favorites: [Favorites]) {
+    required init(mode: Settings, game: GameType, favorites: [Favorites]) {
         self.mode = mode
         self.game = game
         self.favorites = favorites

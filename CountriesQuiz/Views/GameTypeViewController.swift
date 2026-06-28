@@ -16,143 +16,30 @@ protocol GameTypeViewControllerInput: AnyObject {
 class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, GameTypeViewControllerInput {
     var viewModel: GameTypeViewModelProtocol!
     
-    private let viewGameType = UIView()
-    private let imageGameType = UIImageView()
-    private var labelGameType = UILabel()
-    private lazy var buttonBack = makeBarButton(
+    private let gameTypeView = UIView()
+    private var gameTypeImage = UIImageView()
+    private var gameTypeLabel = UILabel()
+    private lazy var backButton = makeBarButton(
         image: "multiply",
         selector: #selector(backToMenu)
     )
-    private lazy var buttonHelp = makeBarButton(
+    private lazy var helpButton = makeBarButton(
         image: "questionmark",
         selector: #selector(showViewHelp)
     )
-    private lazy var viewHelp: UIView = {
+    private lazy var helpView: UIView = {
         setView(action: #selector(closeView), view: viewModel.viewHelp())
     }()
-    
-    private lazy var visualEffectView: UIVisualEffectView = {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(popUpViewCheck))
-        let blurEffect = UIBlurEffect(style: .dark)
-        let view = UIVisualEffectView(effect: blurEffect)
-        view.alpha = 0
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.addGestureRecognizer(tap)
-        return view
-    }()
-    
-    private lazy var buttonStart: UIButton = {
-        setButton(image: "play", color: viewModel.colorButtonPlay, action: #selector(startGame))
-    }()
-    
-    private lazy var buttonFavorites: UIButton = {
-        setButton(
-            image: "star",
-            color: viewModel.colorButtonFavourite,
-            action: #selector(favorites),
-            isEnabled: viewModel.haveFavourites())
-    }()
-    
-    private lazy var buttonSwap: UIButton = {
-        setButton(
-            image: viewModel.imageMode(),
-            color: viewModel.colorButtonSwap,
-            action: #selector(swap),
-            isEnabled: viewModel.isEnabled())
-    }()
-    
-    private lazy var stackViewButtons: UIStackView = {
-        setStackView(
-            buttonFirst: buttonStart,
-            buttonSecond: buttonFavorites,
-            buttonThird: buttonSwap)
-    }()
-    
-    private lazy var buttonCountQuestions: UIButton = {
-        setButton(
-            color: viewModel.colorButtonSwap,
-            labelFirst: labelCountQuestion,
-            labelSecond: labelCount,
-            tag: 1)
-    }()
-    
-    private lazy var labelCountQuestion: UILabel = {
-        setLabel(color: .white, title: "\(viewModel.countQuestions)", size: 60, style: "GillSans")
-    }()
-    
-    private lazy var labelCount: UILabel = {
-        setLabel(color: .white, title: viewModel.titleNumberOfQuestions, size: 17, style: "GillSans")
-    }()
-    
-    private lazy var buttonContinents: UIButton = {
-        setButton(
-            color: viewModel.colorButtonSwap,
-            labelFirst: labelContinents,
-            labelSecond: labelContinentsDescription,
-            tag: 2)
-    }()
-    
-    private lazy var labelContinents: UILabel = {
-        setLabel(color: .white, title: "\(viewModel.comma())", size: 30, style: "GillSans")
-    }()
-    
-    private lazy var labelContinentsDescription: UILabel = {
-        setLabel(color: .white, title: viewModel.titleContinents, size: 17, style: "GillSans")
-    }()
-    
-    private lazy var buttonCountdown: UIButton = {
-        setButton(
-            color: viewModel.colorButtonSwap,
-            labelFirst: labelCountdown,
-            labelSecond: labelCountdownDesription,
-            tag: 3)
-    }()
-    
-    private lazy var labelCountdown: UILabel = {
-        setLabel(
-            color: .white,
-            title: viewModel.isCountdown() ? viewModel.titleYes : viewModel.titleNo,
-            size: 60,
-            style: "GillSans")
-    }()
-    
-    private lazy var labelCountdownDesription: UILabel = {
-        setLabel(
-            color: .white,
-            title: viewModel.titleCountdown,
-            size: 17,
-            style: "GillSans")
-    }()
-    
-    private lazy var buttonTime: UIButton = {
-        setButton(
-            color: viewModel.isCountdown() ? viewModel.colorButtonSwap : .grayLight,
-            labelFirst: labelTime,
-            labelSecond: labelTimeDesription,
-            image: imageInfinity,
-            tag: 4,
-            isEnabled: viewModel.isCountdown())
-    }()
-    
-    private lazy var labelTime: UILabel = {
-        setLabel(
-            color: .white,
-            title: "\(viewModel.countdownOnOff())",
-            size: 60,
-            style: "GillSans")
-    }()
-    
-    private lazy var labelTimeDesription: UILabel = {
-        setLabel(
-            color: .white,
-            title: "\(viewModel.checkTimeDescription())",
-            size: 17,
-            style: "GillSans")
-    }()
-    
-    private lazy var imageInfinity: UIImageView = {
-        setImage(image: "infinity", color: .white, size: 60)
-    }()
+    private let visualEffectView = UIVisualEffectView()
+    private let playButton = Button()
+    private let favoritesButton = Button()
+    private let swapButton = Button()
+    private let menuStackView = UIStackView()
+    private var countQuestionsButton = InfoCardButton()
+    private var continentsButton = InfoCardButton()
+    private var countdownButton = InfoCardButton()
+    private var timeButton = InfoCardButton()
+    private var imageInfinity = UIImageView()
     
     private lazy var pickerViewQuestions: UIPickerView = {
         setPickerView(tag: 1)
@@ -291,7 +178,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }()
     
     private lazy var buttonDone: UIButton = {
-        setButton(title: viewModel.titleOk, color: viewModel.colorButtonDone, action: #selector(done))
+        setButton(title: viewModel.titleOk, color: viewModel.colorDoneButton, action: #selector(done))
     }()
     
     private lazy var buttonCancel: UIButton = {
@@ -310,9 +197,15 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupDesign()
+        setupAppearence()
         setupSubviews()
         setupBarButtons()
+        setupGameTypeView()
+        setupGameTypeImage()
+        setupGameTypeLabel()
+        setupVisualEffectView()
+        setupMenuButtons()
+        setupStackView()
         setupConstraints()
     }
     // MARK: - UIPickerView
@@ -332,18 +225,18 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     // MARK: - Press button count questions / continents / countdown / time
     @objc func showSetting(sender: UIButton) {
-        viewModel.setSubviews(subviews: viewSetting, on: view)
-        viewModel.setSubviewsTag(subviews: buttonDone, viewSetting, tag: sender.tag)
-        viewModel.setSubview(subview(tag: sender.tag), on: viewSetting, and: view)
-        viewModel.setConstraints(stackView: stackView)
-        viewModel.setDataSubviews(tag: sender.tag)
-        viewModel.barButtonsOnOff(buttonBack, buttonHelp, bool: false)
-        viewModel.showViewSetting(viewSetting, and: visualEffectView, view)
+//        viewModel.setSubviews(subviews: viewSetting, on: view)
+//        viewModel.setSubviewsTag(subviews: buttonDone, viewSetting, tag: sender.tag)
+//        viewModel.setSubview(subview(tag: sender.tag), on: viewSetting, and: view)
+//        viewModel.setConstraints(stackView: stackView)
+//        viewModel.setDataSubviews(tag: sender.tag)
+//        viewModel.barButtonsOnOff(buttonBack, buttonHelp, bool: false)
+//        viewModel.showViewSetting(viewSetting, and: visualEffectView, view)
     }
     
     @objc func closeViewSetting() {
-        viewModel.barButtonsOnOff(buttonBack, buttonHelp, bool: true)
-        viewModel.hideViewSetting(viewSetting, and: visualEffectView, view)
+//        viewModel.barButtonsOnOff(buttonBack, buttonHelp, bool: true)
+//        viewModel.hideViewSetting(viewSetting, and: visualEffectView, view)
     }
     // MARK: - Button press continents, change setting continents
     @objc func continents(sender: UIButton) {
@@ -376,48 +269,20 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func disableFavoriteButton() {
-        viewModel.buttonOnOff(button: buttonFavorites, isOn: false)
+        viewModel.buttonOnOff(button: favoritesButton, isOn: false)
     }
 }
 // MARK: - Setup UI
 extension GameTypeViewController {
-    private func setupDesign() {
+    private func setupAppearence() {
         view.backgroundColor = viewModel.background
         imageInfinity.isHidden = viewModel.isCountdown()
     }
     
     private func setupSubviews() {
-        view.addSubviews(viewGameType, imageGameType, labelGameType, stackViewButtons,
-                         buttonCountQuestions, buttonContinents, buttonCountdown, buttonTime,
-                         visualEffectView)
-    }
-    
-    private func setupBarButtons() {
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.tintColor = .white
-        navigationItem.leftBarButtonItem = buttonBack
-        navigationItem.rightBarButtonItem = buttonHelp
-    }
-    
-    private func setupView() {
-        viewGameType.backgroundColor = viewModel.background
-        viewGameType.layer.cornerRadius = viewModel.radius
-    }
-    
-    private func setupImage() {
-        let size = UIImage.SymbolConfiguration(pointSize: 60)
-        let image = UIImage(systemName: viewModel.image, withConfiguration: size)
-        imageGameType.image = image
-        imageGameType.tintColor = viewModel.background
-    }
-    
-    private func setupLabel() {
-        labelGameType = UILabel.label(
-            text: viewModel.name,
-            font: "GillSans",
-            color: .white,
-            size: 30
-        )
+        view.addSubviews(gameTypeView, gameTypeImage, gameTypeLabel, menuStackView,
+                         countQuestionsButton, continentsButton, countdownButton, timeButton,
+                         visualEffectView, imageInfinity)
     }
     
     private func makeBarButton(image: String, selector: Selector) -> UIBarButtonItem {
@@ -428,6 +293,127 @@ extension GameTypeViewController {
         button.tintColor = .white
         button.addTarget(self, action: selector, for: .touchUpInside)
         return UIBarButtonItem(customView: button)
+    }
+    
+    private func setupBarButtons() {
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.tintColor = .white
+        navigationItem.leftBarButtonItem = backButton
+        navigationItem.rightBarButtonItem = helpButton
+    }
+    
+    private func setupGameTypeView() {
+        gameTypeView.backgroundColor = viewModel.background
+        gameTypeView.layer.cornerRadius = viewModel.radius
+        gameTypeView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func setupGameTypeImage() {
+        gameTypeImage = UIImageView.image(
+            image: viewModel.image,
+            color: viewModel.background,
+            size: 60
+        )
+    }
+    
+    private func setupGameTypeLabel() {
+        gameTypeLabel = UILabel.label(
+            text: viewModel.name,
+            font: "GillSans",
+            color: .white,
+            size: 30
+        )
+    }
+    
+    private func setupVisualEffectView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(popUpViewCheck))
+        visualEffectView.effect = UIBlurEffect(style: .dark)
+        visualEffectView.alpha = 0
+        visualEffectView.translatesAutoresizingMaskIntoConstraints = false
+        visualEffectView.addGestureRecognizer(tap)
+    }
+    
+    private func setupMenuButtons() {
+        playButton.button(
+            image: "play",
+            color: viewModel.colorPlayButton,
+            selector: #selector(startGame)
+        )
+        favoritesButton.button(
+            image: "star",
+            color: viewModel.colorFavouriteButton,
+            selector: #selector(favorites),
+            isEnable: viewModel.haveFavourites()
+        )
+        swapButton.button(
+            image: viewModel.imageMode(),
+            color: viewModel.colorSwapButton,
+            selector: #selector(swap),
+            isEnable: viewModel.isEnabled()
+        )
+    }
+    
+    private func setupStackView() {
+        menuStackView.addArrangedSubviews(playButton, favoritesButton, swapButton)
+        menuStackView.spacing = 20
+        menuStackView.distribution = .fillEqually
+        menuStackView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func setupSettingsButton() {
+        countQuestionsButton = configureButton(
+            dataTitle: "\(viewModel.countQuestions)",
+            descriptionTitle: "Количество вопросов",
+            color: viewModel.colorSwapButton,
+            dataLabelSize: 60,
+            tag: 1
+        )
+        countQuestionsButton = configureButton(
+            dataTitle: "\(viewModel.comma())",
+            descriptionTitle: "Континенты",
+            color: viewModel.colorSwapButton,
+            dataLabelSize: 30,
+            tag: 2
+        )
+        countdownButton = configureButton(
+            dataTitle: viewModel.isCountdown() ? "Да" : "Нет",
+            descriptionTitle: "Обратный отсчет",
+            color: viewModel.colorSwapButton,
+            dataLabelSize: 60,
+            tag: 3
+        )
+        timeButton = configureButton(
+            dataTitle: "\(viewModel.countdownOnOff())",
+            descriptionTitle: "\(viewModel.checkTimeDescription())",
+            color: viewModel.colorSwapButton,
+            dataLabelSize: 60,
+            tag: 4,
+            isEnable: viewModel.isCountdown()
+        )
+    }
+    
+    private func configureButton(dataTitle: String, descriptionTitle: String,
+                                 color: UIColor, dataLabelSize: CGFloat,
+                                 tag: Int, isEnable: Bool? = nil) -> InfoCardButton {
+        let button = InfoCardButton()
+        button.configure(
+            dataTitle: dataTitle,
+            descriptionTitle: descriptionTitle,
+            color: color,
+            dataLabelSize: dataLabelSize
+        )
+        button.tag = tag
+        button.isEnabled = isEnable ?? true
+        button.addTarget(self, action: #selector(showSetting), for: .touchUpInside)
+        return button
+    }
+    
+    private func setupInfinityImage() {
+        imageInfinity = UIImageView.image(
+            image: "infinity",
+            color: .white,
+            size: 60
+        )
     }
     
     private func subview(tag: Int) -> UIView {
@@ -444,21 +430,21 @@ extension GameTypeViewController {
     }
     
     @objc private func showViewHelp(sender: UIButton) {
-        viewModel.popUpViewHelpToggle()
-        viewModel.setSubviews(subviews: viewHelp, on: view)
-        viewModel.setConstraints(viewHelp, view)
-        viewModel.barButtonsOnOff(buttonBack, buttonHelp, bool: false)
-        viewModel.showAnimationView(viewHelp, and: visualEffectView)
+//        viewModel.popUpViewHelpToggle()
+//        viewModel.setSubviews(subviews: viewHelp, on: view)
+//        viewModel.setConstraints(viewHelp, view)
+//        viewModel.barButtonsOnOff(buttonBack, buttonHelp, bool: false)
+//        viewModel.showAnimationView(viewHelp, and: visualEffectView)
     }
     
     @objc private func closeView() {
-        viewModel.popUpViewHelpToggle()
-        viewModel.barButtonsOnOff(buttonBack, buttonHelp, bool: true)
-        viewModel.hideAnimationView(viewHelp, and: visualEffectView)
+//        viewModel.popUpViewHelpToggle()
+//        viewModel.barButtonsOnOff(buttonBack, buttonHelp, bool: true)
+//        viewModel.hideAnimationView(viewHelp, and: visualEffectView)
     }
     
     @objc private func popUpViewCheck() {
-        viewModel.popUpViewHelp ? closeView() : closeViewSetting()
+//        viewModel.popUpViewHelp ? closeView() : closeViewSetting()
     }
     // MARK: - Start game, favorites and swap
     @objc private func startGame() {
@@ -515,7 +501,7 @@ extension GameTypeViewController {
     }
     
     @objc private func swap() {
-        viewModel.swap(buttonSwap)
+        viewModel.swap(swapButton)
     }
     // MARK: - Segmented control press, change setting time for one question or for all questions
     @objc private func segmentSelect() {
@@ -526,52 +512,25 @@ extension GameTypeViewController {
 extension GameTypeViewController {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            viewGameType.widthAnchor.constraint(equalToConstant: viewModel.diameter),
-            viewGameType.heightAnchor.constraint(equalToConstant: viewModel.diameter)
+            gameTypeView.widthAnchor.constraint(equalToConstant: viewModel.diameter),
+            gameTypeView.heightAnchor.constraint(equalToConstant: viewModel.diameter)
         ])
         
-        viewModel.setSquare(subviews: buttonBack, buttonHelp, sizes: 40)
+//        viewModel.setSquare(subviews: buttonBack, buttonHelp, sizes: 40)
         
         NSLayoutConstraint.activate([
-            viewGameType.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -30),
-            viewGameType.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        viewModel.setCenterSubview(subview: imageGameType, on: viewGameType)
-        
-        NSLayoutConstraint.activate([
-            labelGameType.topAnchor.constraint(equalTo: viewGameType.bottomAnchor, constant: 10),
-            labelGameType.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            gameTypeView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -30),
+            gameTypeView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
-            stackViewButtons.topAnchor.constraint(equalTo: labelGameType.bottomAnchor, constant: 15),
-            stackViewButtons.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            gameTypeImage.centerXAnchor.constraint(equalTo: gameTypeView.centerXAnchor),
+            gameTypeImage.centerYAnchor.constraint(equalTo: gameTypeView.centerYAnchor)
         ])
-        viewModel.setSize(subview: stackViewButtons, width: 160, height: 40)
-        
-        viewModel.setConstraints(buttonCountQuestions, layout: stackViewButtons.bottomAnchor,
-                                 leading: 20, trailing: -viewModel.width(view), height: 160, view)
-        viewModel.setConstraints(labelCountQuestion, on: buttonCountQuestions, constant: -30)
-        viewModel.setConstraints(labelCount, on: buttonCountQuestions, constant: 35)
-        
-        viewModel.setConstraints(buttonContinents, layout: stackViewButtons.bottomAnchor,
-                                 leading: viewModel.width(view), trailing: -20, height: 190, view)
-        viewModel.setConstraints(labelContinents, on: buttonContinents, constant: -15)
-        viewModel.setConstraints(labelContinentsDescription, on: buttonContinents, constant: 75)
-        
-        viewModel.setConstraints(buttonCountdown, layout: buttonCountQuestions.bottomAnchor,
-                                 leading: 20, trailing: -viewModel.width(view), height: 150, view)
-        viewModel.setConstraints(labelCountdown, on: buttonCountdown, constant: -25)
-        viewModel.setConstraints(labelCountdownDesription, on: buttonCountdown, constant: 35)
-        
-        viewModel.setConstraints(buttonTime, layout: buttonContinents.bottomAnchor,
-                                 leading: viewModel.width(view), trailing: -20, height: 120, view)
-        viewModel.setConstraints(labelTime, on: buttonTime, constant: -25)
-        viewModel.setConstraints(labelTimeDesription, on: buttonTime, constant: 30)
         
         NSLayoutConstraint.activate([
-            imageInfinity.centerXAnchor.constraint(equalTo: buttonTime.centerXAnchor),
-            imageInfinity.centerYAnchor.constraint(equalTo: buttonTime.centerYAnchor, constant: -25)
+            gameTypeLabel.topAnchor.constraint(equalTo: gameTypeView.bottomAnchor, constant: 10),
+            gameTypeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         NSLayoutConstraint.activate([
@@ -579,6 +538,71 @@ extension GameTypeViewController {
             visualEffectView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             visualEffectView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             visualEffectView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            menuStackView.topAnchor.constraint(equalTo: gameTypeLabel.bottomAnchor, constant: 15),
+            menuStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            menuStackView.widthAnchor.constraint(equalToConstant: 160),
+            menuStackView.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        
+        setupConstraints(
+            countQuestionsButton,
+            layout: menuStackView.bottomAnchor,
+            leading: 20,
+            trailing: -(view.frame.width / 2 + 10),
+            height: 160
+        )
+        setupConstraints(
+            continentsButton,
+            layout: menuStackView.bottomAnchor,
+            leading: view.frame.width / 2 + 10,
+            trailing: -20,
+            height: 190
+        )
+        setupConstraints(
+            countdownButton,
+            layout: countQuestionsButton.bottomAnchor,
+            leading: 20,
+            trailing: -(view.frame.width / 2 + 10),
+            height: 150
+        )
+        setupConstraints(
+            timeButton,
+            layout: continentsButton.bottomAnchor,
+            leading: view.frame.width / 2 + 10,
+            trailing: -20,
+            height: 120
+        )
+        
+        NSLayoutConstraint.activate([
+            imageInfinity.centerXAnchor.constraint(equalTo: timeButton.centerXAnchor),
+            imageInfinity.centerYAnchor.constraint(equalTo: timeButton.centerYAnchor, constant: -25)
+        ])
+//        viewModel.setConstraints(labelCountQuestion, on: buttonCountQuestions, constant: -30)
+//        viewModel.setConstraints(labelCount, on: buttonCountQuestions, constant: 35)
+
+//        viewModel.setConstraints(labelContinents, on: continentsButton, constant: -15)
+//        viewModel.setConstraints(labelContinentsDescription, on: continentsButton, constant: 75)
+
+//        viewModel.setConstraints(labelCountdown, on: countdownButton, constant: -25)
+//        viewModel.setConstraints(labelCountdownDesription, on: countdownButton, constant: 35)
+
+//        viewModel.setConstraints(labelTime, on: timeButton, constant: -25)
+//        viewModel.setConstraints(labelTimeDesription, on: timeButton, constant: 30)
+    }
+    
+    func setupConstraints(_ button: UIButton, layout: NSLayoutYAxisAnchor,
+                          leading: CGFloat, trailing: CGFloat, height: CGFloat) {
+        NSLayoutConstraint.activate([
+            button.topAnchor.constraint(equalTo: layout, constant: 20),
+            button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leading),
+            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: trailing),
+            button.heightAnchor.constraint(equalToConstant: height)
         ])
     }
 }

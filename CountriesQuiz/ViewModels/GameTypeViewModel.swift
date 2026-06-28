@@ -32,10 +32,10 @@ protocol GameTypeViewModelProtocol {
     var oceaniaContinent: Bool { get }
     
     var background: UIColor { get }
-    var colorButtonPlay: UIColor { get }
-    var colorButtonFavourite: UIColor { get }
-    var colorButtonSwap: UIColor { get }
-    var colorButtonDone: UIColor { get }
+    var colorPlayButton: UIColor { get }
+    var colorFavouriteButton: UIColor { get }
+    var colorSwapButton: UIColor { get }
+    var colorDoneButton: UIColor { get }
     var image: String { get }
     var name: String { get }
     var diameter: CGFloat { get }
@@ -69,7 +69,6 @@ protocol GameTypeViewModelProtocol {
     func showViewSetting(_ viewSetting: UIView, and visualEffect: UIVisualEffectView, _ view: UIView)
     func hideViewSetting(_ viewSetting: UIView, and visualEffect: UIVisualEffectView, _ view: UIView)
     
-    func width(_ view: UIView) -> CGFloat
     func size() -> CGFloat
     
     func comma() -> String
@@ -108,9 +107,6 @@ protocol GameTypeViewModelProtocol {
                       _ labelTime: UILabel, and buttonTime: UIButton)
     func setTime(_ labelTime: UILabel, and labelDescription: UILabel)
     
-    func setSquare(subviews: UIView..., sizes: CGFloat)
-    func setCenterSubview(subview: UIView, on subviewOther: UIView)
-    func setSize(subview: UIView, width: CGFloat, height: CGFloat)
     func setConstraints(_ button: UIButton, layout: NSLayoutYAxisAnchor, leading: CGFloat,
                         trailing: CGFloat, height: CGFloat,_ view: UIView)
     func setConstraints(_ label: UILabel, on button: UIButton, constant: CGFloat)
@@ -159,7 +155,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
         case .quizOfCapitals: .redTangerineTango
         }
     }
-    var colorButtonPlay: UIColor {
+    var colorPlayButton: UIColor {
         switch gameType {
         case .quizOfFlags: .skyBlueLight
         case .questionnaire: .greenYellowBrilliant
@@ -168,7 +164,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
         case .quizOfCapitals: .redCardinal
         }
     }
-    var colorButtonFavourite: UIColor {
+    var colorFavouriteButton: UIColor {
         switch gameType {
         case .quizOfFlags: .blueMiddlePersian
         case .questionnaire: .greenEmerald
@@ -177,7 +173,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
         case .quizOfCapitals: .bismarkFuriozo
         }
     }
-    var colorButtonSwap: UIColor {
+    var colorSwapButton: UIColor {
         switch gameType {
         case .quizOfFlags: .blueBlackSea
         case .questionnaire: .greenDartmouth
@@ -186,7 +182,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
         case .quizOfCapitals: .brownRed
         }
     }
-    var colorButtonDone: UIColor {
+    var colorDoneButton: UIColor {
         switch gameType {
         case .quizOfFlags: .skyCyanLight
         case .questionnaire: .greenWhite
@@ -418,10 +414,6 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     
     func checkTimeDescription() -> String {
         isOneQuestion() ? "\(checkTitleGameType())" : titleTimeAllQuestions
-    }
-    
-    func width(_ view: UIView) -> CGFloat {
-        view.frame.width / 2 + 10
     }
     
     func size() -> CGFloat {
@@ -682,20 +674,6 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
                 subview.heightAnchor.constraint(equalToConstant: sizes)
             ])
         }
-    }
-    
-    func setCenterSubview(subview: UIView, on subviewOther: UIView) {
-        NSLayoutConstraint.activate([
-            subview.centerXAnchor.constraint(equalTo: subviewOther.centerXAnchor),
-            subview.centerYAnchor.constraint(equalTo: subviewOther.centerYAnchor)
-        ])
-    }
-    
-    func setSize(subview: UIView, width: CGFloat, height: CGFloat) {
-        NSLayoutConstraint.activate([
-            subview.widthAnchor.constraint(equalToConstant: width),
-            subview.heightAnchor.constraint(equalToConstant: height)
-        ])
     }
     
     func setConstraints(_ button: UIButton, layout: NSLayoutYAxisAnchor, leading: CGFloat,
@@ -1239,7 +1217,7 @@ extension GameTypeViewModel {
     
     private func setButtonTime(_ button: UIButton) {
         button.isEnabled = isCountdown()
-        button.backgroundColor = isCountdown() ? colorButtonSwap : .grayLight
+        button.backgroundColor = isCountdown() ? colorSwapButton : .grayLight
     }
     // MARK: - Press done for change setting, time
     private func setSegmentedControl(_ segment: UISegmentedControl) {

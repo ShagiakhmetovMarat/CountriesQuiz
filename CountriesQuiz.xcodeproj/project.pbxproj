@@ -65,6 +65,7 @@
 		C3C0AF872CCFB53700B8F309 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0AF862CCFB53700B8F309 /* LanguageViewController.swift */; };
 		C3C0AF892CCFB55500B8F309 /* LanguageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0AF882CCFB55500B8F309 /* LanguageViewModel.swift */; };
 		C3C0AF8B2CCFBC3700B8F309 /* LanguageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C0AF8A2CCFBC3700B8F309 /* LanguageCell.swift */; };
+		C3CE29542FF16E7400321202 /* UIImageView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CE29532FF16E6A00321202 /* UIImageView + Extension.swift */; };
 		C3D292EB293F5F0900786752 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D292EA293F5F0900786752 /* SettingsViewController.swift */; };
 		C3E2EB302938E7F300AB40AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E2EB2F2938E7F300AB40AD /* AppDelegate.swift */; };
 		C3E2EB322938E7F300AB40AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E2EB312938E7F300AB40AD /* SceneDelegate.swift */; };
@@ -137,6 +138,7 @@
 		C3C0AF862CCFB53700B8F309 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
 		C3C0AF882CCFB55500B8F309 /* LanguageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewModel.swift; sourceTree = "<group>"; };
 		C3C0AF8A2CCFBC3700B8F309 /* LanguageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCell.swift; sourceTree = "<group>"; };
+		C3CE29532FF16E6A00321202 /* UIImageView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Extension.swift"; sourceTree = "<group>"; };
 		C3D292EA293F5F0900786752 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C3E2EB2C2938E7F300AB40AD /* CountriesQuiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountriesQuiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3E2EB2F2938E7F300AB40AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				C36F58F72A7288FB0023E98F /* UIButton + Extension.swift */,
 				C326BEF42D4BA20500CFF0A7 /* String + Localized.swift */,
 				C33F93052D4CB82800188543 /* Bundle + Extension.swift */,
+				C3CE29532FF16E6A00321202 /* UIImageView + Extension.swift */,
 			);
 			path = "Extensions + UIKit";
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				C356E3E32FE67BC6006CFFA9 /* UIKit + Extension.swift in Sources */,
 				C38DF4DB2A8E4BF000550BCC /* IncorrectAnswersViewController.swift in Sources */,
 				C3B972F42CB6496E0013A32F /* SettingCell.swift in Sources */,
+				C3CE29542FF16E7400321202 /* UIImageView + Extension.swift in Sources */,
 				C35568F22C89C6BC00F2D4DD /* CorrectsFlagCell.swift in Sources */,
 				C36773F3296C3B880096BCC5 /* Transition.swift in Sources */,
 				C3613A712A7FB82C006C0F1E /* GameType.swift in Sources */,

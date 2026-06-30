@@ -56,6 +56,85 @@ extension Button {
      */
 }
 
+class GameTypeButton: Button {
+    private let modeImage = UIImageView.image(
+        color: .white,
+        size: 20
+    )
+    private let circleImage = UIImageView.image(
+        image: "circle.fill",
+        color: .whiteAlphaLight,
+        size: 100
+    )
+    private let gameTypeImage = UIImageView.image(
+        color: .white, size: 60
+    )
+    private let gameTypeLabel = UILabel.label(
+        font: "GillSans",
+        color: .white,
+        size: 26
+    )
+    
+    var gameMode: GameMode? {
+        didSet {
+            updateUI()
+        }
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupUI() {
+        layer.cornerRadius = 12
+        layer.shadowOpacity = 0.4
+        layer.shadowOffset = CGSize(width: 0, height: 6)
+    }
+    
+    private func updateUI() {
+        guard let gameMode = gameMode else { return }
+        // GameTypeButton
+        backgroundColor = gameMode.color
+        layer.shadowColor = gameMode.color.cgColor
+        // gameTypeLabel
+        gameTypeLabel.text = gameMode.title
+        // modeImage
+        modeImage.image = UIImage(systemName: gameMode.modeImage)
+        // gameTypeImage
+        gameTypeImage.image = UIImage(systemName: gameMode.gameImage)
+        
+        addSubviews(gameTypeLabel, modeImage, circleImage, gameTypeImage)
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            modeImage.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            modeImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20)
+        ])
+        
+        NSLayoutConstraint.activate([
+            gameTypeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            gameTypeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+        ])
+        
+        NSLayoutConstraint.activate([
+            circleImage.topAnchor.constraint(equalTo: topAnchor),
+            circleImage.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            gameTypeImage.centerXAnchor.constraint(equalTo: circleImage.centerXAnchor),
+            gameTypeImage.centerYAnchor.constraint(equalTo: circleImage.centerYAnchor)
+        ])
+    }
+}
+
 class InfoCardButton: Button {
     private let dataLabel = UILabel()
     private let descriptionLabel = UILabel()
@@ -84,7 +163,7 @@ class InfoCardButton: Button {
     }
     
     private func setupUI() {
-        // Button
+        // InfoCardButton
         layer.cornerRadius = 20
         layer.shadowOpacity = 0.4
         layer.shadowOffset = .init(width: 0, height: 4)

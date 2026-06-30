@@ -20,8 +20,8 @@ protocol GameTypeViewModelProtocol {
     var titleOk: String { get }
     var titleCancel: String { get }
     var delegate: MenuViewControllerInput! { get set }
+    
     var settings: Settings { get }
-    var tag: Int { get }
     var favorites: [Favorites] { get }
     
     var allCountries: Bool { get }
@@ -43,7 +43,7 @@ protocol GameTypeViewModelProtocol {
     var heightOfRows: CGFloat { get }
     var popUpViewHelp: Bool { get }
     
-    init(settings: Settings, gameType: GameType, tag: Int, favorites: [Favorites])
+    init(settings: Settings, gameType: GameType, favorites: [Favorites])
     
     func numberOfComponents() -> Int
     func numberOfRows(_ pickerView: UIPickerView) -> Int
@@ -197,15 +197,23 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     }
     var heightOfRows: CGFloat = 29
     var image: String {
-        game.image
+        switch gameType {
+        case .quizOfFlags: "filemenu.and.selection"
+        case .questionnaire: "checklist"
+        case .quizOfMaps: "globe.desk"
+        case .scrabble: "a.square"
+        case .quizOfCapitals: "building.2"
+        }
     }
     var name: String {
-        names[tag]
+        switch gameType {
+        case .quizOfFlags: "Quiz_of_flags.title".localized
+        case .questionnaire: "Questionnaire.title".localized
+        case .quizOfMaps: "Quiz_of_maps.title".localized
+        case .scrabble: "Scrabble.title".localized
+        case .quizOfCapitals: "Quiz_of_capitals.title".localized
+        }
     }
-    var names = [
-        "Quiz_of_flags.title".localized, "Questionnaire.title".localized,
-        "Quiz_of_maps.title".localized, "Scrabble.title".localized,
-        "Quiz_of_capitals.title".localized]
     var popUpViewHelp: Bool = false
     var titleNumberOfQuestions = "Number_of_questions.title".localized
     var titleContinents = "Continents.title".localized
@@ -219,7 +227,6 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     var delegate: MenuViewControllerInput!
     
     var settings: Settings
-    let tag: Int
     var favorites: [Favorites]
     private let gameType: GameType
     
@@ -231,20 +238,20 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     private var titleCapitalCityMode = "GameType.capital_city_mode.title".localized
     private var titleNamingMode = "GameType.naming_mode.title".localized
     private var titleFirst: String {
-        tag == 2 ? titleMapMode : titleFlagMode
+        gameType == .quizOfMaps ? titleMapMode : titleFlagMode
     }
     private var titleSecond: String {
-        switch tag {
-        case 0, 1: titleNamingMode
-        case 4: titleCapitalCityMode
+        switch gameType {
+        case .quizOfFlags, .questionnaire: titleNamingMode
+        case .quizOfCapitals: titleCapitalCityMode
         default: titleMapMode
         }
     }
     private var descriptionFirst: String {
-        switch tag {
-        case 0, 1: descriptionFlagMode
-        case 2: descriptionMapMode
-        case 3: descriptionScrabble
+        switch gameType {
+        case .quizOfFlags, .questionnaire: descriptionFlagMode
+        case .quizOfMaps: descriptionMapMode
+        case .scrabble: descriptionScrabble
         default: descriptionCapitalCityMode
         }
     }
@@ -253,9 +260,9 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     private var descriptionScrabble = "GameType.scrabble.description".localized
     private var descriptionCapitalCityMode = "GameType.capital_city_mode.description".localized
     private var descriptionSecond: String {
-        switch tag {
-        case 0, 1: descriptionNamingMode
-        case 4: descriptionCapitalCityModeSecond
+        switch gameType {
+        case .quizOfFlags, .questionnaire: descriptionNamingMode
+        case .quizOfCapitals: descriptionCapitalCityModeSecond
         default: descriptionMapModeSecond
         }
     }
@@ -291,10 +298,9 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     private var stackViewCheckmark: UIStackView!
     private var stackViewTime: UIStackView!
     
-    required init(settings: Settings, gameType: GameType, tag: Int, favorites: [Favorites]) {
+    required init(settings: Settings, gameType: GameType, favorites: [Favorites]) {
         self.settings = settings
         self.gameType = gameType
-        self.tag = tag
         self.favorites = favorites
     }
     // MARK: - Set subviews
@@ -305,27 +311,27 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     }
     
     func viewHelp() -> UIView {
-        let popUpView = setView(color: game.buttonSwap)
-        addSubviewsForPopUpView()
-        setSubviews(subviews: labelTitle, scrollView, on: popUpView)
-        setConstraints(popUpView)
-        return popUpView
+//        let popUpView = setView(color: game.buttonSwap)
+//        addSubviewsForPopUpView()
+//        setSubviews(subviews: labelTitle, scrollView, on: popUpView)
+//        setConstraints(popUpView)
+//        return popUpView
     }
     
     func viewSetting() -> UIView {
-        let popUpView = setView(color: game.buttonSwap)
-        viewSecondary = setView(color: game.background)
-        titleSetting = setLabel(title: "", size: 22, font: "GillSans")
-        viewSecondary.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        setSubviews(subviews: viewSecondary, titleSetting, on: popUpView)
-        setConstraints(popUpView: popUpView)
-        return popUpView
+//        let popUpView = setView(color: game.buttonSwap)
+//        viewSecondary = setView(color: game.background)
+//        titleSetting = setLabel(title: "", size: 22, font: "GillSans")
+//        viewSecondary.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+//        setSubviews(subviews: viewSecondary, titleSetting, on: popUpView)
+//        setConstraints(popUpView: popUpView)
+//        return popUpView
     }
     
     func setSubview(_ subview: UIView, on viewSetting: UIView, and view: UIView) {
-        setSubviews(subviews: subview, on: viewSecondary)
-        setConstraints(subview: subview, on: viewSetting, and: view, tag: viewSetting.tag)
-        titleSetting.text = titleSetting(tag: viewSetting.tag)
+//        setSubviews(subviews: subview, on: viewSecondary)
+//        setConstraints(subview: subview, on: viewSetting, and: view, tag: viewSetting.tag)
+//        titleSetting.text = titleSetting(tag: viewSetting.tag)
     }
     // MARK: - PickerView
     func numberOfComponents() -> Int {

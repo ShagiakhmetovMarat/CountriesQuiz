@@ -8,9 +8,9 @@
 import UIKit
 
 extension UILabel {
-    static func label(text: String, font: String, color: UIColor, size: CGFloat) -> UILabel {
+    static func label(text: String? = nil, font: String, color: UIColor, size: CGFloat) -> UILabel {
         let label = UILabel()
-        label.text = text
+        label.text = text ?? ""
         label.font = UIFont(name: font, size: size)
         label.textColor = color
         label.translatesAutoresizingMaskIntoConstraints = false

@@ -8,11 +8,14 @@
 import UIKit
 
 extension UIImageView {
-    static func image(image: String, color: UIColor, size: CGFloat) -> UIImageView {
-        let size = UIImage.SymbolConfiguration(pointSize: size)
-        let image = UIImage(systemName: image, withConfiguration: size)
-        let imageView = UIImageView(image: image)
+    static func image(image: String? = nil, color: UIColor, size: CGFloat) -> UIImageView {
+        let imageView = UIImageView()
+        imageView.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: size)
+        if let image = image {
+            imageView.image = UIImage(systemName: image)
+        }
         imageView.tintColor = color
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }

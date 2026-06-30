@@ -8,65 +8,69 @@
 import UIKit
 
 protocol MenuViewModelProtocol {
-    var titleQuizOfFlags: String { get }
-    var titleQuestionnaire: String { get }
-    var titleQuizOfMaps: String { get }
-    var titleScrabble: String { get }
-    var titleQuizOfCapitals: String { get }
-    var mode: Settings? { get set }
+//    var titleQuizOfFlags: String { get }
+//    var titleQuestionnaire: String { get }
+//    var titleQuizOfMaps: String { get }
+//    var titleScrabble: String { get }
+//    var titleQuizOfCapitals: String { get }
+    var settings: Settings? { get set }
     var gameModes: [GameMode] { get }
     
     func fetchData()
     func getGameModes()
     func forPresented(_ button: UIButton) -> Transition
     func forDismissed(_ button: UIButton) -> Transition
-    func setMode(_ setting: Settings)
-    func setData(_ setting: Settings, newFavorites: [Favorites])
+    func setMode(_ newSettings: Settings)
+    func setData(_ newSettings: Settings, newFavorites: [Favorites])
     
-    func gameTypeViewModel(tag: Int) -> GameTypeViewModelProtocol
+    func gameTypeViewModel(gameType: GameType) -> GameTypeViewModelProtocol
     func settingsViewModel() -> SettingsViewModelProtocol
 }
 
 class MenuViewModel: MenuViewModelProtocol {
-    var titleQuizOfFlags = "Quiz_of_flags.title".localized
-    var titleQuestionnaire = "Questionnaire.title".localized
-    var titleQuizOfMaps = "Quiz_of_maps.title".localized
-    var titleScrabble = "Scrabble.title".localized
-    var titleQuizOfCapitals = "Quiz_of_capitals.title".localized
-    var mode: Settings?
+//    var titleQuizOfFlags = "Quiz_of_flags.title".localized
+//    var titleQuestionnaire = "Questionnaire.title".localized
+//    var titleQuizOfMaps = "Quiz_of_maps.title".localized
+//    var titleScrabble = "Scrabble.title".localized
+//    var titleQuizOfCapitals = "Quiz_of_capitals.title".localized
+    var settings: Settings?
     
     var gameModes: [GameMode] = []
-    private var gameTypes: [GameType] = []
     private var favorites: [Favorites] = []
     private let transition = Transition()
     
     func getGameModes() {
         gameModes = [
             GameMode(
+                gameType: .quizOfFlags,
                 color: .cyanDark,
                 modeImage: "flag",
                 title: "Викторина флагов",
                 gameImage: "filemenu.and.selection"
             ),
             GameMode(
+                gameType: .questionnaire,
                 color: .greenHarlequin,
                 modeImage: "checkmark.circle.badge.questionmark",
                 title: "Опрос",
                 gameImage: "checklist"
             ),
             GameMode(
+                gameType: .quizOfMaps,
                 color: .redYellowBrown,
                 modeImage: "map",
                 title: "Викторина карт",
                 gameImage: "globe.desk"
             ),
             GameMode(
+                gameType: .scrabble,
                 color: .indigo,
                 modeImage: "textformat.abc",
                 title: "Эрудит",
                 gameImage: "a.square"
             ),
             GameMode(
+                gameType: .quizOfCapitals,
                 color: .redTangerineTango,
                 modeImage: "house.and.flag",
                 title: "Викторина столиц",
@@ -76,7 +80,7 @@ class MenuViewModel: MenuViewModelProtocol {
     }
     
     func fetchData() {
-        mode = StorageManager.shared.fetchSetting()
+        settings = StorageManager.shared.fetchSetting()
 //        games = getGames(dialect: mode?.language ?? .english)
 //        StorageManager.shared.loadLanguage()
     }
@@ -98,24 +102,23 @@ class MenuViewModel: MenuViewModelProtocol {
         return transition
     }
     
-    func setMode(_ setting: Settings) {
-        mode = setting
+    func setMode(_ newSettings: Settings) {
+        settings = newSettings
     }
     
-    func setData(_ setting: Settings, newFavorites: [Favorites]) {
-        mode = setting
+    func setData(_ newSettings: Settings, newFavorites: [Favorites]) {
+        settings = newSettings
         favorites = newFavorites
     }
     
-    func gameTypeViewModel(tag: Int) -> GameTypeViewModelProtocol {
-        let mode = mode ?? Settings.getSettingDefault(mode?.language ?? .english)
-        let game = gameTypes[tag]
-        favorites = StorageManager.shared.fetchFavorites(key: game.keys)
-        return GameTypeViewModel(settings: mode, gameType: game, tag: tag, favorites: favorites)
+    func gameTypeViewModel(gameType: GameType) -> GameTypeViewModelProtocol {
+        let settings = settings ?? Settings.getSettingDefault(settings?.language ?? .english)
+        favorites = StorageManager.shared.fetchFavorites(key: gameType.rawValue)
+        return GameTypeViewModel(settings: settings, gameType: gameType, favorites: favorites)
     }
     
     func settingsViewModel() -> SettingsViewModelProtocol {
-        let mode = mode ?? Settings.getSettingDefault(mode?.language ?? .english)
+        let mode = settings ?? Settings.getSettingDefault(settings?.language ?? .english)
         return SettingsViewModel(mode: mode)
     }
     /*

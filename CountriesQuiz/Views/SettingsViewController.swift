@@ -111,7 +111,7 @@ extension SettingsViewController {
     }
     
     @objc private func backToMenu() {
-        viewModel.delegate.modeToMenu(setting: viewModel.mode)
+        viewModel.delegate.modeToMenu(settings: viewModel.mode)
         StorageManager.shared.saveSetting(setting: viewModel.mode)
         dismiss(animated: true)
     }

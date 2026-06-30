@@ -8,8 +8,8 @@
 import UIKit
 
 protocol MenuViewControllerInput: AnyObject {
-    func dataToMenu(setting: Settings, favorites: [Favorites])
-    func modeToMenu(setting: Settings)
+    func dataToMenu(settings: Settings, favorites: [Favorites])
+    func modeToMenu(settings: Settings)
 }
 
 class MenuViewController: UIViewController {
@@ -33,14 +33,11 @@ class MenuViewController: UIViewController {
         return button
     }()
     
-    private let settingsImage: UIImageView = {
-        let size = UIImage.SymbolConfiguration(pointSize: 26)
-        let image = UIImage(systemName: "gear", withConfiguration: size)
-        let imageView = UIImageView(image: image)
-        imageView.tintColor = .white
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
+    private let settingsImage = UIImageView.image(
+        image: "gear",
+        color: .white,
+        size: 26
+    )
     
     private let menuStackView: UIStackView = {
         let stackView = UIStackView()
@@ -109,17 +106,20 @@ class MenuViewController: UIViewController {
     }
     
     private func setupButtonsModes() {
-        for (index, mode) in viewModel.gameModes.enumerated() {
-            let button = setupModeButton(mode: mode, tag: index)
+        for gameMode in viewModel.gameModes {
+            let button = GameTypeButton()
+            button.gameMode = gameMode
+            button.heightAnchor.constraint(equalToConstant: 120).isActive = true
+            button.addTarget(self, action: #selector(navigateToGameType), for: .touchUpInside)
             modesStackView.addArrangedSubview(button)
         }
     }
-    
+    /*
     private func setupModeButton(mode: GameMode, tag: Int) -> UIButton {
-        let modeImage = setupImage(image: mode.modeImage, color: .white, size: 20)
-        let circleImage = setupImage(image: "circle.fill", color: .white.withAlphaComponent(0.8), size: 100)
-        let gameImage = setupImage(image: mode.gameImage, color: mode.color, size: 60)
-        let modeLabel = setupModeLabel(mode: mode)
+        let modeImage = UIImageView.image(image: mode.modeImage, color: .white, size: 20)
+        let circleImage = UIImageView.image(image: "circle.fill", color: .whiteAlphaLight, size: 100)
+        let gameImage = UIImageView.image(image: mode.gameImage, color: mode.color, size: 60)
+        let modeLabel = UILabel.label(text: mode.title, font: "GillSans", color: .white, size: 26)
         let button = Button(type: .custom)
         button.backgroundColor = mode.color
         button.layer.cornerRadius = 12
@@ -133,34 +133,17 @@ class MenuViewController: UIViewController {
                          circleImage: circleImage, gameImage: gameImage)
         return button
     }
-    
-    private func setupImage(image: String, color: UIColor, size: CGFloat) -> UIImageView {
-        let size = UIImage.SymbolConfiguration(pointSize: size)
-        let image = UIImage(systemName: image, withConfiguration: size)
-        let imageView = UIImageView(image: image)
-        imageView.tintColor = color
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }
-    
-    private func setupModeLabel(mode: GameMode) -> UILabel {
-        let label = UILabel()
-        label.text = mode.title
-        label.font = UIFont(name: "GillSans", size: 26)
-        label.textColor = .white
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }
+     */
 }
 // MARK: - Delegates for send data
 extension MenuViewController: MenuViewControllerInput {
-    func dataToMenu(setting: Settings, favorites: [Favorites]) {
+    func dataToMenu(settings: Settings, favorites: [Favorites]) {
         navigationController?.popToRootViewController(animated: true)
-        viewModel.setData(setting, newFavorites: favorites)
+        viewModel.setData(settings, newFavorites: favorites)
     }
     
-    func modeToMenu(setting: Settings) {
-        viewModel.setMode(setting)
+    func modeToMenu(settings: Settings) {
+        viewModel.setMode(settings)
 //        viewModel.reloadTitles(labelQuizOfFlags, labelQuestionnaire, labelQuizOfMaps,
 //                               labelScrabble, labelQuizOfCapitals)
     }
@@ -179,9 +162,9 @@ extension MenuViewController: UIViewControllerTransitioningDelegate {
  */
 // MARK: - Navigate to other view controllers
 extension MenuViewController {
-    @objc private func navigateToGameType(sender: UIButton) {
-        let tag = sender.tag
-        let gameTypeViewModel = viewModel.gameTypeViewModel(tag: tag)
+    @objc private func navigateToGameType(sender: GameTypeButton) {
+        guard let gameMode = sender.gameMode else { return }
+        let gameTypeViewModel = viewModel.gameTypeViewModel(gameType: gameMode.gameType)
         let gameTypeVC = GameTypeViewController()
         gameTypeVC.viewModel = gameTypeViewModel
         gameTypeVC.viewModel.delegate = self
@@ -240,7 +223,7 @@ extension MenuViewController {
             modesStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
-    
+    /*
     private func setupConstraints(button: UIButton, modeImage: UIImageView,
                                   modeLabel: UILabel, circleImage: UIImageView, gameImage: UIImageView) {
         NSLayoutConstraint.activate([
@@ -267,4 +250,5 @@ extension MenuViewController {
             gameImage.centerYAnchor.constraint(equalTo: circleImage.centerYAnchor)
         ])
     }
+     */
 }

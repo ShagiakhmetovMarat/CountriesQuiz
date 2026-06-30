@@ -11,7 +11,7 @@ class StorageManager {
     static let shared = StorageManager()
     
     private let userDefaults = UserDefaults.standard
-    private let settingKey = "setting"
+    private let settingKey = "settings"
     private let languageKey = "appLanguage"
     
     private init() {}

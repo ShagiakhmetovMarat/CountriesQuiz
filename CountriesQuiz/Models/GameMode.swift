@@ -8,6 +8,7 @@
 import UIKit
 
 struct GameMode {
+    let gameType: GameType
     let color: UIColor
     let modeImage: String
     let title: String

@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum GameType {
+enum GameType: String {
     case quizOfFlags
     case questionnaire
     case quizOfMaps

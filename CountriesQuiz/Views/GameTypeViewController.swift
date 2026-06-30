@@ -13,7 +13,7 @@ protocol GameTypeViewControllerInput: AnyObject {
     func disableFavoriteButton()
 }
 
-class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, GameTypeViewControllerInput {
+class GameTypeViewController: UIViewController, GameTypeViewControllerInput {
     var viewModel: GameTypeViewModelProtocol!
     
     private let gameTypeView = UIView()
@@ -40,7 +40,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     private var countdownButton = InfoCardButton()
     private var timeButton = InfoCardButton()
     private var imageInfinity = UIImageView()
-    
+    /*
     private lazy var pickerViewQuestions: UIPickerView = {
         setPickerView(tag: 1)
     }()
@@ -194,7 +194,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         viewModel.setSubviews(subviews: stackView, on: view)
         return view
     }()
-    
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAppearence()
@@ -209,6 +209,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         setupConstraints()
     }
     // MARK: - UIPickerView
+    /*
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         viewModel.numberOfComponents()
     }
@@ -223,6 +224,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         viewModel.heightOfRows
     }
+     */
     // MARK: - Press button count questions / continents / countdown / time
     @objc func showSetting(sender: UIButton) {
 //        viewModel.setSubviews(subviews: viewSetting, on: view)
@@ -238,6 +240,7 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 //        viewModel.barButtonsOnOff(buttonBack, buttonHelp, bool: true)
 //        viewModel.hideViewSetting(viewSetting, and: visualEffectView, view)
     }
+    /*
     // MARK: - Button press continents, change setting continents
     @objc func continents(sender: UIButton) {
         guard sender.tag > 0 else { return viewModel.setAllCountries(sender) }
@@ -259,9 +262,10 @@ class GameTypeViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
         closeViewSetting()
     }
+     */
     // MARK: - GameTypeViewControllerInput
     func dataToMenu(setting: Settings, favorites: [Favorites]) {
-        viewModel.delegate.dataToMenu(setting: setting, favorites: favorites)
+        viewModel.delegate.dataToMenu(settings: setting, favorites: favorites)
     }
     
     func favoritesToGameType(favorites: [Favorites]) {
@@ -415,7 +419,7 @@ extension GameTypeViewController {
             size: 60
         )
     }
-    
+    /*
     private func subview(tag: Int) -> UIView {
         switch tag {
         case 1: pickerViewQuestions
@@ -424,9 +428,10 @@ extension GameTypeViewController {
         default: stackViewTime
         }
     }
+     */
     // MARK: - Bar buttons activate
     @objc private func backToMenu() {
-        viewModel.delegate.dataToMenu(setting: viewModel.settings, favorites: viewModel.favorites)
+        viewModel.delegate.dataToMenu(settings: viewModel.settings, favorites: viewModel.favorites)
     }
     
     @objc private func showViewHelp(sender: UIButton) {
@@ -504,9 +509,9 @@ extension GameTypeViewController {
         viewModel.swap(swapButton)
     }
     // MARK: - Segmented control press, change setting time for one question or for all questions
-    @objc private func segmentSelect() {
-        viewModel.segmentSelect()
-    }
+//    @objc private func segmentSelect() {
+//        viewModel.segmentSelect()
+//    }
 }
 // MARK: - Setup constraints
 extension GameTypeViewController {

@@ -34,10 +34,16 @@ class MenuViewModel: MenuViewModelProtocol {
 //    var titleScrabble = "Scrabble.title".localized
 //    var titleQuizOfCapitals = "Quiz_of_capitals.title".localized
     var settings: Settings?
-    
     var gameModes: [GameMode] = []
     private var favorites: [Favorites] = []
+    
     private let transition = Transition()
+    
+    func fetchData() {
+        settings = StorageManager.shared.fetchSettings()
+//        games = getGames(dialect: mode?.language ?? .english)
+//        StorageManager.shared.loadLanguage()
+    }
     
     func getGameModes() {
         gameModes = [
@@ -78,12 +84,6 @@ class MenuViewModel: MenuViewModelProtocol {
             )
         ]
     }
-    
-    func fetchData() {
-        settings = StorageManager.shared.fetchSetting()
-//        games = getGames(dialect: mode?.language ?? .english)
-//        StorageManager.shared.loadLanguage()
-    }
     /*
     func size(view: UIView?) -> CGSize {
         guard let view = view else { return CGSize(width: 0, height: 0) }
@@ -112,14 +112,22 @@ class MenuViewModel: MenuViewModelProtocol {
     }
     
     func gameTypeViewModel(gameType: GameType) -> GameTypeViewModelProtocol {
-        let settings = settings ?? Settings.getSettingDefault(settings?.language ?? .english)
         favorites = StorageManager.shared.fetchFavorites(key: gameType.rawValue)
-        return GameTypeViewModel(settings: settings, gameType: gameType, favorites: favorites)
+        let quizConfiguration = getQuizConfiguration(gameType: gameType)
+        return GameTypeViewModel(quizConfiguration: quizConfiguration)
     }
     
     func settingsViewModel() -> SettingsViewModelProtocol {
         let mode = settings ?? Settings.getSettingDefault(settings?.language ?? .english)
         return SettingsViewModel(mode: mode)
+    }
+    
+    private func getQuizConfiguration(gameType: GameType) -> QuizConfiguration {
+        return QuizConfiguration(
+            gameType: gameType,
+            settings: settings ?? Settings.getSettingDefault(settings?.language ?? .english),
+            favorites: favorites
+        )
     }
     /*
     private func getGameTypes() {

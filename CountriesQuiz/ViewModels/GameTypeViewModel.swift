@@ -21,8 +21,8 @@ protocol GameTypeViewModelProtocol {
     var titleCancel: String { get }
     var delegate: MenuViewControllerInput! { get set }
     
-    var settings: Settings { get }
-    var favorites: [Favorites] { get }
+//    var settings: Settings { get }
+//    var favorites: [Favorites] { get }
     
     var allCountries: Bool { get }
     var americaContinent: Bool { get }
@@ -43,7 +43,7 @@ protocol GameTypeViewModelProtocol {
     var heightOfRows: CGFloat { get }
     var popUpViewHelp: Bool { get }
     
-    init(settings: Settings, gameType: GameType, favorites: [Favorites])
+    init(quizConfiguration: QuizConfiguration)
     
     func numberOfComponents() -> Int
     func numberOfRows(_ pickerView: UIPickerView) -> Int
@@ -226,9 +226,16 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     var titleCancel = "GameType.cancel.title".localized
     var delegate: MenuViewControllerInput!
     
-    var settings: Settings
-    var favorites: [Favorites]
-    private let gameType: GameType
+    private var quizConfiguration: QuizConfiguration
+    private var gameType: GameType {
+        quizConfiguration.gameType
+    }
+    private var settings: Settings {
+        quizConfiguration.settings
+    }
+    private var favorites: [Favorites] {
+        quizConfiguration.favorites
+    }
     
     private var countRowsDefault = DefaultSetting.countRows.rawValue
     private var titleTimeAllQuestions = "GameType.time_all_questions.title".localized
@@ -298,10 +305,8 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     private var stackViewCheckmark: UIStackView!
     private var stackViewTime: UIStackView!
     
-    required init(settings: Settings, gameType: GameType, favorites: [Favorites]) {
-        self.settings = settings
-        self.gameType = gameType
-        self.favorites = favorites
+    required init(quizConfiguration: QuizConfiguration) {
+        self.quizConfiguration = quizConfiguration
     }
     // MARK: - Set subviews
     func removeSubviews(subviews: UIView...) {
@@ -370,15 +375,15 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     }
     // MARK: - Constants
     func imageMode() -> String {
-        switch tag {
-        case 0, 1, 4: return settings.flag ? "flag" : "building"
-        case 2: return "globe.europe.africa"
+        switch gameType {
+        case .quizOfFlags, .questionnaire, .quizOfCapitals: return settings.flag ? "flag" : "building"
+        case .quizOfMaps: return "globe.europe.africa"
         default: return scrabbleType()
         }
     }
     
     func isEnabled() -> Bool {
-        tag == 2 ? false : true
+        gameType == .quizOfMaps ? false : true
     }
     
     func haveFavourites() -> Bool {
@@ -423,10 +428,10 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     }
     
     func size() -> CGFloat {
-        switch tag {
-        case 0, 4: 1.4
-        case 1: 1.55
-        case 2: 1.15
+        switch gameType {
+        case .quizOfFlags, .quizOfCapitals: 1.4
+        case .questionnaire: 1.55
+        case .quizOfMaps: 1.15
         default: 1.65
         }
     }
@@ -493,8 +498,8 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     }
     // MARK: - Press swap button of setting
     func swap(_ button: UIButton) {
-        switch tag {
-        case 0, 1, 4: GameTypeFirst(button: button)
+        switch gameType {
+        case .quizOfFlags, .questionnaire, .quizOfCapitals: GameTypeFirst(button: button)
         default: GameTypeSecond(button: button)
         }
     }
@@ -508,7 +513,7 @@ class GameTypeViewModel: GameTypeViewModelProtocol {
     }
     
     func setFavorites(newFavorites: [Favorites]) {
-        favorites = newFavorites
+//        favorites = newFavorites
     }
     // MARK: - Set popup view controller
     func popUpViewHelpToggle() {
@@ -754,25 +759,23 @@ extension GameTypeViewModel {
     }
     
     private func bulletsListGameType() -> [String] {
-        switch tag {
-        case 0: bulletsQuizOfFlags()
-        case 1: bulletsQuestionnaire()
-        case 2: bulletsQuizOfMaps()
-        case 3: bulletsScrabble()
+        switch gameType {
+        case .quizOfFlags: bulletsQuizOfFlags()
+        case .questionnaire: bulletsQuestionnaire()
+        case .quizOfMaps: bulletsQuizOfMaps()
+        case .scrabble: bulletsScrabble()
         default: bulletsQuizOfCapitals()
         }
     }
     
     private func description() -> String {
-        descriptions()[tag]
-    }
-    
-    private func descriptions() -> [String] {
-        ["GameType.first.tag.description".localized,
-         "GameType.second.tag.description".localized,
-         "GameType.third.tag.description".localized,
-         "GameType.fourth.tag.description".localized,
-         "GameType.fifth.tag.description".localized]
+        switch gameType {
+        case .quizOfFlags: "GameType.first.tag.description".localized
+        case .questionnaire: "GameType.second.tag.description".localized
+        case .quizOfMaps: "GameType.third.tag.description".localized
+        case .scrabble: "GameType.fourth.tag.description".localized
+        default: "GameType.fifth.tag.description".localized
+        }
     }
     
     private func bulletsQuizOfFlags() -> [String] {
@@ -870,26 +873,27 @@ extension GameTypeViewModel {
         let view = UIView()
         view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
-        setSubviews(subviews: description, list, on: view)
-        switch tag {
-        case 0, 1, 4:
+//        setSubviews(subviews: description, list, on: view)
+        switch gameType {
+        case .quizOfFlags, .questionnaire, .quizOfCapitals:
             let stackViews = gameTypeFirst()
-            setSubviews(subviews: stackViews.0, stackViews.1, on: view)
-            setConstraintsFirst(stackViews.0, stackViews.1, view)
-        case 2:
+//            setSubviews(subviews: stackViews.0, stackViews.1, on: view)
+//            setConstraintsFirst(stackViews.0, stackViews.1, view)
+        case .quizOfMaps:
             let stackView = gameTypeSecond()
-            setSubviews(subviews: stackView, on: view)
-            setConstraintSecond(stackView, view)
+//            setSubviews(subviews: stackView, on: view)
+//            setConstraintSecond(stackView, view)
         default:
             let stackViews = gameTypeThird()
-            setSubviews(subviews: stackViews.0, stackViews.1, stackViews.2, on: view)
-            setConstraintsThird(stackViews.0, stackViews.1, stackViews.2, view)
+//            setSubviews(subviews: stackViews.0, stackViews.1, stackViews.2, on: view)
+//            setConstraintsThird(stackViews.0, stackViews.1, stackViews.2, view)
         }
         return view
     }
     
     private func topic(image: String, color: UIColor, title: String, 
                        description: String) -> UIStackView {
+        /*
         let image = setImage(image: image, color: color)
         let view = setView(color: game.buttonSwap, addImage: image)
         let title = setLabel(title: title, size: 24, font: "GillSans", alignment: .left)
@@ -899,6 +903,7 @@ extension GameTypeViewModel {
         setCenterSubview(subview: image, on: view)
         setSquare(subviews: view, sizes: 40)
         return stackViewTwo
+         */
     }
     
     private func gameTypeFirst() -> (UIStackView, UIStackView) {
@@ -942,7 +947,7 @@ extension GameTypeViewModel {
     
     private func setScrollView(_ contentView: UIView) -> UIScrollView {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = game.background
+        scrollView.backgroundColor = background
         scrollView.layer.cornerRadius = 15
         scrollView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -952,8 +957,8 @@ extension GameTypeViewModel {
     // MARK: - Button change type game mode
     private func GameTypeFirst(button: UIButton) {
         settings.flag ? imageSwap("building", button) : imageSwap("flag", button)
-        settings.flag.toggle()
-        StorageManager.shared.saveSetting(setting: settings)
+//        settings.flag.toggle()
+        StorageManager.shared.saveSettings(settings: settings)
     }
     
     private func imageSwap(_ image: String, _ button: UIButton) {
@@ -972,8 +977,8 @@ extension GameTypeViewModel {
     
     private func imageSwap(_ image: String, _ scrabbleType: Int, _ button: UIButton) {
         imageSwap(image, button)
-        settings.scrabbleType = scrabbleType
-        StorageManager.shared.saveSetting(setting: settings)
+//        settings.scrabbleType = scrabbleType
+        StorageManager.shared.saveSettings(settings: settings)
     }
     // MARK: - Attributted for picker view
     private func setAttributed(title: String, tag: Int, segmented: UISegmentedControl) -> NSAttributedString {
